@@ -19,6 +19,6 @@ public class Teacher {
     private User user;
 
     @OneToMany(mappedBy = "teacher")
-    private List<Class> classes;
+    private List<Group> groups;
 }
 
