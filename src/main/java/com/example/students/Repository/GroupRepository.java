@@ -1,9 +1,7 @@
-package com.example.students.repositories;
+package com.example.students.Repository;
 
+import com.example.students.Model.Group;
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.example.students.models.Group;
 
 public interface GroupRepository extends JpaRepository<Group, Integer> {
-
 }
-

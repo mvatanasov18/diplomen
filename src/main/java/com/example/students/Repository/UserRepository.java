@@ -1,8 +1,7 @@
-package com.example.students.repositories;
+package com.example.students.Repository;
 
-import com.example.students.models.User;
+import com.example.students.Model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
-
 }
