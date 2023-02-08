@@ -1,402 +1,572 @@
+USE [master]
+GO
+/****** Object:  Database [StudentsAndTeachers]    Script Date: 2/8/2023 9:24:13 AM ******/
+CREATE DATABASE [StudentsAndTeachers]
+ CONTAINMENT = NONE
+ ON  PRIMARY
+( NAME = N'StudentsAndTeachers', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\StudentsAndTeachers.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON
+( NAME = N'StudentsAndTeachers_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\StudentsAndTeachers_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT
+GO
+ALTER DATABASE [StudentsAndTeachers] SET COMPATIBILITY_LEVEL = 150
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [StudentsAndTeachers].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [StudentsAndTeachers] SET ANSI_NULL_DEFAULT OFF
+GO
+ALTER DATABASE [StudentsAndTeachers] SET ANSI_NULLS OFF
+GO
+ALTER DATABASE [StudentsAndTeachers] SET ANSI_PADDING OFF
+GO
+ALTER DATABASE [StudentsAndTeachers] SET ANSI_WARNINGS OFF
+GO
+ALTER DATABASE [StudentsAndTeachers] SET ARITHABORT OFF
+GO
+ALTER DATABASE [StudentsAndTeachers] SET AUTO_CLOSE OFF
+GO
+ALTER DATABASE [StudentsAndTeachers] SET AUTO_SHRINK OFF
+GO
+ALTER DATABASE [StudentsAndTeachers] SET AUTO_UPDATE_STATISTICS ON
+GO
+ALTER DATABASE [StudentsAndTeachers] SET CURSOR_CLOSE_ON_COMMIT OFF
+GO
+ALTER DATABASE [StudentsAndTeachers] SET CURSOR_DEFAULT  GLOBAL
+GO
+ALTER DATABASE [StudentsAndTeachers] SET CONCAT_NULL_YIELDS_NULL OFF
+GO
+ALTER DATABASE [StudentsAndTeachers] SET NUMERIC_ROUNDABORT OFF
+GO
+ALTER DATABASE [StudentsAndTeachers] SET QUOTED_IDENTIFIER OFF
+GO
+ALTER DATABASE [StudentsAndTeachers] SET RECURSIVE_TRIGGERS OFF
+GO
+ALTER DATABASE [StudentsAndTeachers] SET  DISABLE_BROKER
+GO
+ALTER DATABASE [StudentsAndTeachers] SET AUTO_UPDATE_STATISTICS_ASYNC OFF
+GO
+ALTER DATABASE [StudentsAndTeachers] SET DATE_CORRELATION_OPTIMIZATION OFF
+GO
+ALTER DATABASE [StudentsAndTeachers] SET TRUSTWORTHY OFF
+GO
+ALTER DATABASE [StudentsAndTeachers] SET ALLOW_SNAPSHOT_ISOLATION OFF
+GO
+ALTER DATABASE [StudentsAndTeachers] SET PARAMETERIZATION SIMPLE
+GO
+ALTER DATABASE [StudentsAndTeachers] SET READ_COMMITTED_SNAPSHOT OFF
+GO
+ALTER DATABASE [StudentsAndTeachers] SET HONOR_BROKER_PRIORITY OFF
+GO
+ALTER DATABASE [StudentsAndTeachers] SET RECOVERY SIMPLE
+GO
+ALTER DATABASE [StudentsAndTeachers] SET  MULTI_USER
+GO
+ALTER DATABASE [StudentsAndTeachers] SET PAGE_VERIFY CHECKSUM
+GO
+ALTER DATABASE [StudentsAndTeachers] SET DB_CHAINING OFF
+GO
+ALTER DATABASE [StudentsAndTeachers] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF )
+GO
+ALTER DATABASE [StudentsAndTeachers] SET TARGET_RECOVERY_TIME = 60 SECONDS
+GO
+ALTER DATABASE [StudentsAndTeachers] SET DELAYED_DURABILITY = DISABLED
+GO
+ALTER DATABASE [StudentsAndTeachers] SET ACCELERATED_DATABASE_RECOVERY = OFF
+GO
+ALTER DATABASE [StudentsAndTeachers] SET QUERY_STORE = OFF
+GO
 USE [StudentsAndTeachers]
 GO
-/****** Object:  User [SakamDiploma]    Script Date: 1/7/2023 1:28:38 PM ******/
-CREATE USER [SakamDiploma] FOR LOGIN [diplomaIskam] WITH DEFAULT_SCHEMA=[db_owner]
-GO
-ALTER ROLE [db_owner] ADD MEMBER [SakamDiploma]
-GO
-ALTER ROLE [db_accessadmin] ADD MEMBER [SakamDiploma]
-GO
-ALTER ROLE [db_securityadmin] ADD MEMBER [SakamDiploma]
-GO
-ALTER ROLE [db_ddladmin] ADD MEMBER [SakamDiploma]
-GO
-ALTER ROLE [db_backupoperator] ADD MEMBER [SakamDiploma]
-GO
-ALTER ROLE [db_datareader] ADD MEMBER [SakamDiploma]
-GO
-ALTER ROLE [db_datawriter] ADD MEMBER [SakamDiploma]
-GO
-ALTER ROLE [db_denydatareader] ADD MEMBER [SakamDiploma]
-GO
-ALTER ROLE [db_denydatawriter] ADD MEMBER [SakamDiploma]
-GO
-/****** Object:  Table [dbo].[Classes]    Script Date: 1/7/2023 1:28:38 PM ******/
+/****** Object:  Table [dbo].[Addresses]    Script Date: 2/8/2023 9:24:13 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[Classes](
-                                [ID] [int] IDENTITY(1,1) NOT NULL,
-                                [Grade] [smallint] NOT NULL,
-                                [Letter] [nchar](1) NOT NULL,
-                                [TeacherID] [int] NOT NULL,
-                                PRIMARY KEY CLUSTERED
-                                    (
-                                     [ID] ASC
-                                        )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
-                                UNIQUE NONCLUSTERED
-                                    (
-                                     [TeacherID] ASC
-                                        )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Parents]    Script Date: 1/7/2023 1:28:38 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
+CREATE TABLE [dbo].[Addresses](
+    [Id] [varchar](36) NOT NULL,
+    [City] [nvarchar](100) NOT NULL,
+    [HouseNumber] [int] NOT NULL,
+    [Street] [nvarchar](100) NOT NULL,
+    [AdditionalInfo] [nvarchar](100) NULL,
+    PRIMARY KEY CLUSTERED
+(
+[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY]
+    GO
+/****** Object:  Table [dbo].[Admins]    Script Date: 2/8/2023 9:24:13 AM ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
+CREATE TABLE [dbo].[Admins](
+    [Id] [varchar](36) NOT NULL,
+    [UserId] [varchar](36) NOT NULL,
+    PRIMARY KEY CLUSTERED
+(
+[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    UNIQUE NONCLUSTERED
+(
+[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY]
+    GO
+/****** Object:  Table [dbo].[Files]    Script Date: 2/8/2023 9:24:13 AM ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
+CREATE TABLE [dbo].[Files](
+    [Id] [varchar](36) NOT NULL,
+    [FileContent] [varbinary](max) NOT NULL,
+    [TaskId] [varchar](36) NOT NULL,
+    PRIMARY KEY CLUSTERED
+(
+[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+    GO
+/****** Object:  Table [dbo].[Groups]    Script Date: 2/8/2023 9:24:13 AM ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
+CREATE TABLE [dbo].[Groups](
+    [Id] [varchar](36) NOT NULL,
+    [Grade] [smallint] NOT NULL,
+    [Letter] [nchar](1) NULL,
+    [TeacherId] [varchar](36) NOT NULL,
+    PRIMARY KEY CLUSTERED
+(
+[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    UNIQUE NONCLUSTERED
+(
+[TeacherId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY]
+    GO
+/****** Object:  Table [dbo].[Parents]    Script Date: 2/8/2023 9:24:13 AM ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
 CREATE TABLE [dbo].[Parents](
-                                [ID] [int] IDENTITY(1,1) NOT NULL,
-                                [FirstName] [nvarchar](100) NOT NULL,
-                                [LastName] [nvarchar](100) NOT NULL,
-                                [Email] [varchar](255) NOT NULL,
-                                [PhoneNumber] [varbinary](max) NOT NULL,
-                                [Address] [varbinary](max) NOT NULL,
-                                PRIMARY KEY CLUSTERED
-                                    (
-                                     [ID] ASC
-                                        )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Principals]    Script Date: 1/7/2023 1:28:38 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
+    [Id] [varchar](36) NOT NULL,
+    [FirstName] [nvarchar](100) NOT NULL,
+    [LastName] [nvarchar](100) NOT NULL,
+    [Email] [varchar](255) NOT NULL,
+    [PhoneNumber] [varchar](10) NOT NULL,
+    [AddressId] [varchar](36) NOT NULL,
+    PRIMARY KEY CLUSTERED
+(
+[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    UNIQUE NONCLUSTERED
+(
+[AddressId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    UNIQUE NONCLUSTERED
+(
+[PhoneNumber] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    UNIQUE NONCLUSTERED
+(
+[Email] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY]
+    GO
+/****** Object:  Table [dbo].[PendingUpdates]    Script Date: 2/8/2023 9:24:13 AM ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
+CREATE TABLE [dbo].[PendingUpdates](
+    [Id] [varchar](36) NOT NULL,
+    [Username] [varchar](150) NOT NULL,
+    [Password] [varbinary](max) NOT NULL,
+    [Email] [varchar](255) NOT NULL,
+    [FirstName] [nvarchar](100) NOT NULL,
+    [LastName] [nvarchar](100) NOT NULL,
+    [ChangesMade] [timestamp] NOT NULL,
+    [AdminId] [varchar](36) NOT NULL,
+    [UserId] [varchar](36) NOT NULL,
+    PRIMARY KEY CLUSTERED
+(
+[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    UNIQUE NONCLUSTERED
+(
+[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    UNIQUE NONCLUSTERED
+(
+[Username] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    UNIQUE NONCLUSTERED
+(
+[Email] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+    GO
+/****** Object:  Table [dbo].[Principals]    Script Date: 2/8/2023 9:24:13 AM ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
 CREATE TABLE [dbo].[Principals](
-                                   [ID] [int] IDENTITY(1,1) NOT NULL,
-                                   [UserID] [int] NOT NULL,
-                                   [IsVerified] [bit] NOT NULL,
-                                   PRIMARY KEY CLUSTERED
-                                       (
-                                        [ID] ASC
-                                           )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
-                                   UNIQUE NONCLUSTERED
-                                       (
-                                        [UserID] ASC
-                                           )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Projects]    Script Date: 1/7/2023 1:28:38 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
+    [Id] [varchar](36) NOT NULL,
+    [UserId] [varchar](36) NOT NULL,
+    [IsVerified] [bit] NOT NULL,
+    PRIMARY KEY CLUSTERED
+(
+[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    UNIQUE NONCLUSTERED
+(
+[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY]
+    GO
+/****** Object:  Table [dbo].[Projects]    Script Date: 2/8/2023 9:24:13 AM ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
 CREATE TABLE [dbo].[Projects](
-                                 [ID] [int] IDENTITY(1,1) NOT NULL,
-                                 [Name] [nvarchar](255) NOT NULL,
-                                 [Description] [ntext] NOT NULL,
-                                 [DateCreated] [datetime2](7) NOT NULL,
-                                 [DueDate] [datetime2](7) NOT NULL,
-                                 PRIMARY KEY CLUSTERED
-                                     (
-                                      [ID] ASC
-                                         )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Schools]    Script Date: 1/7/2023 1:28:38 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
+    [Id] [varchar](36) NOT NULL,
+    [Name] [nvarchar](255) NULL,
+    [Description] [nvarchar](max) NULL,
+    [DateCreated] [datetime2](0) NOT NULL,
+    [DueDate] [datetime2](0) NOT NULL,
+    [AdminId] [varchar](36) NOT NULL,
+    PRIMARY KEY CLUSTERED
+(
+[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    UNIQUE NONCLUSTERED
+(
+[Name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+    GO
+/****** Object:  Table [dbo].[Schools]    Script Date: 2/8/2023 9:24:13 AM ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
 CREATE TABLE [dbo].[Schools](
-                                [ID] [int] IDENTITY(1,1) NOT NULL,
-                                [Name] [nvarchar](255) NOT NULL,
-                                [Address] [nvarchar](255) NOT NULL,
-                                PRIMARY KEY CLUSTERED
-                                    (
-                                     [ID] ASC
-                                        )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Students]    Script Date: 1/7/2023 1:28:38 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
+    [Id] [varchar](36) NOT NULL,
+    [Name] [nvarchar](255) NOT NULL,
+    [AddressId] [varchar](36) NOT NULL,
+    PRIMARY KEY CLUSTERED
+(
+[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    UNIQUE NONCLUSTERED
+(
+[AddressId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    UNIQUE NONCLUSTERED
+(
+[Name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY]
+    GO
+/****** Object:  Table [dbo].[Students]    Script Date: 2/8/2023 9:24:13 AM ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
 CREATE TABLE [dbo].[Students](
-                                 [ID] [int] IDENTITY(1,1) NOT NULL,
-                                 [UserID] [int] NOT NULL,
-                                 [ParentID] [int] NOT NULL,
-                                 PRIMARY KEY CLUSTERED
-                                     (
-                                      [ID] ASC
-                                         )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
-                                 UNIQUE NONCLUSTERED
-                                     (
-                                      [UserID] ASC
-                                         )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
-                                 UNIQUE NONCLUSTERED
-                                     (
-                                      [ParentID] ASC
-                                         )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[StudentsClasses]    Script Date: 1/7/2023 1:28:38 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[StudentsClasses](
-                                        [ID] [int] IDENTITY(1,1) NOT NULL,
-                                        [StudentID] [int] NOT NULL,
-                                        [ClassID] [int] NOT NULL,
-                                        PRIMARY KEY CLUSTERED
-                                            (
-                                             [ID] ASC
-                                                )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[StudentsTasks]    Script Date: 1/7/2023 1:28:38 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
+    [Id] [varchar](36) NOT NULL,
+    [UserId] [varchar](36) NOT NULL,
+    [ParentId] [varchar](36) NOT NULL,
+    PRIMARY KEY CLUSTERED
+(
+[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    UNIQUE NONCLUSTERED
+(
+[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY]
+    GO
+/****** Object:  Table [dbo].[StudentsGroups]    Script Date: 2/8/2023 9:24:13 AM ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
+CREATE TABLE [dbo].[StudentsGroups](
+    [StudentId] [varchar](36) NOT NULL,
+    [GroupId] [varchar](36) NOT NULL,
+    PRIMARY KEY CLUSTERED
+(
+    [StudentId] ASC,
+[GroupId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY]
+    GO
+/****** Object:  Table [dbo].[StudentsTasks]    Script Date: 2/8/2023 9:24:13 AM ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
 CREATE TABLE [dbo].[StudentsTasks](
-                                      [ID] [int] IDENTITY(1,1) NOT NULL,
-                                      [StudentID] [int] NOT NULL,
-                                      [TaskID] [int] NOT NULL,
-                                      PRIMARY KEY CLUSTERED
-                                          (
-                                           [ID] ASC
-                                              )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[StudentsTeams]    Script Date: 1/7/2023 1:28:38 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
+    [StudentId] [varchar](36) NOT NULL,
+    [TaskId] [varchar](36) NOT NULL,
+    PRIMARY KEY CLUSTERED
+(
+    [StudentId] ASC,
+[TaskId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY]
+    GO
+/****** Object:  Table [dbo].[StudentsTeams]    Script Date: 2/8/2023 9:24:13 AM ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
 CREATE TABLE [dbo].[StudentsTeams](
-                                      [ID] [int] IDENTITY(1,1) NOT NULL,
-                                      [StudentID] [int] NOT NULL,
-                                      [TeamID] [int] NOT NULL,
-                                      PRIMARY KEY CLUSTERED
-                                          (
-                                           [ID] ASC
-                                              )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Tasks]    Script Date: 1/7/2023 1:28:38 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
+    [StudentId] [varchar](36) NOT NULL,
+    [TeamId] [varchar](36) NOT NULL,
+    PRIMARY KEY CLUSTERED
+(
+    [StudentId] ASC,
+[TeamId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY]
+    GO
+/****** Object:  Table [dbo].[Tasks]    Script Date: 2/8/2023 9:24:13 AM ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
 CREATE TABLE [dbo].[Tasks](
-                              [ID] [int] IDENTITY(1,1) NOT NULL,
-                              [Name] [nvarchar](255) NOT NULL,
-                              [Description] [ntext] NOT NULL,
-                              [DateCreated] [datetime2](7) NOT NULL,
-                              [DueDate] [datetime2](7) NOT NULL,
-                              [TeacherID] [int] NOT NULL,
-                              PRIMARY KEY CLUSTERED
-                                  (
-                                   [ID] ASC
-                                      )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Teachers]    Script Date: 1/7/2023 1:28:38 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
+    [Id] [varchar](36) NOT NULL,
+    [Name] [nvarchar](255) NULL,
+    [Description] [nvarchar](max) NULL,
+    [DateCreated] [datetime2](0) NOT NULL,
+    [DueDate] [datetime2](0) NOT NULL,
+    [StudentId] [varchar](36) NOT NULL,
+    [TeacherId] [varchar](36) NOT NULL,
+    PRIMARY KEY CLUSTERED
+(
+[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    UNIQUE NONCLUSTERED
+(
+[Name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+    GO
+/****** Object:  Table [dbo].[Teachers]    Script Date: 2/8/2023 9:24:13 AM ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
 CREATE TABLE [dbo].[Teachers](
-                                 [ID] [int] IDENTITY(1,1) NOT NULL,
-                                 [UserID] [int] NOT NULL,
-                                 PRIMARY KEY CLUSTERED
-                                     (
-                                      [ID] ASC
-                                         )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
-                                 UNIQUE NONCLUSTERED
-                                     (
-                                      [UserID] ASC
-                                         )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Teams]    Script Date: 1/7/2023 1:28:38 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
+    [Id] [varchar](36) NOT NULL,
+    [UserId] [varchar](36) NOT NULL,
+    PRIMARY KEY CLUSTERED
+(
+[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    UNIQUE NONCLUSTERED
+(
+[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY]
+    GO
+/****** Object:  Table [dbo].[Teams]    Script Date: 2/8/2023 9:24:13 AM ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
 CREATE TABLE [dbo].[Teams](
-                              [ID] [int] IDENTITY(1,1) NOT NULL,
-                              [Name] [nvarchar](255) NOT NULL,
-                              PRIMARY KEY CLUSTERED
-                                  (
-                                   [ID] ASC
-                                      )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[TeamsProjects]    Script Date: 1/7/2023 1:28:38 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
+    [Id] [varchar](36) NOT NULL,
+    [Name] [nvarchar](100) NOT NULL,
+    PRIMARY KEY CLUSTERED
+(
+[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    UNIQUE NONCLUSTERED
+(
+[Name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY]
+    GO
+/****** Object:  Table [dbo].[TeamsProjects]    Script Date: 2/8/2023 9:24:13 AM ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
 CREATE TABLE [dbo].[TeamsProjects](
-                                      [ID] [int] IDENTITY(1,1) NOT NULL,
-                                      [ProjectID] [int] NOT NULL,
-                                      [TeamID] [int] NOT NULL,
-                                      PRIMARY KEY CLUSTERED
-                                          (
-                                           [ID] ASC
-                                              )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[Users]    Script Date: 1/7/2023 1:28:38 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
+    [ProjectId] [varchar](36) NOT NULL,
+    [TeamId] [varchar](36) NOT NULL,
+    PRIMARY KEY CLUSTERED
+(
+    [ProjectId] ASC,
+[TeamId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY]
+    GO
+/****** Object:  Table [dbo].[Users]    Script Date: 2/8/2023 9:24:13 AM ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
 CREATE TABLE [dbo].[Users](
-                              [ID] [int] IDENTITY(1,1) NOT NULL,
-                              [Username] [nvarchar](255) NOT NULL,
-                              [Password] [varbinary](max) NOT NULL,
-                              [FirstName] [nvarchar](100) NOT NULL,
-                              [LastName] [nvarchar](100) NOT NULL,
-                              [Email] [varchar](255) NOT NULL,
-                              [SchoolID] [int] NOT NULL,
-                              PRIMARY KEY CLUSTERED
-                                  (
-                                   [ID] ASC
-                                      )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
-                              CONSTRAINT [UK_Username] UNIQUE NONCLUSTERED
-                                  (
-                                   [Username] ASC
-                                      )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
-                              UNIQUE NONCLUSTERED
-                                  (
-                                   [Email] ASC
-                                      )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
-ALTER TABLE [dbo].[Principals] ADD  DEFAULT ((0)) FOR [IsVerified]
-GO
-ALTER TABLE [dbo].[Projects] ADD  DEFAULT (getdate()) FOR [DateCreated]
-GO
-ALTER TABLE [dbo].[Projects] ADD  DEFAULT (getdate()+(7)) FOR [DueDate]
-GO
-ALTER TABLE [dbo].[Tasks] ADD  DEFAULT (getdate()) FOR [DateCreated]
-GO
-ALTER TABLE [dbo].[Tasks] ADD  DEFAULT (getdate()+(1)) FOR [DueDate]
-GO
-ALTER TABLE [dbo].[Classes]  WITH CHECK ADD  CONSTRAINT [FK_Classes_Teachers] FOREIGN KEY([TeacherID])
-    REFERENCES [dbo].[Teachers] ([ID])
-GO
-ALTER TABLE [dbo].[Classes] CHECK CONSTRAINT [FK_Classes_Teachers]
-GO
-ALTER TABLE [dbo].[Principals]  WITH CHECK ADD  CONSTRAINT [FK_Principals_Users] FOREIGN KEY([UserID])
-    REFERENCES [dbo].[Users] ([ID])
-GO
-ALTER TABLE [dbo].[Principals] CHECK CONSTRAINT [FK_Principals_Users]
-GO
-ALTER TABLE [dbo].[Students]  WITH CHECK ADD  CONSTRAINT [FK_Students_Parents] FOREIGN KEY([ParentID])
-    REFERENCES [dbo].[Parents] ([ID])
-GO
-ALTER TABLE [dbo].[Students] CHECK CONSTRAINT [FK_Students_Parents]
-GO
-ALTER TABLE [dbo].[Students]  WITH CHECK ADD  CONSTRAINT [FK_Students_Users] FOREIGN KEY([UserID])
-    REFERENCES [dbo].[Users] ([ID])
-GO
-ALTER TABLE [dbo].[Students] CHECK CONSTRAINT [FK_Students_Users]
-GO
-ALTER TABLE [dbo].[StudentsClasses]  WITH NOCHECK ADD FOREIGN KEY([ClassID])
-    REFERENCES [dbo].[Classes] ([ID])
-GO
-ALTER TABLE [dbo].[StudentsClasses]  WITH NOCHECK ADD FOREIGN KEY([StudentID])
-    REFERENCES [dbo].[Students] ([ID])
-GO
-ALTER TABLE [dbo].[StudentsTasks]  WITH NOCHECK ADD FOREIGN KEY([StudentID])
-    REFERENCES [dbo].[Students] ([ID])
-GO
-ALTER TABLE [dbo].[StudentsTasks]  WITH NOCHECK ADD FOREIGN KEY([TaskID])
-    REFERENCES [dbo].[Tasks] ([ID])
-GO
-ALTER TABLE [dbo].[StudentsTeams]  WITH NOCHECK ADD FOREIGN KEY([StudentID])
-    REFERENCES [dbo].[Students] ([ID])
-GO
-ALTER TABLE [dbo].[StudentsTeams]  WITH NOCHECK ADD FOREIGN KEY([TeamID])
-    REFERENCES [dbo].[Teams] ([ID])
-GO
-ALTER TABLE [dbo].[Tasks]  WITH NOCHECK ADD FOREIGN KEY([TeacherID])
-    REFERENCES [dbo].[Teachers] ([ID])
-GO
-ALTER TABLE [dbo].[Teachers]  WITH CHECK ADD  CONSTRAINT [FK_Teachers_Users] FOREIGN KEY([UserID])
-    REFERENCES [dbo].[Users] ([ID])
-GO
-ALTER TABLE [dbo].[Teachers] CHECK CONSTRAINT [FK_Teachers_Users]
-GO
-ALTER TABLE [dbo].[TeamsProjects]  WITH NOCHECK ADD FOREIGN KEY([ProjectID])
-    REFERENCES [dbo].[Projects] ([ID])
-GO
-ALTER TABLE [dbo].[TeamsProjects]  WITH NOCHECK ADD FOREIGN KEY([TeamID])
-    REFERENCES [dbo].[Teams] ([ID])
-GO
-ALTER TABLE [dbo].[Users]  WITH NOCHECK ADD FOREIGN KEY([SchoolID])
-    REFERENCES [dbo].[Schools] ([ID])
-GO
-/****** Object:  StoredProcedure [dbo].[InsertParent]    Script Date: 1/7/2023 1:28:38 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
--- =============================================
--- Author:		pak az
--- Create date: pak dnes
--- Description:	pak testvam
--- =============================================
-CREATE PROCEDURE [dbo].[InsertParent]
-    -- Add the parameters for the stored procedure here
-    @FirstName nvarchar(100),
-    @LastName nvarchar(100),
-    @Email varchar(255),
-    @PhoneNumber varchar(10),
-    @Address nvarchar(255)
+    [Id] [varchar](36) NOT NULL,
+    [Username] [varchar](150) NOT NULL,
+    [Password] [varbinary](max) NOT NULL,
+    [Email] [varchar](255) NOT NULL,
+    [FirstName] [nvarchar](100) NOT NULL,
+    [LastName] [nvarchar](100) NOT NULL,
+    [SchoolId] [varchar](36) NOT NULL,
+    PRIMARY KEY CLUSTERED
+(
+[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    UNIQUE NONCLUSTERED
+(
+[Username] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+    UNIQUE NONCLUSTERED
+(
+[Email] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+    GO
+ALTER TABLE [dbo].[Admins]  WITH CHECK ADD FOREIGN KEY([UserId])
+    REFERENCES [dbo].[Users] ([Id])
+    GO
+ALTER TABLE [dbo].[Files]  WITH CHECK ADD FOREIGN KEY([TaskId])
+    REFERENCES [dbo].[Tasks] ([Id])
+    GO
+ALTER TABLE [dbo].[Groups]  WITH CHECK ADD FOREIGN KEY([TeacherId])
+    REFERENCES [dbo].[Teachers] ([Id])
+    GO
+ALTER TABLE [dbo].[Parents]  WITH CHECK ADD FOREIGN KEY([AddressId])
+    REFERENCES [dbo].[Addresses] ([Id])
+    GO
+ALTER TABLE [dbo].[PendingUpdates]  WITH CHECK ADD FOREIGN KEY([AdminId])
+    REFERENCES [dbo].[Admins] ([Id])
+    GO
+ALTER TABLE [dbo].[PendingUpdates]  WITH CHECK ADD FOREIGN KEY([UserId])
+    REFERENCES [dbo].[Users] ([Id])
+    GO
+ALTER TABLE [dbo].[Principals]  WITH CHECK ADD FOREIGN KEY([UserId])
+    REFERENCES [dbo].[Users] ([Id])
+    GO
+ALTER TABLE [dbo].[Projects]  WITH CHECK ADD FOREIGN KEY([AdminId])
+    REFERENCES [dbo].[Admins] ([Id])
+    GO
+ALTER TABLE [dbo].[Schools]  WITH CHECK ADD FOREIGN KEY([AddressId])
+    REFERENCES [dbo].[Addresses] ([Id])
+    GO
+ALTER TABLE [dbo].[Students]  WITH CHECK ADD FOREIGN KEY([ParentId])
+    REFERENCES [dbo].[Parents] ([Id])
+    GO
+ALTER TABLE [dbo].[Students]  WITH CHECK ADD FOREIGN KEY([UserId])
+    REFERENCES [dbo].[Users] ([Id])
+    GO
+ALTER TABLE [dbo].[StudentsGroups]  WITH CHECK ADD FOREIGN KEY([GroupId])
+    REFERENCES [dbo].[Groups] ([Id])
+    GO
+ALTER TABLE [dbo].[StudentsGroups]  WITH CHECK ADD FOREIGN KEY([StudentId])
+    REFERENCES [dbo].[Students] ([Id])
+    GO
+ALTER TABLE [dbo].[StudentsTasks]  WITH CHECK ADD FOREIGN KEY([StudentId])
+    REFERENCES [dbo].[Students] ([Id])
+    GO
+ALTER TABLE [dbo].[StudentsTasks]  WITH CHECK ADD FOREIGN KEY([TaskId])
+    REFERENCES [dbo].[Tasks] ([Id])
+    GO
+ALTER TABLE [dbo].[StudentsTeams]  WITH CHECK ADD FOREIGN KEY([StudentId])
+    REFERENCES [dbo].[Users] ([Id])
+    GO
+ALTER TABLE [dbo].[StudentsTeams]  WITH CHECK ADD FOREIGN KEY([TeamId])
+    REFERENCES [dbo].[Teams] ([Id])
+    GO
+ALTER TABLE [dbo].[Tasks]  WITH CHECK ADD FOREIGN KEY([StudentId])
+    REFERENCES [dbo].[Students] ([Id])
+    GO
+ALTER TABLE [dbo].[Tasks]  WITH CHECK ADD FOREIGN KEY([TeacherId])
+    REFERENCES [dbo].[Teachers] ([Id])
+    GO
+ALTER TABLE [dbo].[Teachers]  WITH CHECK ADD FOREIGN KEY([UserId])
+    REFERENCES [dbo].[Users] ([Id])
+    GO
+ALTER TABLE [dbo].[TeamsProjects]  WITH CHECK ADD FOREIGN KEY([ProjectId])
+    REFERENCES [dbo].[Projects] ([Id])
+    GO
+ALTER TABLE [dbo].[TeamsProjects]  WITH CHECK ADD FOREIGN KEY([TeamId])
+    REFERENCES [dbo].[Teams] ([Id])
+    GO
+ALTER TABLE [dbo].[Users]  WITH CHECK ADD FOREIGN KEY([SchoolId])
+    REFERENCES [dbo].[Schools] ([Id])
+    GO
+ALTER TABLE [dbo].[Addresses]  WITH CHECK ADD CHECK  (([HouseNumber]>(0)))
+    GO
+ALTER TABLE [dbo].[Groups]  WITH CHECK ADD CHECK  (([Grade]=(12) OR [Grade]=(11) OR [Grade]=(10) OR [Grade]=(9) OR [Grade]=(8) OR [Grade]=(7) OR [Grade]=(6) OR [Grade]=(5) OR [Grade]=(4) OR [Grade]=(3) OR [Grade]=(2) OR [Grade]=(1)))
+    GO
+/****** Object:  StoredProcedure [dbo].[CheckPassword]    Script Date: 2/8/2023 9:24:13 AM ******/
+    SET ANSI_NULLS ON
+    GO
+    SET QUOTED_IDENTIFIER ON
+    GO
+
+CREATE OR ALTER PROCEDURE [dbo].[CheckPassword]
+
+@Username varchar(150),
+@Password varchar(255)
 AS
 BEGIN
-    SET NOCOUNT ON;
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
 
-    INSERT INTO Parents(FirstName,LastName,Email,PhoneNumber,[Address])
-    VALUES(
-              @FirstName,
-              @LastName,
-              @Email,
-              CONVERT(varbinary(MAX),@PhoneNumber),
-              CONVERT(varbinary(MAX),@Address)
-          )
-
+    -- Insert statements for procedure here
+SELECT IIF(
+                   HASHBYTES('SHA2_512',CONVERT(varbinary(MAX), @Password))=u.[Password],1,0)
+FROM Users as u
 END
 GO
-/****** Object:  StoredProcedure [dbo].[InsertUser]    Script Date: 1/7/2023 1:28:38 PM ******/
+/****** Object:  StoredProcedure [dbo].[InsertUser]    Script Date: 2/8/2023 9:24:13 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
--- Author:		nqma poveche da pisha
--- Create date: tochno predi da vlqza na zashtita
--- Description:	naistina iskam 6
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
 -- =============================================
-CREATE PROCEDURE [dbo].[InsertUser]
-    -- Add the parameters for the stored procedure here
-    @Username varchar(255),
-    @Password varchar(MAX),
-    @FirstName nvarchar(100),
-    @LastName nvarchar(100),
-    @Email varchar(255),
-    @SchoolID int
+CREATE OR ALTER PROCEDURE [dbo].[InsertUser]
+@Username varchar(150),
+@Password varchar(150),
+@Email varchar(255),
+@FirstName varchar(100),
+@LastName varchar(100),
+@SchoolId varchar(36)
 AS
 BEGIN
-    SET NOCOUNT ON;
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
 
-    INSERT INTO Users(Username,[Password],FirstName,LastName,Email,SchoolID)
-    VALUES(
-              @Username,
-              CONVERT(varbinary(MAX),@Password),
-              @FirstName,
-              @LastName,
-              @Email,
-              @SchoolID)
+INSERT INTO Users(
+    Username,
+    [Password],
+    Email,
+    FirstName,
+    LastName, SchoolId)
+VALUES(@Username,CONVERT(varbinary(MAX),@Password),@Email,@FirstName,@LastName,@SchoolId)
 END
 GO
 USE [master]
@@ -404,70 +574,32 @@ GO
 ALTER DATABASE [StudentsAndTeachers] SET  READ_WRITE
 GO
 
--- =============================================
--- Author:		az mi koi da e
--- Create date: epa dnes koga da e
--- Description:	testvam dali raboti
--- =============================================
-CREATE OR ALTER TRIGGER [dbo].[EncryptParentData]
-   ON  [dbo].[Parents]
-   INSTEAD OF INSERT
-AS 
-BEGIN
-	SET NOCOUNT ON;
+USE StudentsAndTeachers
 
-	INSERT INTO Parents(FirstName,LastName,Email,PhoneNumber,[Address])
-	SELECT 
-		i.FirstName,
-		i.LastName,
-		i.Email,
-		ENCRYPTBYPASSPHRASE('iskam_6_ot_komisiqta_molq',i.PhoneNumber),
-		ENCRYPTBYPASSPHRASE('iskam_6_ot_komisiqta_molq',i.[Address])
-	FROM inserted AS i
-
-END
-GO
-
-ALTER TABLE [dbo].[Parents] ENABLE TRIGGER [EncryptParentData]
-GO
-
-
-USE [StudentsAndTeachers]
-GO
-
-/****** Object:  Trigger [dbo].[HashPassword]    Script Date: 1/7/2023 12:02:06 PM ******/
 SET ANSI_NULLS ON
 GO
-
 SET QUOTED_IDENTIFIER ON
 GO
 
--- =============================================
--- Author:		poznai ot 3tiq put
--- Create date: utre
--- Description:	onui sraboti
--- =============================================
-CREATE OR ALTER TRIGGER [dbo].[HashPassword] 
-   ON  [dbo].[Users] 
+CREATE OR ALTER TRIGGER HashPassword
+ON  Users
    INSTEAD OF INSERT
-AS 
+AS
 BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-    INSERT INTO Users(Username,[Password],FirstName,LastName,Email,SchoolID)
-	SELECT
-		i.Username,
-		HASHBYTES('SHA2_512',i.[Password]),
-		i.FirstName,
-		i.LastName,
-		i.Email,
-		i.SchoolID
-	FROM inserted AS i
+INSERT INTO Users(Username,[Password],Email,FirstName,LastName,
+                  SchoolId)
+SELECT
+    i.Username,
+    HASHBYTES('SHA2_512' ,i.[Password]),
+    i.Email,
+    i.FirstName,
+    i.LastName,
+    i.SchoolId
+FROM inserted as i
 
 END
 GO
-
-ALTER TABLE [dbo].[Users] ENABLE TRIGGER [HashPassword]
-GO
-
-
