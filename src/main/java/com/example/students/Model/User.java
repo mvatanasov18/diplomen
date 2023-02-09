@@ -1,33 +1,27 @@
 package com.example.students.Model;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
-@Table(name = "Users")
 @Entity
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
+@Table(name = "Users")
 public class User {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Column(name = "Username",length = 100,unique = true)
+    @Column(name = "Id",columnDefinition = "varchar(36)")
+    private String id;
+
+    @Column(name = "Username",columnDefinition = "varchar(150)")
     private String username;
+
     @Column(name = "Password")
     private String password;
-    @Column(name = "FirstName",length = 100)
-    private String firstName;
-    @Column(name = "LastName",length = 100)
-    private String lastName;
-    @Column(name = "Email",length = 100,unique = true)
+
+    @Column(name = "Email",columnDefinition = "varchar(255)",unique = true)
     private String email;
+    @Column(name = "FirstName",columnDefinition = "nvarchar(100)")
+    private String firstName;
+    @Column(name = "LastName",columnDefinition = "nvarchar(100)")
+    private String lastName;
     @ManyToOne
-    @JoinColumn(name = "SchoolID")
+    @JoinColumn(name = "SchoolId")
     private School school;
 }
