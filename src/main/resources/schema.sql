@@ -286,6 +286,7 @@ CREATE TABLE [dbo].[Students](
     [Id] [varchar](36) NOT NULL,
     [UserId] [varchar](36) NOT NULL,
     [ParentId] [varchar](36) NOT NULL,
+    [GroupId] [varchar](36) NOT NULL,
     PRIMARY KEY CLUSTERED
 (
 [Id] ASC
@@ -296,21 +297,7 @@ CREATE TABLE [dbo].[Students](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
     ) ON [PRIMARY]
     GO
-/****** Object:  Table [dbo].[StudentsGroups]    Script Date: 2/8/2023 9:24:13 AM ******/
-    SET ANSI_NULLS ON
-    GO
-    SET QUOTED_IDENTIFIER ON
-    GO
-CREATE TABLE [dbo].[StudentsGroups](
-    [StudentId] [varchar](36) NOT NULL,
-    [GroupId] [varchar](36) NOT NULL,
-    PRIMARY KEY CLUSTERED
-(
-    [StudentId] ASC,
-[GroupId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-    ) ON [PRIMARY]
-    GO
+
 /****** Object:  Table [dbo].[StudentsTasks]    Script Date: 2/8/2023 9:24:13 AM ******/
     SET ANSI_NULLS ON
     GO
@@ -475,12 +462,6 @@ ALTER TABLE [dbo].[Students]  WITH CHECK ADD FOREIGN KEY([ParentId])
 ALTER TABLE [dbo].[Students]  WITH CHECK ADD FOREIGN KEY([UserId])
     REFERENCES [dbo].[Users] ([Id])
     GO
-ALTER TABLE [dbo].[StudentsGroups]  WITH CHECK ADD FOREIGN KEY([GroupId])
-    REFERENCES [dbo].[Groups] ([Id])
-    GO
-ALTER TABLE [dbo].[StudentsGroups]  WITH CHECK ADD FOREIGN KEY([StudentId])
-    REFERENCES [dbo].[Students] ([Id])
-    GO
 ALTER TABLE [dbo].[StudentsTasks]  WITH CHECK ADD FOREIGN KEY([StudentId])
     REFERENCES [dbo].[Students] ([Id])
     GO
@@ -489,6 +470,9 @@ ALTER TABLE [dbo].[StudentsTasks]  WITH CHECK ADD FOREIGN KEY([TaskId])
     GO
 ALTER TABLE [dbo].[StudentsTeams]  WITH CHECK ADD FOREIGN KEY([StudentId])
     REFERENCES [dbo].[Users] ([Id])
+    GO
+ALTER TABLE [dbo].[Students]  WITH CHECK ADD FOREIGN KEY([GroupId])
+    REFERENCES [dbo].[Groups] ([Id])
     GO
 ALTER TABLE [dbo].[StudentsTeams]  WITH CHECK ADD FOREIGN KEY([TeamId])
     REFERENCES [dbo].[Teams] ([Id])

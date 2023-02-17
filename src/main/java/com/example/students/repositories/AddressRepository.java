@@ -1,6 +1,6 @@
-package com.example.students.Repository;
+package com.example.students.repositories;
 
-import com.example.students.Model.Address;
+import com.example.students.models.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AddressRepository extends JpaRepository<Address, String> {
