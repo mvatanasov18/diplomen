@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -24,6 +25,38 @@ public class Address {
 
     public Address() {
         this.id= UUID.randomUUID().toString();
+    }
+
+    public Address(String id, String city, Integer houseNumber, String street, String additionalInfo) {
+        this.id = id;
+        this.city = city;
+        this.houseNumber = houseNumber;
+        this.street = street;
+        this.additionalInfo = additionalInfo;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return Objects.equals(id, address.id);
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "id='" + id + '\'' +
+                ", city='" + city + '\'' +
+                ", houseNumber=" + houseNumber +
+                ", street='" + street + '\'' +
+                ", additionalInfo='" + additionalInfo + '\'' +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     public String getId() {
