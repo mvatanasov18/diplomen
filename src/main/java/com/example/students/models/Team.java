@@ -22,11 +22,11 @@ public class Team {
     private String name;
 
     @ManyToMany
-    @JoinTable(name = "TeamsProjects", joinColumns = @JoinColumn(name = "TeamId"), inverseJoinColumns = @JoinColumn(name = "ProjectId"))
+    @JoinTable(name = "TeamsProjects", joinColumns = @JoinColumn(name = "Team_Id"), inverseJoinColumns = @JoinColumn(name = "Project_Id"))
     private Set<Project> projects;
 
     @ManyToMany
-    @JoinTable(name = "StudentsTeams", joinColumns = @JoinColumn(name = "TeamId"), inverseJoinColumns = @JoinColumn(name = "StudentId"))
+    @JoinTable(name = "StudentsTeams", joinColumns = @JoinColumn(name = "Team_Id"), inverseJoinColumns = @JoinColumn(name = "Student_Id"))
     private Set<Student> students;
 
 

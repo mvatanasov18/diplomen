@@ -17,10 +17,10 @@ public class Principal {
     @Column(name = "Id", columnDefinition = "varchar(36)")
     private String id;
 
-    @Column(name = "IsVerified")
+    @Column(name = "Is_Verified")
     private Boolean isVerified;
     @OneToOne
-    @JoinColumn(name = "UserId")
+    @JoinColumn(name = "User_Id")
     private User user;
 
     public Principal() {

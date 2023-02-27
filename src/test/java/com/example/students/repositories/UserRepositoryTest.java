@@ -4,6 +4,7 @@ import com.example.students.StudentsApplication;
 import com.example.students.models.Address;
 import com.example.students.models.School;
 import com.example.students.models.User;
+import com.example.students.services.PasswordHasher;
 import com.example.students.services.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -53,13 +54,13 @@ public class UserRepositoryTest {
         assertTrue(temp.isPresent());
 
         assertEquals(temp.get().getId(), user.getId());
-        assertEquals(temp.get().getPassword(), UserService.hashPassword("VeryStrongPassword123"));
+        assertEquals(temp.get().getPassword(), PasswordHasher.hashPassword("VeryStrongPassword123"));
         assertEquals(temp.get().getEmail(), user.getEmail());
         assertEquals(temp.get().getFirstName(), user.getFirstName());
         assertEquals(temp.get().getLastName(), user.getLastName());
         assertEquals(temp.get().getSchool(), user.getSchool());
         assertEquals(temp.get().getUsername(), user.getUsername());
-        assertNotEquals(temp.get().getPassword(), UserService.hashPassword("test123"));
+        assertNotEquals(temp.get().getPassword(), PasswordHasher.hashPassword("test123"));
         userRepository.delete(user);
         schoolRepository.delete(school);
         addressRepository.delete(address);

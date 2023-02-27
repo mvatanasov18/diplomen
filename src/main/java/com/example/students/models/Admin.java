@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -19,7 +18,7 @@ public class Admin {
     private String id;
 
     @OneToOne
-    @JoinColumn(name = "UserId")
+    @JoinColumn(name = "User_Id")
     private User user;
 
     public Admin() {

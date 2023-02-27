@@ -21,11 +21,11 @@ public class Address {
     private String id;
     @Column(name = "City", columnDefinition = "nvarchar(100) NOT NULL")
     private String city;
-    @Column(name = "HouseNumber", columnDefinition = "int CHECK(HouseNumber>0) NOT NULL")
+    @Column(name = "House_Number", columnDefinition = "int CHECK(HouseNumber>0) NOT NULL")
     private Integer houseNumber;
     @Column(name = "Street", columnDefinition = "nvarchar(100) NOT NULL")
     private String street;
-    @Column(name = "AdditionalInfo", columnDefinition = "nvarchar(100)")
+    @Column(name = "Additional_Info", columnDefinition = "nvarchar(100)")
     private String additionalInfo;
 
     public Address() {

@@ -1,32 +1,52 @@
 package com.example.students.services;
 
+import com.example.students.models.User;
+import com.example.students.repositories.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-import java.security.SecureRandom;
-import java.security.spec.KeySpec;
 @Service
 public class UserService {
-    private static final SecureRandom random = new SecureRandom();
-private static final byte[] salt = new byte[16];
-private static  int called=0;
+    private final UserRepository userRepository;
+    private final UserJdbcTemplateRepository userJdbcTemplateRepository;
+    private final RoleService roleService;
 
-    public static String hashPassword(String password){
-        try{
-            if(called==0){
-                random.nextBytes(salt);
-                called++;
-            }
-            KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
-            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-            password= "";
-            for(Byte nz:factory.generateSecret(spec).getEncoded()){
-                password=password.concat(nz.toString());
-            }
-            return password;
+    @Autowired
+    public UserService(UserRepository userRepository,
+                       UserJdbcTemplateRepository userJdbcTemplateRepository,
+                       RoleService roleService){
+        this.userRepository=userRepository;
+        this.userJdbcTemplateRepository=userJdbcTemplateRepository;
+        this.roleService=roleService;
+    }
+
+    public User findByUsername(String username){
+        return userRepository.findByUsername(username);
+    }
+
+    public boolean saveSessionForUser(String token, String username){
+        try {
+            userJdbcTemplateRepository.saveSessionByUsername(token, username);
+            return true;
         }catch (Exception e){
-            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean checkPassword(User user, String providedPassword){
+        return user.getPassword().equals(providedPassword);
+    }
+    public String getRole(User user){
+        if(roleService.isStudent(user)){
+            return "student";
+        }
+        if(roleService.isTeacher(user)){
+            return "teacher";
+        }
+        if(roleService.isAdmin(user)){
+            return "admin";
+        }
+        if(roleService.isPrincipal(user)){
+            return "principal";
         }
         return "";
     }

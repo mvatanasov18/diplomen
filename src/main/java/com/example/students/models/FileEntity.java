@@ -16,11 +16,11 @@ public class FileEntity {
     @Id
     @Column(name = "Id",columnDefinition = "varchar(36)",nullable = false,unique = true)
     private String id;
-    @Column(name = "FileContent",columnDefinition = "varbinary(max)",nullable = false)
+    @Column(name = "File_Content",columnDefinition = "varbinary(max)",nullable = false)
     private byte[] fileContent;
 
     @ManyToOne
-    @JoinColumn(name = "TaskId",nullable = false)
+    @JoinColumn(name = "Task_Id",nullable = false)
     private Task task;
 
     public FileEntity() {

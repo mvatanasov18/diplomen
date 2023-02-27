@@ -27,7 +27,7 @@ public class Group {
     private NCharJdbcType letter;
 
     @OneToOne
-    @JoinColumn(name = "TeacherId", columnDefinition = "varchar(36)")
+    @JoinColumn(name = "Teacher_Id", columnDefinition = "varchar(36)")
     private Teacher teacher;
     @OneToMany(mappedBy = "group")
     private Set<Student> students;

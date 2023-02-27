@@ -17,19 +17,19 @@ public class Parent {
     @Column(name = "Id", nullable = false, columnDefinition = "varchar(36)")
     private String id;
 
-    @Column(name = "FirstName", columnDefinition = "nvarchar(100)", nullable = false)
+    @Column(name = "First_Name", columnDefinition = "nvarchar(100)", nullable = false)
     private String firstName;
 
-    @Column(name = "LastName", columnDefinition = "nvarchar(100)", nullable = false)
+    @Column(name = "Last_Name", columnDefinition = "nvarchar(100)", nullable = false)
     private String lastName;
 
     @Column(name = "Email", columnDefinition = "varchar(255)", nullable = false)
     private String email;
 
-    @Column(name = "PhoneNumber", columnDefinition = "varchar(10)", nullable = false)
+    @Column(name = "Phone_Number", columnDefinition = "varchar(10)", nullable = false)
     private String phoneNumber;
     @OneToOne
-    @JoinColumn(name = "AddressId", columnDefinition = "varchar(36)")
+    @JoinColumn(name = "Address_Id", columnDefinition = "varchar(36)")
     private Address address;
 
     public Parent() {

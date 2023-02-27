@@ -1,16 +1,9 @@
 package com.example.students.models;
 
-import com.example.students.services.UserService;
+import com.example.students.services.PasswordHasher;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-import java.security.SecureRandom;
-import java.security.spec.KeySpec;
-import java.util.Arrays;
 import java.util.UUID;
 
 @Entity
@@ -85,7 +78,7 @@ public class User {
     }
 
     public User setPassword(String password) {
-     this.password=UserService.hashPassword(password);
+     this.password= PasswordHasher.hashPassword(password);
         return this;
     }
 
