@@ -1,6 +1,9 @@
 package com.example.students.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -8,45 +11,46 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "Projects")
+@ToString
+@AllArgsConstructor
+@EqualsAndHashCode
 public class Project {
     @Id
-    @Column(name = "Id",nullable = false,columnDefinition = "varchar(36)")
+    @Column(name = "Id", nullable = false, columnDefinition = "varchar(36)")
     private String id;
 
-    @Column(name = "Name",columnDefinition = "nvarchar(255)",nullable = false)
+    @Column(name = "Name", columnDefinition = "nvarchar(255)", nullable = false)
     private String name;
 
-    @Column(name = "Description",columnDefinition = "nvarchar(MAX)",nullable = false)
+    @Column(name = "Description", columnDefinition = "nvarchar(MAX)", nullable = false)
     private String description;
 
-    @Column(name = "DateCreated",columnDefinition = "datetime2(0)",nullable = false)
+    @Column(name = "DateCreated", columnDefinition = "datetime2(0)", nullable = false)
     private LocalDateTime dateCreated;
 
-    @Column(name = "DueDate",columnDefinition = "datetime2(0)",nullable = true)
+    @Column(name = "DueDate", columnDefinition = "datetime2(0)", nullable = true)
     private LocalDateTime dueDate;
 
     @ManyToOne
-    @JoinColumn(name = "AdminId",columnDefinition = "varchar(36)")
+    @JoinColumn(name = "AdminId", columnDefinition = "varchar(36)")
     private Admin admin;
 
     @ManyToMany
-    @JoinTable(
-            name = "TeamsProjects",
-            joinColumns = @JoinColumn(name = "ProjectId"),
-            inverseJoinColumns = @JoinColumn(name = "TeamId")
-    )
+    @JoinTable(name = "TeamsProjects", joinColumns = @JoinColumn(name = "ProjectId"), inverseJoinColumns = @JoinColumn(name = "TeamId"))
     private Set<Team> teams;
+
+
+    public Project() {
+        id = UUID.randomUUID().toString();
+    }
 
     public Set<Team> getTeams() {
         return teams;
     }
 
-    public void setTeams(Set<Team> teams) {
+    public Project setTeams(Set<Team> teams) {
         this.teams = teams;
-    }
-
-    public Project() {
-        id= UUID.randomUUID().toString();
+        return this;
     }
 
     public String getId() {
@@ -57,39 +61,44 @@ public class Project {
         return name;
     }
 
-    public void setName(String name) {
+    public Project setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public Project setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public LocalDateTime getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(LocalDateTime dateCreated) {
+    public Project setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
+        return this;
     }
 
     public LocalDateTime getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDateTime dueDate) {
+    public Project setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
+        return this;
     }
 
     public Admin getAdmin() {
         return admin;
     }
 
-    public void setAdmin(Admin admin) {
+    public Project setAdmin(Admin admin) {
         this.admin = admin;
+        return this;
     }
 }

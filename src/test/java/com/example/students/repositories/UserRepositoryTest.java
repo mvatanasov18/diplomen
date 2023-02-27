@@ -2,23 +2,22 @@ package com.example.students.repositories;
 
 import com.example.students.StudentsApplication;
 import com.example.students.models.Address;
-import com.example.students.models.Admin;
 import com.example.students.models.School;
 import com.example.students.models.User;
-import org.junit.jupiter.api.Order;
+import com.example.students.services.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = StudentsApplication.class)
-public class AdminRepositoryTest {
-    @Autowired
-    private AdminRepository adminRepository;
+public class UserRepositoryTest {
     @Autowired
     private AddressRepository addressRepository;
     @Autowired
@@ -27,49 +26,42 @@ public class AdminRepositoryTest {
     private UserRepository userRepository;
 
 
-    private Admin admin;
-    private Address address;
-    private School school;
-    private User user;
-
     @Test
-    @Order(1)
-    public boolean setUp() {
-         address = new Address()
+    public void testSaveUser() {
+        Address address = new Address()
                 .setCity("TestCity")
                 .setStreet("testStreet")
                 .setHouseNumber(4)
                 .setAdditionalInfo("test additional info test test test тест");
-        assertNotNull(  addressRepository.save(address));
-         school = new School()
+        assertNotNull(addressRepository.save(address));
+
+        School school = new School()
                 .setName("TestSchool")
                 .setAddress(address);
-        assertNotNull( schoolRepository.save(school));
-        user = new User()
+        assertNotNull(schoolRepository.save(school));
+
+        User user = new User()
                 .setEmail("test@test.com")
                 .setFirstName("Test")
                 .setLastName("Testov")
                 .setPassword("VeryStrongPassword123")
                 .setUsername("testUser")
                 .setSchool(school);
-
         assertNotNull(userRepository.save(user));
-        admin = new Admin().setUser(user);
 
-        return true;
-    }
+        Optional<User> temp = userRepository.findById(user.getId());
+        assertTrue(temp.isPresent());
 
-    @Test
-    @Order(2)
-    public void testSaveAdmin() {
-        if (setUp()) {
-            Admin temp = adminRepository.save(admin);
-            assertNotNull(temp);
-            System.out.println(temp);
-            adminRepository.delete(admin);
-            userRepository.delete(user);
-            schoolRepository.delete(school);
-            addressRepository.delete(address);
-        }
+        assertEquals(temp.get().getId(), user.getId());
+        assertEquals(temp.get().getPassword(), UserService.hashPassword("VeryStrongPassword123"));
+        assertEquals(temp.get().getEmail(), user.getEmail());
+        assertEquals(temp.get().getFirstName(), user.getFirstName());
+        assertEquals(temp.get().getLastName(), user.getLastName());
+        assertEquals(temp.get().getSchool(), user.getSchool());
+        assertEquals(temp.get().getUsername(), user.getUsername());
+        assertNotEquals(temp.get().getPassword(), UserService.hashPassword("test123"));
+        userRepository.delete(user);
+        schoolRepository.delete(school);
+        addressRepository.delete(address);
     }
 }

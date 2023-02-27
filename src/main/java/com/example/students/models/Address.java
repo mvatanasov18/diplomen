@@ -4,12 +4,17 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
-import java.util.Objects;
 import java.util.UUID;
 
 @Entity
 @Table(name = "Addresses")
+@AllArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class Address {
     @Id
     @Column(name = "Id", columnDefinition = "varchar(36) NOT NULL")
@@ -20,43 +25,11 @@ public class Address {
     private Integer houseNumber;
     @Column(name = "Street", columnDefinition = "nvarchar(100) NOT NULL")
     private String street;
-    @Column(name = "AdditionalInfo",columnDefinition = "nvarchar(100)")
+    @Column(name = "AdditionalInfo", columnDefinition = "nvarchar(100)")
     private String additionalInfo;
 
     public Address() {
-        this.id= UUID.randomUUID().toString();
-    }
-
-    public Address(String id, String city, Integer houseNumber, String street, String additionalInfo) {
-        this.id = id;
-        this.city = city;
-        this.houseNumber = houseNumber;
-        this.street = street;
-        this.additionalInfo = additionalInfo;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Address address = (Address) o;
-        return Objects.equals(id, address.id);
-    }
-
-    @Override
-    public String toString() {
-        return "Address{" +
-                "id='" + id + '\'' +
-                ", city='" + city + '\'' +
-                ", houseNumber=" + houseNumber +
-                ", street='" + street + '\'' +
-                ", additionalInfo='" + additionalInfo + '\'' +
-                '}';
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getId() {
@@ -67,31 +40,35 @@ public class Address {
         return city;
     }
 
-    public void setCity(String city) {
+    public Address setCity(String city) {
         this.city = city;
+        return this;
     }
 
     public Integer getHouseNumber() {
         return houseNumber;
     }
 
-    public void setHouseNumber(Integer houseNumber) {
+    public Address setHouseNumber(Integer houseNumber) {
         this.houseNumber = houseNumber;
+        return this;
     }
 
     public String getStreet() {
         return street;
     }
 
-    public void setStreet(String street) {
+    public Address setStreet(String street) {
         this.street = street;
+        return this;
     }
 
     public String getAdditionalInfo() {
         return additionalInfo;
     }
 
-    public void setAdditionalInfo(String additionalInfo) {
+    public Address setAdditionalInfo(String additionalInfo) {
         this.additionalInfo = additionalInfo;
+        return this;
     }
 }

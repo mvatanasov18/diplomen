@@ -429,7 +429,7 @@ CREATE TABLE [dbo].[TeamsProjects](
 CREATE TABLE [dbo].[Users](
     [Id] [varchar](36) NOT NULL,
     [Username] [varchar](150) NOT NULL,
-    [Password] [varbinary](max) NOT NULL,
+    [Password] [varchar](500) NOT NULL,
     [Email] [varchar](255) NOT NULL,
     [First_Name] [nvarchar](100) NOT NULL,
     [Last_Name] [nvarchar](100) NOT NULL,
@@ -446,7 +446,7 @@ CREATE TABLE [dbo].[Users](
 (
 [Email] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-    ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+    ) ON [PRIMARY]
     GO
 ALTER TABLE [dbo].[Admins]  WITH CHECK ADD FOREIGN KEY([User_Id])
     REFERENCES [dbo].[Users] ([Id])
@@ -518,93 +518,4 @@ ALTER TABLE [dbo].[Addresses] CHECK CONSTRAINT [CK__Addresses__House__693CA210]
 ALTER TABLE [dbo].[Groups]  WITH CHECK ADD CHECK  (([Grade]=(12) OR [Grade]=(11) OR [Grade]=(10) OR [Grade]=(9) OR [Grade]=(8) OR [Grade]=(7) OR [Grade]=(6) OR [Grade]=(5) OR [Grade]=(4) OR [Grade]=(3) OR [Grade]=(2) OR [Grade]=(1)))
     GO
 /****** Object:  StoredProcedure [dbo].[CheckPassword]    Script Date: 2/21/2023 10:02:32 AM ******/
-    SET ANSI_NULLS ON
-    GO
-    SET QUOTED_IDENTIFIER ON
-    GO
-
-CREATE   PROCEDURE [dbo].[CheckPassword]
-
-@Username varchar(150),
-@Password varchar(255)
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-
-    -- Insert statements for procedure here
-SELECT IIF(
-                   HASHBYTES('SHA2_512',CONVERT(varbinary(MAX), @Password))=u.[Password],1,0)
-FROM Users as u
-WHERE u.Username=@Username
-END
-GO
-/****** Object:  StoredProcedure [dbo].[InsertUser]    Script Date: 2/21/2023 10:02:32 AM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
--- =============================================
--- Author:		<Author,,Name>
--- Create date: <Create Date,,>
--- Description:	<Description,,>
--- =============================================
-CREATE   PROCEDURE [dbo].[InsertUser]
-@Username varchar(150),
-@Password varchar(150),
-@Email varchar(255),
-@FirstName varchar(100),
-@LastName varchar(100),
-@SchoolId varchar(36)
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-
-INSERT INTO Users(
-    Username,
-    [Password],
-    Email,
-    First_Name,
-    Last_Name, School_Id)
-VALUES(@Username,CONVERT(varbinary(MAX),@Password),@Email,@FirstName,@LastName,@SchoolId)
-END
-GO
-USE [master]
-GO
-ALTER DATABASE [StudentsAndTeachers] SET  READ_WRITE
-GO
-
-USE [StudentsAndTeachers]
-GO
-/****** Object:  Trigger [dbo].[HashPassword]    Script Date: 2/21/2023 10:01:57 AM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
-USE [StudentsAndTeachers]
-ALTER   TRIGGER [dbo].[HashPassword]
-ON  [dbo].[Users]
-   INSTEAD OF INSERT
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-
-INSERT INTO Users(Username,[Password],Email,First_Name,Last_Name,
-                  School_Id)
-SELECT
-    i.Username,
-    HASHBYTES('SHA2_512' ,i.[Password]),
-    i.Email,
-    i.First_Name,
-    i.Last_Name,
-    i.School_Id
-FROM inserted as i
-
-END
 
