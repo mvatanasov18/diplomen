@@ -51,7 +51,7 @@ public class LoginController {
 
     @PostMapping(value = "/login")
     public String postLogin(@ModelAttribute User loginUser, HttpServletResponse response) {
-        try{
+
         User user = userService.findByUsername(loginUser.getUsername());
 
         if (user != null) {
@@ -80,10 +80,6 @@ public class LoginController {
                 return "customError";
             }
         }
-        return "customError";}
-catch(Exception e){
-            e.printStackTrace();
-    return "customError";
-}
+        return "customError";
     }
 }

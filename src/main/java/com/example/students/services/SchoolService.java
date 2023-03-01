@@ -1,16 +1,16 @@
 package com.example.students.services;
 
-import com.example.students.models.Address;
+import com.example.students.models.Admin;
 import com.example.students.models.School;
-import com.example.students.repositories.AddressRepository;
 import com.example.students.repositories.SchoolRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class SchoolService {
     private final SchoolRepository schoolRepository;
-    @Autowired
+
     public SchoolService(SchoolRepository schoolRepository){
         this.schoolRepository=schoolRepository;
     }
@@ -18,7 +18,13 @@ public class SchoolService {
     public School saveSchool(School school){
         return schoolRepository.save(school);
     }
-    public void deleteAddress(School school){
+    public void deleteSchool(School school){
         schoolRepository.delete(school);
+    }
+    public Optional<School> find(String id){
+        return schoolRepository.findById(id);
+    }
+    public Iterable<School> findAll(){
+        return schoolRepository.findAll();
     }
 }

@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [StudentsAndTeachers]    Script Date: 3/1/2023 8:49:13 AM ******/
+/****** Object:  Database [StudentsAndTeachers]    Script Date: 3/1/2023 1:43:33 PM ******/
 CREATE DATABASE [StudentsAndTeachers]
  CONTAINMENT = NONE
  ON  PRIMARY
@@ -80,7 +80,7 @@ ALTER DATABASE [StudentsAndTeachers] SET QUERY_STORE = OFF
 GO
 USE [StudentsAndTeachers]
 GO
-/****** Object:  User [IskamDiploma]    Script Date: 3/1/2023 8:49:13 AM ******/
+/****** Object:  User [IskamDiploma]    Script Date: 3/1/2023 1:43:33 PM ******/
 CREATE USER [IskamDiploma] FOR LOGIN [diplomaIskam] WITH DEFAULT_SCHEMA=[db_owner]
 GO
 ALTER ROLE [db_owner] ADD MEMBER [IskamDiploma]
@@ -101,7 +101,7 @@ ALTER ROLE [db_denydatareader] ADD MEMBER [IskamDiploma]
 GO
 ALTER ROLE [db_denydatawriter] ADD MEMBER [IskamDiploma]
 GO
-/****** Object:  Table [dbo].[Addresses]    Script Date: 3/1/2023 8:49:13 AM ******/
+/****** Object:  Table [dbo].[Addresses]    Script Date: 3/1/2023 1:43:33 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -118,7 +118,7 @@ CREATE TABLE [dbo].[Addresses](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
     ) ON [PRIMARY]
     GO
-/****** Object:  Table [dbo].[Admins]    Script Date: 3/1/2023 8:49:13 AM ******/
+/****** Object:  Table [dbo].[Admins]    Script Date: 3/1/2023 1:43:33 PM ******/
     SET ANSI_NULLS ON
     GO
     SET QUOTED_IDENTIFIER ON
@@ -136,7 +136,7 @@ CREATE TABLE [dbo].[Admins](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
     ) ON [PRIMARY]
     GO
-/****** Object:  Table [dbo].[Files]    Script Date: 3/1/2023 8:49:13 AM ******/
+/****** Object:  Table [dbo].[Files]    Script Date: 3/1/2023 1:43:33 PM ******/
     SET ANSI_NULLS ON
     GO
     SET QUOTED_IDENTIFIER ON
@@ -151,7 +151,7 @@ CREATE TABLE [dbo].[Files](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
     ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
     GO
-/****** Object:  Table [dbo].[Groups]    Script Date: 3/1/2023 8:49:13 AM ******/
+/****** Object:  Table [dbo].[Groups]    Script Date: 3/1/2023 1:43:33 PM ******/
     SET ANSI_NULLS ON
     GO
     SET QUOTED_IDENTIFIER ON
@@ -171,7 +171,7 @@ CREATE TABLE [dbo].[Groups](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
     ) ON [PRIMARY]
     GO
-/****** Object:  Table [dbo].[Parents]    Script Date: 3/1/2023 8:49:13 AM ******/
+/****** Object:  Table [dbo].[Parents]    Script Date: 3/1/2023 1:43:33 PM ******/
     SET ANSI_NULLS ON
     GO
     SET QUOTED_IDENTIFIER ON
@@ -201,7 +201,7 @@ CREATE TABLE [dbo].[Parents](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
     ) ON [PRIMARY]
     GO
-/****** Object:  Table [dbo].[PendingUpdates]    Script Date: 3/1/2023 8:49:13 AM ******/
+/****** Object:  Table [dbo].[PendingUpdates]    Script Date: 3/1/2023 1:43:33 PM ******/
     SET ANSI_NULLS ON
     GO
     SET QUOTED_IDENTIFIER ON
@@ -234,7 +234,7 @@ CREATE TABLE [dbo].[PendingUpdates](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
     ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
     GO
-/****** Object:  Table [dbo].[Principals]    Script Date: 3/1/2023 8:49:13 AM ******/
+/****** Object:  Table [dbo].[Principals]    Script Date: 3/1/2023 1:43:33 PM ******/
     SET ANSI_NULLS ON
     GO
     SET QUOTED_IDENTIFIER ON
@@ -253,7 +253,7 @@ CREATE TABLE [dbo].[Principals](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
     ) ON [PRIMARY]
     GO
-/****** Object:  Table [dbo].[Projects]    Script Date: 3/1/2023 8:49:13 AM ******/
+/****** Object:  Table [dbo].[Projects]    Script Date: 3/1/2023 1:43:33 PM ******/
     SET ANSI_NULLS ON
     GO
     SET QUOTED_IDENTIFIER ON
@@ -275,7 +275,7 @@ CREATE TABLE [dbo].[Projects](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
     ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
     GO
-/****** Object:  Table [dbo].[Schools]    Script Date: 3/1/2023 8:49:13 AM ******/
+/****** Object:  Table [dbo].[Schools]    Script Date: 3/1/2023 1:43:33 PM ******/
     SET ANSI_NULLS ON
     GO
     SET QUOTED_IDENTIFIER ON
@@ -298,7 +298,7 @@ CREATE TABLE [dbo].[Schools](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
     ) ON [PRIMARY]
     GO
-/****** Object:  Table [dbo].[Sessions]    Script Date: 3/1/2023 8:49:13 AM ******/
+/****** Object:  Table [dbo].[Sessions]    Script Date: 3/1/2023 1:43:33 PM ******/
     SET ANSI_NULLS ON
     GO
     SET QUOTED_IDENTIFIER ON
@@ -318,7 +318,7 @@ CREATE TABLE [dbo].[Sessions](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
     ) ON [PRIMARY]
     GO
-/****** Object:  Table [dbo].[Students]    Script Date: 3/1/2023 8:49:13 AM ******/
+/****** Object:  Table [dbo].[Students]    Script Date: 3/1/2023 1:43:33 PM ******/
     SET ANSI_NULLS ON
     GO
     SET QUOTED_IDENTIFIER ON
@@ -338,7 +338,7 @@ CREATE TABLE [dbo].[Students](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
     ) ON [PRIMARY]
     GO
-/****** Object:  Table [dbo].[StudentsTasks]    Script Date: 3/1/2023 8:49:13 AM ******/
+/****** Object:  Table [dbo].[StudentsTasks]    Script Date: 3/1/2023 1:43:33 PM ******/
     SET ANSI_NULLS ON
     GO
     SET QUOTED_IDENTIFIER ON
@@ -353,7 +353,7 @@ CREATE TABLE [dbo].[StudentsTasks](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
     ) ON [PRIMARY]
     GO
-/****** Object:  Table [dbo].[StudentsTeams]    Script Date: 3/1/2023 8:49:13 AM ******/
+/****** Object:  Table [dbo].[StudentsTeams]    Script Date: 3/1/2023 1:43:33 PM ******/
     SET ANSI_NULLS ON
     GO
     SET QUOTED_IDENTIFIER ON
@@ -368,7 +368,7 @@ CREATE TABLE [dbo].[StudentsTeams](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
     ) ON [PRIMARY]
     GO
-/****** Object:  Table [dbo].[Tasks]    Script Date: 3/1/2023 8:49:13 AM ******/
+/****** Object:  Table [dbo].[Tasks]    Script Date: 3/1/2023 1:43:33 PM ******/
     SET ANSI_NULLS ON
     GO
     SET QUOTED_IDENTIFIER ON
@@ -390,7 +390,7 @@ CREATE TABLE [dbo].[Tasks](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
     ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
     GO
-/****** Object:  Table [dbo].[Teachers]    Script Date: 3/1/2023 8:49:13 AM ******/
+/****** Object:  Table [dbo].[Teachers]    Script Date: 3/1/2023 1:43:33 PM ******/
     SET ANSI_NULLS ON
     GO
     SET QUOTED_IDENTIFIER ON
@@ -408,7 +408,7 @@ CREATE TABLE [dbo].[Teachers](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
     ) ON [PRIMARY]
     GO
-/****** Object:  Table [dbo].[Teams]    Script Date: 3/1/2023 8:49:13 AM ******/
+/****** Object:  Table [dbo].[Teams]    Script Date: 3/1/2023 1:43:33 PM ******/
     SET ANSI_NULLS ON
     GO
     SET QUOTED_IDENTIFIER ON
@@ -426,7 +426,7 @@ CREATE TABLE [dbo].[Teams](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
     ) ON [PRIMARY]
     GO
-/****** Object:  Table [dbo].[TeamsProjects]    Script Date: 3/1/2023 8:49:13 AM ******/
+/****** Object:  Table [dbo].[TeamsProjects]    Script Date: 3/1/2023 1:43:33 PM ******/
     SET ANSI_NULLS ON
     GO
     SET QUOTED_IDENTIFIER ON
@@ -441,7 +441,7 @@ CREATE TABLE [dbo].[TeamsProjects](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
     ) ON [PRIMARY]
     GO
-/****** Object:  Table [dbo].[Users]    Script Date: 3/1/2023 8:49:13 AM ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 3/1/2023 1:43:33 PM ******/
     SET ANSI_NULLS ON
     GO
     SET QUOTED_IDENTIFIER ON
