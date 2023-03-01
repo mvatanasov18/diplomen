@@ -25,15 +25,40 @@ public class RoleService {
     }
 
     public boolean isStudent(User user){
-        return studentRepository.findById(user.getId()).isPresent();
+        System.out.println(studentRepository.findStudentByUserId(user.getId()));
+        return studentRepository.findStudentByUserId(user.getId())!=null;
     }
     public boolean isTeacher(User user){
-        return teacherRepository.findById(user.getId()).isPresent();
+        System.out.println(teacherRepository.findTeacherByUserId(user.getId()));
+        return teacherRepository.findTeacherByUserId(user.getId())!=null;
     }
     public boolean isAdmin(User user){
-        return adminRepository.findById(user.getId()).isPresent();
+        System.out.println(adminRepository.findAdminByUserId(user.getId()));
+
+        return adminRepository.findAdminByUserId(user.getId())!=null;
     }
     public boolean isPrincipal(User user){
-        return principalRepository.findById(user.getId()).isPresent();
+        System.out.println(principalRepository.findPrincipalByUserId(user.getId()));
+        return principalRepository.findPrincipalByUserId(user.getId())!=null;
+    }
+
+    public String getRole(User user){
+        if(isStudent(user)){
+            System.out.println("student");
+            return "student";
+        }
+        if(isTeacher(user)){
+            System.out.println("teacher");
+            return "teacher";
+        }
+        if(isAdmin(user)){
+            System.out.println("admin");
+            return "admin";
+        }
+        if(isPrincipal(user)){
+            System.out.println("principal");
+            return "principal";
+        }
+        return "";
     }
 }

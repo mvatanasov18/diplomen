@@ -4,4 +4,5 @@ import com.example.students.models.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TeacherRepository extends JpaRepository<Teacher, String> {
+    public Teacher findTeacherByUserId(String userId);
 }

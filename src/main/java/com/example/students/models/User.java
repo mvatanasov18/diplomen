@@ -29,18 +29,18 @@ public class User {
     @Column(name = "Last_Name",columnDefinition = "nvarchar(100)")
     private String lastName;
 
-    @Column(name = "Auth_Token",columnDefinition = "nvarchar(100)")
-    private String authToken;
-
     @ManyToOne
     @JoinColumn(name = "School_Id")
     private School school;
+
+    @OneToOne(mappedBy = "user")
+    private Session session;
 
     public User() {
         id= UUID.randomUUID().toString();
     }
 
-    public User(String id, String username, String password, String email, String firstName, String lastName, School school,String authToken) {
+    public User(String id, String username, String password, String email, String firstName, String lastName, School school,Session session) {
         this.id = id;
         this.username = username;
         this.setPassword(password);
@@ -48,7 +48,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.school = school;
-        this.authToken=authToken;
+        this.session=session;
     }
 
     public String getId() {
@@ -56,12 +56,12 @@ public class User {
     }
 
 
-    public String getAuthToken() {
-        return authToken;
+    public Session getSession() {
+        return session;
     }
 
-    public void setAuthToken(String authToken) {
-        this.authToken = authToken;
+    public void setSession(Session session) {
+        this.session = session;
     }
 
     public String getUsername() {
