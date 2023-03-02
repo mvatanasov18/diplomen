@@ -21,8 +21,8 @@ public class SchoolService {
     public void deleteSchool(School school){
         schoolRepository.delete(school);
     }
-    public Optional<School> find(String id){
-        return schoolRepository.findById(id);
+    public School findById(String id){
+        return schoolRepository.findById(id).orElse(null);
     }
     public Iterable<School> findAll(){
         return schoolRepository.findAll();

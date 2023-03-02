@@ -22,8 +22,8 @@ public class ParentService {
     public void deleteParent(Parent parent){
         parentRepository.delete(parent);
     }
-    public Optional<Parent> findById(String id){
-        return parentRepository.findById(id);
+    public Parent findById(String id){
+        return parentRepository.findById(id).orElse(null);
     }
     public Iterable<Parent> findAll(){
         return parentRepository.findAll();

@@ -23,8 +23,8 @@ public class GroupService {
     public void deleteGroup(Group group){
         groupRepository.delete(group);
     }
-    public Optional<Group> findById(String id){
-        return groupRepository.findById(id);
+    public Group findById(String id){
+        return groupRepository.findById(id).orElse(null);
     }
     public Iterable<Group> findAll(){
         return groupRepository.findAll();

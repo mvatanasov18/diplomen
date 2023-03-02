@@ -5,6 +5,8 @@ import com.example.students.repositories.SessionJdbcTemplateRepository;
 import com.example.students.repositories.SessionRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class SessionService {
     private final SessionRepository sessionRepository;
@@ -22,4 +24,7 @@ public class SessionService {
         sessionRepository.delete(session);
     }
 
+    public Session findById(String id){
+        return sessionRepository.findById(id).orElse(null);
+    }
 }

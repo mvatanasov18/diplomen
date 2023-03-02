@@ -23,8 +23,8 @@ public class PendingUpdateService {
     public void deletePendingUpdate(PendingUpdate pendingUpdate){
         pendingUpdateRepository.delete(pendingUpdate);
     }
-    public Optional<PendingUpdate> findById(String id){
-        return pendingUpdateRepository.findById(id);
+    public PendingUpdate findById(String id){
+        return pendingUpdateRepository.findById(id).orElse(null);
     }
     public Iterable<PendingUpdate> findAll(){
         return pendingUpdateRepository.findAll();

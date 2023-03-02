@@ -22,8 +22,8 @@ public class AdminService {
     public void deleteAdmin(Admin admin){
         adminRepository.delete(admin);
     }
-    public Optional<Admin> find(String id){
-        return adminRepository.findById(id);
+    public Admin findById(String id){
+        return adminRepository.findById(id).orElse(null);
     }
     public Iterable<Admin> findAll(){
         return adminRepository.findAll();

@@ -20,8 +20,8 @@ public class AddressService {
     public void deleteAddress(Address address){
         addressRepository.delete(address);
     }
-    public Optional<Address> findById(String id){
-        return addressRepository.findById(id);
+    public Address findById(String id){
+        return addressRepository.findById(id).orElse(null);
     }
     public Iterable<Address> findAll(){
         return addressRepository.findAll();

@@ -23,8 +23,8 @@ public class FileEntityService {
     public void deleteFileEntity(FileEntity fileEntity){
         fileEntityRepository.delete(fileEntity);
     }
-    public Optional<FileEntity> findById(String id){
-        return fileEntityRepository.findById(id);
+    public FileEntity findById(String id){
+        return fileEntityRepository.findById(id).orElse(null);
     }
     public Iterable<FileEntity> findAll(){
         return fileEntityRepository.findAll();

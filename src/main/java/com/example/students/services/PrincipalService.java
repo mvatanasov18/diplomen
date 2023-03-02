@@ -33,4 +33,11 @@ public class PrincipalService {
         }
     }
 
+    public Principal findPrincipalByUserId(String id){
+        return principalRepository.findPrincipalByUserId(id);
+    }
+    public Principal findById(String id){
+        return principalRepository.findById(id).orElse(null);
+    }
+
 }

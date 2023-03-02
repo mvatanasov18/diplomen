@@ -25,4 +25,7 @@ public class UserService {
     public boolean checkPassword(User user, String providedPassword){
         return user.getPassword().equals(providedPassword);
     }
+    public User findById(String id){
+        return userRepository.findById(id).orElse(null);
+    }
 }
