@@ -2,15 +2,13 @@ package com.example.students.services;
 
 import com.example.students.models.Project;
 import com.example.students.repositories.ProjectRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class ProjectService {
     private final ProjectRepository projectRepository;
-    public ProjectService(ProjectRepository projectRepository){
-        this.projectRepository=projectRepository;
-    }
-
     public Project insertProject(Project project){
         return projectRepository.save(project);
     }

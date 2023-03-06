@@ -3,26 +3,17 @@ package com.example.students.services;
 import com.example.students.models.Teacher;
 import com.example.students.models.User;
 import com.example.students.repositories.*;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class RoleService {
     private final StudentRepository studentRepository;
     private final PrincipalRepository principalRepository;
     private final TeacherRepository teacherRepository;
     private final AdminRepository adminRepository;
-
-    @Autowired
-    public RoleService(StudentRepository studentRepository,
-                       PrincipalRepository principalRepository,
-                       TeacherRepository teacherRepository,
-                       AdminRepository adminRepository){
-        this.studentRepository=studentRepository;
-        this.principalRepository=principalRepository;
-        this.teacherRepository=teacherRepository;
-        this.adminRepository=adminRepository;
-    }
 
     public boolean isStudent(User user){
         System.out.println(studentRepository.findStudentByUserId(user.getId()));

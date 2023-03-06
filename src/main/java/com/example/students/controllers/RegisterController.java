@@ -9,6 +9,7 @@ import com.example.students.services.PrincipalService;
 import com.example.students.services.SchoolService;
 import com.example.students.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
+@AllArgsConstructor
 public class RegisterController {
 
     private final PrincipalService principalService;
@@ -23,13 +25,6 @@ public class RegisterController {
     private final AddressService addressService;
     private final SchoolService schoolService;
 
-    public RegisterController(PrincipalService principalService, UserService userService,
-                          AddressService addressService,SchoolService schoolService) {
-        this.principalService = principalService;
-        this.userService = userService;
-        this.addressService=addressService;
-        this.schoolService=schoolService;
-    }
 
     @GetMapping(value = "/register")
     public String getRegister(Model model, HttpServletRequest request) {

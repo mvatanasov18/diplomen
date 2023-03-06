@@ -4,17 +4,15 @@ import com.example.students.models.Group;
 import com.example.students.models.Parent;
 import com.example.students.repositories.GroupRepository;
 import com.example.students.repositories.ParentRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class ParentService {
     private final ParentRepository parentRepository;
-
-    public ParentService(ParentRepository parentRepository){
-        this.parentRepository =parentRepository;
-    }
 
     public Parent saveParent(Parent parent){
         return parentRepository.save(parent);

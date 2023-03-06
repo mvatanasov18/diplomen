@@ -8,6 +8,7 @@ import com.example.students.services.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import java.time.LocalTime;
 import java.util.UUID;
 
 @Controller
+@AllArgsConstructor
 public class LoginController {
 
 
@@ -25,11 +27,6 @@ public class LoginController {
     private final RoleService roleService;
     private final SessionService sessionService;
 
-    public LoginController(UserService userService,RoleService roleService,SessionService sessionService) {
-        this.userService = userService;
-        this.roleService=roleService;
-        this.sessionService=sessionService;
-    }
 
     @GetMapping(value = "/login")
     public String getLogin(Model model, HttpServletRequest request) {
@@ -68,7 +65,7 @@ public class LoginController {
                 System.out.println(session);
                 user.setSession(session);
 
-                if(sessionService.saveSession(session)==1) {
+                if(sessionService.saveSession(session)!=null) {
                     System.out.println("creating a cookie");
                     Cookie cookie = new Cookie("session", id);
                     cookie.setMaxAge(4 * 60 * 60);

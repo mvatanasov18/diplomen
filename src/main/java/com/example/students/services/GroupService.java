@@ -4,18 +4,16 @@ import com.example.students.models.FileEntity;
 import com.example.students.models.Group;
 import com.example.students.repositories.FileEntityRepository;
 import com.example.students.repositories.GroupRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 
 @Service
+@AllArgsConstructor
 public class GroupService {
     private final GroupRepository groupRepository;
-
-    public GroupService(GroupRepository groupRepository){
-        this.groupRepository =groupRepository;
-    }
 
     public Group saveGroup(Group group){
         return groupRepository.save(group);

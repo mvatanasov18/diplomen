@@ -4,18 +4,16 @@ import com.example.students.models.Admin;
 import com.example.students.models.FileEntity;
 import com.example.students.repositories.AdminRepository;
 import com.example.students.repositories.FileEntityRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 
 @Service
+@AllArgsConstructor
 public class FileEntityService {
     private final FileEntityRepository fileEntityRepository;
-
-    public FileEntityService(FileEntityRepository fileEntityRepository){
-        this.fileEntityRepository=fileEntityRepository;
-    }
 
     public FileEntity saveFileEntity(FileEntity fileEntity){
         return fileEntityRepository.save(fileEntity);
