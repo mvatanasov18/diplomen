@@ -19,23 +19,19 @@ public class Student {
     private String id;
 
     @OneToOne
-    @JoinColumn(name = "User_Id", columnDefinition = "varchar(36)")
+    @JoinColumn(name = "user_id", columnDefinition = "varchar(36)")
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Parent_Id", columnDefinition = "varchar(36)")
-    private Parent parent;
-
     @ManyToMany
-    @JoinTable(name = "StudentsTeams", joinColumns = @JoinColumn(name = "Student_Id"), inverseJoinColumns = @JoinColumn(name = "Team_Id"))
+    @JoinTable(name = "StudentsTeams", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
     private Set<Team> teams;
 
     @ManyToOne
-    @JoinColumn(name = "Group_Id", nullable = false)
+    @JoinColumn(name = "group_id", nullable = false)
     private Group group;
 
     @ManyToMany
-    @JoinTable(name = "StudentsTasks", joinColumns = @JoinColumn(name = "Student_Id"), inverseJoinColumns = @JoinColumn(name = "Task_Id"))
+    @JoinTable(name = "StudentsTasks", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "task_id"))
     private Set<Task> tasks;
 
     public Student() {
@@ -70,15 +66,6 @@ public class Student {
 
     public Student setUser(User user) {
         this.user = user;
-        return this;
-    }
-
-    public Parent getParent() {
-        return parent;
-    }
-
-    public Student setParent(Parent parent) {
-        this.parent = parent;
         return this;
     }
 

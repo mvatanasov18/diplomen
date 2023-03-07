@@ -1,13 +1,9 @@
 package com.example.students.services;
 
-import com.example.students.models.Parent;
 import com.example.students.models.PendingUpdate;
-import com.example.students.repositories.ParentRepository;
 import com.example.students.repositories.PendingUpdateRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 
 @Service

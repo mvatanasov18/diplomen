@@ -25,15 +25,10 @@ public class RegisterController {
     private final NavbarService navbarService;
 
 
-
     @GetMapping(value = "/register")
-    public ModelAndView getRegister( HttpServletRequest request) {
+    public ModelAndView getRegister(HttpServletRequest request) {
 
-        return new ModelAndView("register")
-                .addObject("user", new User())
-                .addObject("address", new Address())
-                .addObject("school", new School())
-                .addObject("navElements",navbarService.getNavbar(request));
+        return new ModelAndView("register").addObject("user", new User()).addObject("address", new Address()).addObject("school", new School()).addObject("navElements", navbarService.getNavbar(request));
     }
 
     @PostMapping(value = "/register")
@@ -42,21 +37,25 @@ public class RegisterController {
         //check if data is valid
 
 
+        try {
 
+            school.setAddress(address);
+            user.setSchool(school);
+            Principal principal = new Principal();
+            principal.setUser(user);
 
-        school.setAddress(address);
-        user.setSchool(school);
-        Principal principal = new Principal();
-        principal.setUser(user);
+            addressService.saveAddress(address);
+            schoolService.saveSchool(school);
+            userService.saveUser(user);
 
-        addressService.saveAddress(address);
-        schoolService.saveSchool(school);
-        userService.saveUser(user);
-
-        if (principalService.insertPrincipal(principal)) {
-            return "redirect:/login";
+            if (principalService.insertPrincipal(principal)) {
+                return "redirect:/login";
+            }
+            return "/index";
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("message", "Invalid username or password");
+            return "customError";
         }
-        model.addAttribute("message", "Invalid username or password");
-        return "customError";
     }
 }
