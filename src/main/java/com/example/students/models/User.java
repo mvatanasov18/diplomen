@@ -10,7 +10,6 @@ import java.util.UUID;
 @Table(name = "Users")
 
 @EqualsAndHashCode
-@ToString
 public class User {
     @Id
     @Column(name = "Id",columnDefinition = "varchar(36)")
@@ -33,7 +32,7 @@ public class User {
     @JoinColumn(name = "School_Id")
     private School school;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
     private Session session;
 
     public User() {
@@ -55,6 +54,18 @@ public class User {
         return id;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", school=" + school +
+                '}';
+    }
 
     public Session getSession() {
         return session;

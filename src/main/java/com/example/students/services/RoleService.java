@@ -16,20 +16,15 @@ public class RoleService {
     private final AdminRepository adminRepository;
 
     public boolean isStudent(User user){
-        System.out.println(studentRepository.findStudentByUserId(user.getId()));
         return studentRepository.findStudentByUserId(user.getId())!=null;
     }
     public boolean isTeacher(User user){
-        System.out.println(teacherRepository.findTeacherByUserId(user.getId()));
         return teacherRepository.findTeacherByUserId(user.getId())!=null;
     }
     public boolean isAdmin(User user){
-        System.out.println(adminRepository.findAdminByUserId(user.getId()));
-
         return adminRepository.findAdminByUserId(user.getId())!=null;
     }
     public boolean isPrincipal(User user){
-        System.out.println(principalRepository.findPrincipalByUserId(user.getId()));
         return principalRepository.findPrincipalByUserId(user.getId())!=null;
     }
 

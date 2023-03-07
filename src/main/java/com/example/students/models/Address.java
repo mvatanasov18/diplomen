@@ -14,7 +14,6 @@ import java.util.UUID;
 @Table(name = "Addresses")
 @AllArgsConstructor
 @EqualsAndHashCode
-@ToString
 public class Address {
     @Id
     @Column(name = "Id", columnDefinition = "varchar(36) NOT NULL")
@@ -43,6 +42,17 @@ public class Address {
     public Address setCity(String city) {
         this.city = city;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "id='" + id + '\'' +
+                ", city='" + city + '\'' +
+                ", houseNumber=" + houseNumber +
+                ", street='" + street + '\'' +
+                ", additionalInfo='" + additionalInfo + '\'' +
+                '}';
     }
 
     public Integer getHouseNumber() {

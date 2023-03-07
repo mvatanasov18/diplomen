@@ -11,7 +11,6 @@ import java.util.UUID;
 @Table(name = "Schools")
 @AllArgsConstructor
 @EqualsAndHashCode
-@ToString
 public class School {
     @Id
     @Column(name = "Id", columnDefinition = "varchar(36) NOT NULL")
@@ -38,6 +37,16 @@ public class School {
     public School setName(String name) {
         this.name = name;
         return this;
+    }
+
+
+    @Override
+    public String toString() {
+        return "School{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", address=" + address +
+                '}';
     }
 
     public Address getAddress() {

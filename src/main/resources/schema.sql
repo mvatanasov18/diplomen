@@ -306,7 +306,7 @@ CREATE TABLE [dbo].[Schools](
 CREATE TABLE [dbo].[Sessions](
     [session_id] [varchar](36) NOT NULL,
     [role_name] [varchar](20) NOT NULL,
-    [time_created] [timestamp] NOT NULL,
+    [time_created] datetime2(0) NOT NULL,
     [user_id] [varchar](36) NOT NULL,
     PRIMARY KEY CLUSTERED
 (

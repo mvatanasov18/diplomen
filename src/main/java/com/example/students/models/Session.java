@@ -21,7 +21,7 @@ public class Session {
     private String roleName;
     @Column(name = "time_created")
     private Timestamp timeCreated;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 

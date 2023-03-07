@@ -18,29 +18,11 @@ import java.util.*;
 @RestController
 @AllArgsConstructor
 public class HomeController {
-
-    private final SessionService sessionService;
-    private  final CookieService cookieService;
     private final NavbarService navbarService;
 
     @GetMapping(value = "/")
     public ModelAndView getIndex(HttpServletRequest request) {
-
-//        String sessionId = cookieService.getValue(request.getCookies());
-//        if(sessionId.equals("")) {
-//            Map<String,String> temp=new HashMap<>();
-//            temp.put("/","Home");
-//            temp.put("/register","Register");
-//            temp.put("/login","Login");
-//            Navbar navbar=new Navbar(temp);
-//            model.addAttribute("navElements",navbar);
-//
-//        }else{
-//            String roleName = sessionService.findById(sessionId).getRoleName();
-//            model.addAttribute("navElements", navbarService.getNavbarByRoleName(roleName));
-//        }
-//        return "index";
-        ModelAndView modelAndView = new ModelAndView("index");
-        return modelAndView;
+        return  new ModelAndView("index")
+                .addObject("navElements",navbarService.getNavbar(request));
     }
 }
