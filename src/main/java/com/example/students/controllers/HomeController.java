@@ -15,7 +15,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 
-@RestController
+@Controller
 @AllArgsConstructor
 public class HomeController {
     private final NavbarService navbarService;

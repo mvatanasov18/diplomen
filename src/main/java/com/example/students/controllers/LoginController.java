@@ -1,5 +1,6 @@
 package com.example.students.controllers;
 
+import com.example.students.exeptions.InvalidCredentialsException;
 import com.example.students.models.Session;
 import com.example.students.models.User;
 import com.example.students.services.NavbarService;
@@ -11,14 +12,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.time.LocalTime;
 import java.util.UUID;
 
-@RestController
+@Controller
 @RequestMapping(value = "/login")
 @AllArgsConstructor
 public class LoginController {
@@ -55,6 +54,7 @@ public class LoginController {
 
         User user = userService.findByUsername(loginUser.getUsername());
 
+
         if (user != null) {
             if(userService.checkPassword(user,user.getPassword())) {
                 System.out.println("Password was correct");
@@ -68,8 +68,6 @@ public class LoginController {
                         roleService.getRole(user),
                         new java.sql.Timestamp(new java.util.Date().getTime()),user);
                 user.setSession(session);
-
-                System.out.println("sesiq maina: "+session);
                 if(sessionService.saveSession(session)!=null) {
                     System.out.println("creating a cookie");
                     Cookie cookie = new Cookie("session", id);
@@ -79,9 +77,9 @@ public class LoginController {
                     response.addCookie(cookie);
                     return new ModelAndView("redirect:/");
                 }
-                return new ModelAndView("customError");
+                return new ModelAndView("custom-error");
             }
         }
-        return new ModelAndView("customError");
+        throw new InvalidCredentialsException();
     }
 }

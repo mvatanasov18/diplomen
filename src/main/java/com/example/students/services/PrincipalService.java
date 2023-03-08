@@ -20,15 +20,10 @@ public class PrincipalService {
         return principalRepository.save(principal);
     }
 
-    public boolean insertPrincipal(Principal principal){
-        try {
+    public Principal insertPrincipal(Principal principal){
 
-            principalRepository.save(principal);
-            return true;
-        }catch (Exception e){
-            e.printStackTrace();
-            return false;
-        }
+          return  principalRepository.save(principal);
+
     }
 
     public Principal findPrincipalByUserId(String id){

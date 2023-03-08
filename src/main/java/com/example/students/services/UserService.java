@@ -24,4 +24,8 @@ public class UserService {
     public User findById(String id){
         return userRepository.findById(id).orElse(null);
     }
+    public boolean checkEmailAndUsername(User user){
+        return userRepository.existsByEmail(user.getEmail()) ||
+                userRepository.existsByUsername(user.getUsername());
+    }
 }
