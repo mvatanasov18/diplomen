@@ -15,44 +15,48 @@ import java.util.TreeMap;
 public class NavbarService {
 
     private final SessionService sessionService;
-    private  final CookieService cookieService;
+    private final CookieService cookieService;
 
-//future idea if there is time:
+    //future idea if there is time:
 //statistics about the school
-    private Map<String,String> setMapForPrincipal(){
-        Map<String,String> elemets = new TreeMap<>();
-        elemets.put("/students","Students Menu");
-        elemets.put("/teachers","Teachers Menu");
-        elemets.put("/school","School Menu");
-        elemets.put("/profile","Profile");
-        return elemets;
+    private Map<String, String> setMapForPrincipal() {
+        Map<String, String> elements = new HashMap<>();
+        elements.put("/profile", "Profile");
+        elements.put("/students", "Students Menu");
+        elements.put("/teachers", "Teachers Menu");
+        elements.put("/school", "School Menu");
+        return elements;
     }
-    private Map<String,String> setMapForStudent(){
-        Map<String,String> elemets = new TreeMap<>();
-        elemets.put("/calendar","Calendar");
-        elemets.put("/tasks","Tasks");
-        elemets.put("/projects","Projects");
-        elemets.put("/teams","Teams");
-        elemets.put("/profile","Profile");
-        return elemets;
+
+    private Map<String, String> setMapForStudent() {
+        Map<String, String> elements = new HashMap<>();
+        elements.put("/calendar", "Calendar");
+        elements.put("/tasks", "Tasks");
+        elements.put("/projects", "Projects");
+        elements.put("/teams", "Teams");
+        elements.put("/profile", "Profile");
+        return elements;
     }
-    private Map<String,String> setMapForTeacher(){
-        Map<String,String> elemets = new TreeMap<>();
-        elemets.put("/tasksMenu","Tasks Menu");
-        elemets.put("/projectsMenu","Projects Menu");
-        elemets.put("/teamsMenu","Teams Menu");
-        elemets.put("/profile","Profile");
-        return elemets;
+
+    private Map<String, String> setMapForTeacher() {
+        Map<String, String> elements = new HashMap<>();
+        elements.put("/profile", "Profile");
+        elements.put("/tasksMenu", "Tasks Menu");
+        elements.put("/projectsMenu", "Projects Menu");
+        elements.put("/teamsMenu", "Teams Menu");
+        return elements;
     }
-    private Map<String,String> setMapForAdmin(){
-        Map<String,String> elemets = new TreeMap<>();
-        elemets.put("/students","Students Menu");
-        elemets.put("/projectsMenu","Projects Menu");
-        elemets.put("/teamsMenu","Teams Menu");
-        elemets.put("/profile","Profile");
-        return elemets;
+
+    private Map<String, String> setMapForAdmin() {
+        Map<String, String> elements = new HashMap<>();
+        elements.put("/profile", "Profile");
+        elements.put("/students", "Students Menu");
+        elements.put("/projectsMenu", "Projects Menu");
+        elements.put("/teamsMenu", "Teams Menu");
+        return elements;
     }
-    private Navbar getNavbarByRoleName(String roleName){
+
+    private Navbar getNavbarByRoleName(String roleName) {
 
         return switch (roleName) {
             case "principal" -> new Navbar(setMapForPrincipal());
@@ -64,20 +68,18 @@ public class NavbarService {
 
     }
 
-    public Navbar getNavbar(HttpServletRequest request){
-
-
+    public Navbar getNavbar(HttpServletRequest request) {
         String sessionId = cookieService.getValue(request.getCookies());
-        if(sessionId.equals("")) {
-            Map<String,String> temp=new TreeMap<>();
-            temp.put("/login","Login");
-            temp.put("/register","Register");
-            temp.put("/","Home");
+        if (sessionId.equals("")) {
+            Map<String, String> temp = new TreeMap<>();
+            temp.put("/login", "Login");
+            temp.put("/register", "Register");
+            temp.put("/", "Home");
             return new Navbar(temp);
 
 
-        }else{
-            return  getNavbarByRoleName(sessionService.findById(sessionId).getRoleName());
+        } else {
+            return getNavbarByRoleName(sessionService.findById(sessionId).getRoleName());
         }
     }
 }

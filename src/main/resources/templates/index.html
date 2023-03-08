@@ -16,9 +16,9 @@
                 data-bs-target="#navbarText" data-bs-toggle="collapse" type="button">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarText">
+        <div class="collapse navbar-collapse" >
             <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="place" >
-                <li class="nav-item" th:each="navElement:${navElements.elements}">
+                <li class="nav-item"  th:each="navElement:${navElements.elements}">
                     <a class="nav-link active" aria-current="page" th:href="${navElement.key}" th:text="${navElement.value}"></a>
                 </li>
             </ul>
