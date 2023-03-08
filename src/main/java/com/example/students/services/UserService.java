@@ -19,6 +19,8 @@ public class UserService {
     }
 
     public boolean checkPassword(User user, String providedPassword){
+        System.out.println(user.getPassword());
+        System.out.println(providedPassword);
         return user.getPassword().equals(providedPassword);
     }
     public User findById(String id){

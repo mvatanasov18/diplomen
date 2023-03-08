@@ -3,7 +3,7 @@ package com.example.students.models;
 import com.example.students.services.PasswordHasher;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
+
 import java.util.UUID;
 
 @Entity
@@ -12,42 +12,58 @@ import java.util.UUID;
 @EqualsAndHashCode
 public class User {
     @Id
-    @Column(name = "Id",columnDefinition = "varchar(36)")
-    private String id;
+    @Column(name = "id", columnDefinition = "varchar(36)")
+    private final String id;
 
-    @Column(name = "Username",columnDefinition = "varchar(150)")
+    @Column(name = "username", columnDefinition = "varchar(150)")
     private String username;
 
-    @Column(name = "Password",columnDefinition = "varchar(255)")
+    @Column(name = "password", columnDefinition = "varchar(255)")
     private String password;
 
-    @Column(name = "Email",columnDefinition = "varchar(255)",unique = true)
+    @Column(name = "email", columnDefinition = "varchar(255)", unique = true)
     private String email;
-    @Column(name = "First_Name",columnDefinition = "nvarchar(100)")
+    @Column(name = "first_name", columnDefinition = "nvarchar(100)")
     private String firstName;
-    @Column(name = "Last_Name",columnDefinition = "nvarchar(100)")
+    @Column(name = "last_name", columnDefinition = "nvarchar(100)")
     private String lastName;
 
     @ManyToOne
-    @JoinColumn(name = "School_Id")
+    @JoinColumn(name = "school_id")
     private School school;
 
-    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
-    private Session session;
+
 
     public User() {
-        id= UUID.randomUUID().toString();
+        id = UUID.randomUUID().toString();
+        username="";
+        password="";
+        email="";
+        firstName="";
+        lastName="";
+        school=new School();
+
     }
 
-    public User(String id, String username, String password, String email, String firstName, String lastName, School school,Session session) {
+    public User(String id, String username, String password, String email, String firstName, String lastName) {
         this.id = id;
         this.username = username;
-        this.setPassword(password);
+        this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public User(String id, String username, String password, String email, String firstName, String lastName, School school) {
+        this(id, username, password, email, firstName, lastName);
         this.school = school;
-        this.session=session;
+    }
+
+
+
+    public User(String id, String username, String password, String email, String firstName, String lastName, School school, Session session) {
+        this(id, username, password, email, firstName, lastName, school);
+
     }
 
     public String getId() {
@@ -67,13 +83,6 @@ public class User {
                 '}';
     }
 
-    public Session getSession() {
-        return session;
-    }
-
-    public void setSession(Session session) {
-        this.session = session;
-    }
 
     public String getUsername() {
         return username;
@@ -89,7 +98,7 @@ public class User {
     }
 
     public User setPassword(String password) {
-     this.password= PasswordHasher.hashPassword(password);
+        this.password = PasswordHasher.hashPassword(password);
         return this;
     }
 

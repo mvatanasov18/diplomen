@@ -6,7 +6,6 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.sql.Timestamp;
-import java.time.LocalTime;
 import java.util.UUID;
 
 @Entity
@@ -16,7 +15,7 @@ import java.util.UUID;
 @EqualsAndHashCode
 public class Session {
     @Id
-    private String sessionId;
+    private String id;
     @Column(name = "role_name")
     private String roleName;
     @Column(name = "time_created")
@@ -26,11 +25,11 @@ public class Session {
     private User user;
 
     public Session() {
-        sessionId = UUID.randomUUID().toString();
+        id = UUID.randomUUID().toString();
     }
 
-    public String getSessionId() {
-        return sessionId;
+    public String getId() {
+        return id;
     }
 
     public String getRoleName() {

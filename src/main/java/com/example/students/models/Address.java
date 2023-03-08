@@ -16,7 +16,7 @@ import java.util.UUID;
 @EqualsAndHashCode
 public class Address {
     @Id
-    @Column(name = "Id", columnDefinition = "varchar(36) NOT NULL")
+    @Column(name = "id", columnDefinition = "varchar(36) NOT NULL")
     private String id;
     @Column(name = "City", columnDefinition = "nvarchar(100) NOT NULL")
     private String city;

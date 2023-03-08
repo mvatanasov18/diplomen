@@ -14,11 +14,11 @@ import java.util.UUID;
 @ToString
 public class Admin {
     @Id
-    @Column(name = "Id", columnDefinition = "varchar(36)")
+    @Column(name = "id", columnDefinition = "varchar(36)")
     private String id;
 
     @OneToOne
-    @JoinColumn(name = "User_Id")
+    @JoinColumn(name = "user_Id")
     private User user;
 
     public Admin() {

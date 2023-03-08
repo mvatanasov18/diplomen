@@ -56,18 +56,18 @@ public class LoginController {
 
 
         if (user != null) {
-            if(userService.checkPassword(user,user.getPassword())) {
+            if(userService.checkPassword(user,loginUser.getPassword())) {
                 System.out.println("Password was correct");
                 String id = UUID.randomUUID().toString();
 
+                Session temp= sessionService.findByUserId(user.getId());
                 //check if user already has a session
-                if(user.getSession()!=null ) {
-                    sessionService.deleteSession(user.getSession());
+                if(temp!=null ) {
+                    sessionService.deleteSession(temp);
                 }
                 Session session= new Session(id,
                         roleService.getRole(user),
                         new java.sql.Timestamp(new java.util.Date().getTime()),user);
-                user.setSession(session);
                 if(sessionService.saveSession(session)!=null) {
                     System.out.println("creating a cookie");
                     Cookie cookie = new Cookie("session", id);
@@ -77,7 +77,6 @@ public class LoginController {
                     response.addCookie(cookie);
                     return new ModelAndView("redirect:/");
                 }
-                return new ModelAndView("custom-error");
             }
         }
         throw new InvalidCredentialsException();
