@@ -14,14 +14,16 @@ public class UserService {
     public User saveUser(User user){
         return userRepository.save(user);
     }
+
+    public void deleteUser(User user){
+        userRepository.delete(user);
+    }
     public User findByUsername(String username){
         return userRepository.findByUsername(username);
     }
 
-    public boolean checkPassword(User user, String providedPassword){
-        System.out.println(user.getPassword());
-        System.out.println(providedPassword);
-        return user.getPassword().equals(providedPassword);
+    public boolean checkPassword(User user, User loginUser){
+        return user.getPassword().equals(loginUser.getPassword());
     }
     public User findById(String id){
         return userRepository.findById(id).orElse(null);

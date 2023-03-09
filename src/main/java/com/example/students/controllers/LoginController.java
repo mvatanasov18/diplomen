@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 @Controller
@@ -37,8 +38,8 @@ public class LoginController {
                 .addObject("navElements",navbarService.getNavbar(request));
     }
 
-    @PostMapping(value = "/logout")
-    public String postLogin( HttpServletResponse response) {
+    @GetMapping(value = "/logout")
+    public String getLogout( HttpServletResponse response) {
         Cookie cookie = new Cookie("session", null);
         cookie.setMaxAge(0);
         cookie.setHttpOnly(true);
@@ -51,12 +52,14 @@ public class LoginController {
 
     @PostMapping
     public ModelAndView postLogin(@ModelAttribute User loginUser, HttpServletResponse response) {
-
         User user = userService.findByUsername(loginUser.getUsername());
 
-
         if (user != null) {
-            if(userService.checkPassword(user,loginUser.getPassword())) {
+            loginUser.setSalt(user.getSalt());
+            loginUser.hashPassword();
+
+
+            if(userService.checkPassword(user,loginUser)) {
                 System.out.println("Password was correct");
                 String id = UUID.randomUUID().toString();
 

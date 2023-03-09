@@ -9,6 +9,7 @@ import com.example.students.services.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,25 +36,32 @@ public class RegisterController {
     }
 
     @PostMapping
+    @Transactional(rollbackFor = InvalidCredentialsException.class)
     public String postRegister(@ModelAttribute User user, @ModelAttribute Address address, @ModelAttribute School school, Model model) {
 
         //check if data is valid
+        try {
+            if (userService.checkEmailAndUsername(user)) {
+                throw new InvalidCredentialsException();
+            }
+            user.hashPassword();
+            school.setAddress(address);
+            user.setSchool(school);
+            Principal principal = new Principal();
+            principal.setUser(user);
 
-        if (userService.checkEmailAndUsername(user)) {
-            throw new InvalidCredentialsException();
-        }
+            addressService.saveAddress(address);
+            schoolService.saveSchool(school);
+            userService.saveUser(user);
 
-        school.setAddress(address);
-        user.setSchool(school);
-        Principal principal = new Principal();
-        principal.setUser(user);
-
-        addressService.saveAddress(address);
-        schoolService.saveSchool(school);
-        userService.saveUser(user);
-
-        if (principalService.insertPrincipal(principal) != null) {
-            return "redirect:/login";
+            if (principalService.insertPrincipal(principal) != null) {
+                return "redirect:/login";
+            }
+        } catch (Exception e) {
+            userService.deleteUser(user);
+            schoolService.deleteSchool(school);
+            addressService.deleteAddress(address);
+            throw e;
         }
         return "/index";
     }

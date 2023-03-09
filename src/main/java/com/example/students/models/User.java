@@ -8,7 +8,6 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "Users")
-
 @EqualsAndHashCode
 public class User {
     @Id
@@ -28,10 +27,11 @@ public class User {
     @Column(name = "last_name", columnDefinition = "nvarchar(100)")
     private String lastName;
 
+    @Column(name = "salt")
+    private byte[] salt;
     @ManyToOne
     @JoinColumn(name = "school_id")
     private School school;
-
 
 
     public User() {
@@ -45,26 +45,24 @@ public class User {
 
     }
 
-    public User(String id, String username, String password, String email, String firstName, String lastName) {
+    public User(String id, String username, String password, String email, String firstName, String lastName, byte[] salt) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.salt=salt;
     }
 
-    public User(String id, String username, String password, String email, String firstName, String lastName, School school) {
-        this(id, username, password, email, firstName, lastName);
+    public User(String id, String username, String password, String email, String firstName, String lastName, School school, byte[] salt) {
+        this(id, username, password, email, firstName, lastName,salt);
         this.school = school;
     }
 
 
 
-    public User(String id, String username, String password, String email, String firstName, String lastName, School school, Session session) {
-        this(id, username, password, email, firstName, lastName, school);
 
-    }
 
     public String getId() {
         return id;
@@ -97,9 +95,17 @@ public class User {
         return password;
     }
 
-    public User setPassword(String password) {
-        this.password = PasswordHasher.hashPassword(password);
-        return this;
+    public void setPassword(String password) {
+        this.password=password;
+    }
+
+    public void hashPassword(){
+        PasswordHasher passwordHasher = new PasswordHasher();
+        if (this.salt != null) {
+            passwordHasher.setSalt(salt);
+        }
+        this.password = passwordHasher.hashPassword(password);
+        this.salt = passwordHasher.getSalt();
     }
 
     public String getEmail() {
@@ -136,5 +142,13 @@ public class User {
     public User setSchool(School school) {
         this.school = school;
         return this;
+    }
+
+    public byte[] getSalt() {
+        return salt;
+    }
+
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
     }
 }

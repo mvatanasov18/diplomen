@@ -6,18 +6,16 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.security.SecureRandom;
 import java.security.spec.KeySpec;
-@Service
 public class PasswordHasher {
-    private static final SecureRandom random = new SecureRandom();
-private static final byte[] salt = new byte[16];
-private static  int called=0;
+    private  byte[] salt = new byte[16];
 
-    public static String hashPassword(String password){
+    public PasswordHasher() {
+        SecureRandom random = new SecureRandom();
+        random.nextBytes(salt);
+    }
+
+    public  String hashPassword(String password){
         try{
-            if(called==0){
-                random.nextBytes(salt);
-                called++;
-            }
             KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
             password= "";
@@ -29,5 +27,11 @@ private static  int called=0;
             e.printStackTrace();
         }
         return "";
+    }
+    public byte[] getSalt(){
+        return salt;
+    }
+    public void setSalt(byte[] salt){
+        this.salt=salt;
     }
 }

@@ -32,4 +32,12 @@ public class GlobalExceptionHandler {
 
         return new ModelAndView("custom-error").addObject("message","Invalid credentials!");
     }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ModelAndView handleOtherExceptions(Exception exception) {
+
+        return new ModelAndView("custom-error").addObject("message","An error occurred!");
+    }
 }
