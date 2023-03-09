@@ -19,10 +19,12 @@ import java.util.*;
 @AllArgsConstructor
 public class HomeController {
     private final NavbarService navbarService;
+    private final CookieService cookieService;
+    private final SessionService sessionService;
 
     @GetMapping(value = "/")
     public ModelAndView getIndex(HttpServletRequest request) {
         return  new ModelAndView("index")
-                .addObject("navElements",navbarService.getNavbar(request));
+                .addObject("navElements",navbarService.getNavbar(cookieService.getValue(request.getCookies()),sessionService));
     }
 }

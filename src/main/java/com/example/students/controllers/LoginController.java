@@ -1,12 +1,10 @@
 package com.example.students.controllers;
 
+import com.example.students.exeptions.EmailAlreadyTakenException;
 import com.example.students.exeptions.InvalidCredentialsException;
 import com.example.students.models.Session;
 import com.example.students.models.User;
-import com.example.students.services.NavbarService;
-import com.example.students.services.RoleService;
-import com.example.students.services.SessionService;
-import com.example.students.services.UserService;
+import com.example.students.services.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,14 +26,15 @@ public class LoginController {
     private final RoleService roleService;
     private final SessionService sessionService;
     private final NavbarService navbarService;
-
-
+    private final CookieService cookieService;
 
     @GetMapping
     public ModelAndView getLogin( HttpServletRequest request) {
+        if(cookieService.isSessionPresent(request.getCookies())){
         return new ModelAndView("/login")
                 .addObject("user",new User())
-                .addObject("navElements",navbarService.getNavbar(request));
+                .addObject("navElements",navbarService.getNavbar(cookieService.getValue(request.getCookies()),sessionService));}
+        throw new RuntimeException();
     }
 
     @GetMapping(value = "/logout")
@@ -51,37 +50,40 @@ public class LoginController {
 
 
     @PostMapping
-    public ModelAndView postLogin(@ModelAttribute User loginUser, HttpServletResponse response) {
-        User user = userService.findByUsername(loginUser.getUsername());
+    public ModelAndView postLogin(@ModelAttribute User loginUser, HttpServletResponse response,HttpServletRequest request) {
+        if (cookieService.isSessionPresent(request.getCookies())) {
+            User user = userService.findByUsername(loginUser.getUsername());
 
-        if (user != null) {
-            loginUser.setSalt(user.getSalt());
-            loginUser.hashPassword();
+            if (user != null) {
+                loginUser.setSalt(user.getSalt());
+                loginUser.hashPassword();
 
 
-            if(userService.checkPassword(user,loginUser)) {
-                System.out.println("Password was correct");
-                String id = UUID.randomUUID().toString();
+                if (userService.checkPassword(user, loginUser)) {
+                    System.out.println("Password was correct");
+                    String id = UUID.randomUUID().toString();
 
-                Session temp= sessionService.findByUserId(user.getId());
-                //check if user already has a session
-                if(temp!=null ) {
-                    sessionService.deleteSession(temp);
-                }
-                Session session= new Session(id,
-                        roleService.getRole(user),
-                        new java.sql.Timestamp(new java.util.Date().getTime()),user);
-                if(sessionService.saveSession(session)!=null) {
-                    System.out.println("creating a cookie");
-                    Cookie cookie = new Cookie("session", id);
-                    cookie.setMaxAge(4 * 60 * 60);
-                    cookie.setHttpOnly(true);
-                    cookie.setPath("/");
-                    response.addCookie(cookie);
-                    return new ModelAndView("redirect:/");
+                    Session temp = sessionService.findByUserId(user.getId());
+                    //check if user already has a session
+                    if (temp != null) {
+                        sessionService.deleteSession(temp);
+                    }
+                    Session session = new Session(id,
+                            roleService.getRole(user),
+                            new java.sql.Timestamp(new java.util.Date().getTime()), user);
+                    if (sessionService.saveSession(session) != null) {
+                        System.out.println("creating a cookie");
+                        Cookie cookie = new Cookie("session", id);
+                        cookie.setMaxAge(4 * 60 * 60);
+                        cookie.setHttpOnly(true);
+                        cookie.setPath("/");
+                        response.addCookie(cookie);
+                        return new ModelAndView("redirect:/");
+                    }
                 }
             }
+            throw new InvalidCredentialsException();
         }
-        throw new InvalidCredentialsException();
+        throw new RuntimeException();
     }
 }

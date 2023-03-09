@@ -14,32 +14,35 @@ import java.util.TreeMap;
 @AllArgsConstructor
 public class NavbarService {
 
-    private final SessionService sessionService;
-    private final CookieService cookieService;
-
     //future idea if there is time:
 //statistics about the school
     private Map<String, String> setMapForPrincipal() {
         Map<String, String> elements = new HashMap<>();
+
         elements.put("/profile", "Profile");
+        elements.put("/login/logout", "Logout");
         elements.put("/students", "Students Menu");
         elements.put("/teachers", "Teachers Menu");
         elements.put("/school", "School Menu");
+
         return elements;
     }
 
     private Map<String, String> setMapForStudent() {
         Map<String, String> elements = new HashMap<>();
+        elements.put("/login/logout", "Logout");
+        elements.put("/profile", "Profile");
         elements.put("/calendar", "Calendar");
         elements.put("/tasks", "Tasks");
         elements.put("/projects", "Projects");
         elements.put("/teams", "Teams");
-        elements.put("/profile", "Profile");
+
         return elements;
     }
 
     private Map<String, String> setMapForTeacher() {
         Map<String, String> elements = new HashMap<>();
+        elements.put("/login/logout", "Logout");
         elements.put("/profile", "Profile");
         elements.put("/tasksMenu", "Tasks Menu");
         elements.put("/projectsMenu", "Projects Menu");
@@ -49,6 +52,7 @@ public class NavbarService {
 
     private Map<String, String> setMapForAdmin() {
         Map<String, String> elements = new HashMap<>();
+        elements.put("/login/logout", "Logout");
         elements.put("/profile", "Profile");
         elements.put("/students", "Students Menu");
         elements.put("/projectsMenu", "Projects Menu");
@@ -68,8 +72,8 @@ public class NavbarService {
 
     }
 
-    public Navbar getNavbar(HttpServletRequest request) {
-        String sessionId = cookieService.getValue(request.getCookies());
+    public Navbar getNavbar(String sessionId,SessionService sessionService) {
+
         if (sessionId.equals("")) {
             Map<String, String> temp = new TreeMap<>();
             temp.put("/login", "Login");
