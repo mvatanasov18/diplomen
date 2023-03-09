@@ -12,13 +12,13 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class GroupService {
+public class GroupService implements com.example.students.services.Service<Group> {
     private final GroupRepository groupRepository;
 
-    public Group saveGroup(Group group){
+    public Group save(Group group){
         return groupRepository.save(group);
     }
-    public void deleteGroup(Group group){
+    public void delete(Group group){
         groupRepository.delete(group);
     }
     public Group findById(String id){

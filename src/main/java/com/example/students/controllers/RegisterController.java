@@ -54,17 +54,17 @@ public class RegisterController {
                 Principal principal = new Principal();
                 principal.setUser(user);
 
-                addressService.saveAddress(address);
+                addressService.save(address);
                 schoolService.saveSchool(school);
                 userService.saveUser(user);
 
-                if (principalService.insertPrincipal(principal) != null) {
+                if (principalService.save(principal) != null) {
                     return "redirect:/login";
                 }
             } catch (Exception e) {
                 userService.deleteUser(user);
                 schoolService.deleteSchool(school);
-                addressService.deleteAddress(address);
+                addressService.delete(address);
                 throw e;
             }
             return "/index";

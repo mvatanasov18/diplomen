@@ -12,13 +12,13 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class FileEntityService {
+public class FileEntityService implements com.example.students.services.Service<FileEntity> {
     private final FileEntityRepository fileEntityRepository;
 
-    public FileEntity saveFileEntity(FileEntity fileEntity){
+    public FileEntity save(FileEntity fileEntity){
         return fileEntityRepository.save(fileEntity);
     }
-    public void deleteFileEntity(FileEntity fileEntity){
+    public void delete(FileEntity fileEntity){
         fileEntityRepository.delete(fileEntity);
     }
     public FileEntity findById(String id){

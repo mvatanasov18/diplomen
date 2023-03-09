@@ -11,13 +11,13 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class AdminService {
+public class AdminService implements com.example.students.services.Service<Admin> {
     private final AdminRepository adminRepository;
 
-    public Admin saveAdmin(Admin admin){
+    public Admin save(Admin admin){
         return adminRepository.save(admin);
     }
-    public void deleteAdmin(Admin admin){
+    public void delete(Admin admin){
         adminRepository.delete(admin);
     }
     public Admin findById(String id){

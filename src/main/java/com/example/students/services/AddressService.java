@@ -10,13 +10,13 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class AddressService {
+public class AddressService implements com.example.students.services.Service<Address> {
     private final AddressRepository addressRepository;
 
-    public Address saveAddress(Address address){
+    public Address save(Address address){
         return addressRepository.save(address);
     }
-    public void deleteAddress(Address address){
+    public void delete(Address address){
         addressRepository.delete(address);
     }
     public Address findById(String id){
