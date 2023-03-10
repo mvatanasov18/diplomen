@@ -1,6 +1,6 @@
 package com.example.students.services;
 
-import com.example.students.exeptions.NoUserFoundException;
+import com.example.students.exeptions.UserNotFoundException;
 import com.example.students.models.Teacher;
 import com.example.students.repositories.TeacherRepository;
 import lombok.AllArgsConstructor;
@@ -24,7 +24,7 @@ public class TeacherService implements com.example.students.services.Service<Tea
 
     @Override
     public Teacher findById(String id) {
-        return teacherRepository.findById(id).orElseThrow(NoUserFoundException::new);
+        return teacherRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
 
     @Override

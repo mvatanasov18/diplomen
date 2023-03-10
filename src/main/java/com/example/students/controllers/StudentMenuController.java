@@ -1,5 +1,6 @@
 package com.example.students.controllers;
 
+import com.example.students.exeptions.UserDoesNotHavePermissionException;
 import com.example.students.models.Session;
 import com.example.students.models.Student;
 import com.example.students.models.User;
@@ -42,26 +43,22 @@ public class StudentMenuController {
                         .addObject("student", student);
             }
         }
-//todo should throw user doesn't have permission
-        return null;
+        throw new UserDoesNotHavePermissionException();
     }
 
     @PostMapping
     public ModelAndView postTeacher(@ModelAttribute Student student, HttpServletRequest request) {
         //todo check is the user sending the request is principal
-        // - check the student's data
-        // - save the student entity using the student service
+        // - check the teacher's data
+        // - save the teacher entity using the teacher service
         if (cookieService.isSessionPresent(request.getCookies())) {
             throw new RuntimeException();
         } else {
-            Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
-            String role = roleService.getRole(session.getUser());
+            String role = roleService.getRoleFromSessionId(cookieService.getValue(request.getCookies()));
             if (role.equals("principal")) {
-
-
                 studentService.save(student);
             }
-            return null;
+            throw new UserDoesNotHavePermissionException();
         }
     }
 }

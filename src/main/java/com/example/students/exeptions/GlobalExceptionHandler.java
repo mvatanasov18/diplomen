@@ -37,4 +37,21 @@ public class GlobalExceptionHandler {
 
         return new ModelAndView("custom-error").addObject("message","An error occurred!");
     }
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ModelAndView handleNoUserFoundException(UserNotFoundException userNotFoundException) {
+
+        return new ModelAndView("custom-error")
+                .addObject("message","No such user with this id!");
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ModelAndView handleUserDoesNotHavePermissionException(UserDoesNotHavePermissionException userDoesNotHavePermissionException) {
+
+        return new ModelAndView("custom-error")
+                .addObject("message","You don't have permission to view this page!");
+    }
 }
