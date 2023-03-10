@@ -7,14 +7,22 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class TeamService {
+public class TeamService implements com.example.students.services.Service<Team> {
     private final TeamRepository teamRepository;
-
-    public Team insertTeam(Team team){
+@Override
+    public Team save(Team team){
         return teamRepository.save(team);
     }
-
-    public void deleteTeam (Team team){
+@Override
+    public void delete (Team team){
         teamRepository.delete(team);
+    }
+    @Override
+    public Team findById(String id){
+        return teamRepository.findById(id).orElse(null);
+    }
+    @Override
+    public Iterable<Team> findAll(){
+    return teamRepository.findAll();
     }
 }

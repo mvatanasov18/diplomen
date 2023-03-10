@@ -55,15 +55,15 @@ public class RegisterController {
                 principal.setUser(user);
 
                 addressService.save(address);
-                schoolService.saveSchool(school);
-                userService.saveUser(user);
+                schoolService.save(school);
+                userService.save(user);
 
                 if (principalService.save(principal) != null) {
                     return "redirect:/login";
                 }
             } catch (Exception e) {
-                userService.deleteUser(user);
-                schoolService.deleteSchool(school);
+                userService.delete(user);
+                schoolService.delete(school);
                 addressService.delete(address);
                 throw e;
             }

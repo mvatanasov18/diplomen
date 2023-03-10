@@ -2,20 +2,21 @@ package com.example.students.services;
 
 import com.example.students.models.User;
 import com.example.students.repositories.*;
+import jakarta.persistence.Version;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class UserService {
+public class UserService  implements com.example.students.services.Service<User> {
     private final UserRepository userRepository;
-
-    public User saveUser(User user){
+@Override
+    public User save(User user){
         return userRepository.save(user);
     }
 
-    public void deleteUser(User user){
+@Override
+    public void delete(User user){
         userRepository.delete(user);
     }
     public User findByUsername(String username){
@@ -25,8 +26,13 @@ public class UserService {
     public boolean checkPassword(User user, User loginUser){
         return user.getPassword().equals(loginUser.getPassword());
     }
+    @Override
     public User findById(String id){
         return userRepository.findById(id).orElse(null);
+    }
+    @Override
+    public Iterable<User> findAll(){
+    return userRepository.findAll();
     }
     public boolean checkEmailAndUsername(User user){
         return userRepository.existsByEmail(user.getEmail()) ||
