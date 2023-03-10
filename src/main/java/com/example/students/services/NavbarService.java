@@ -1,7 +1,6 @@
 package com.example.students.services;
 
 import com.example.students.models.Navbar;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +14,7 @@ import java.util.TreeMap;
 public class NavbarService {
 
     //future idea if there is time:
-//statistics about the school
+    //statistics about the school
     private Map<String, String> setMapForPrincipal() {
         Map<String, String> elements = new HashMap<>();
 
@@ -72,7 +71,7 @@ public class NavbarService {
 
     }
 
-    public Navbar getNavbar(String sessionId,SessionService sessionService) {
+    public Navbar getNavbar(String sessionId, SessionService sessionService) {
 
         if (sessionId.equals("")) {
             Map<String, String> temp = new TreeMap<>();

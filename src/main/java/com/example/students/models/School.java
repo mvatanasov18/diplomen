@@ -3,7 +3,6 @@ package com.example.students.models;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 import java.util.UUID;
 

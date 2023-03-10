@@ -4,5 +4,5 @@ import com.example.students.models.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AdminRepository extends JpaRepository<Admin, String> {
-    public Admin findAdminByUserId(String userId);
+    Admin findAdminByUserId(String userId);
 }

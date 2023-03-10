@@ -11,16 +11,23 @@ import org.springframework.stereotype.Service;
 public class PendingUpdateService implements com.example.students.services.Service<PendingUpdate> {
     private final PendingUpdateRepository pendingUpdateRepository;
 
-    public PendingUpdate save(PendingUpdate pendingUpdate){
+    @Override
+    public PendingUpdate save(PendingUpdate pendingUpdate) {
         return pendingUpdateRepository.save(pendingUpdate);
     }
-    public void delete(PendingUpdate pendingUpdate){
+
+    @Override
+    public void delete(PendingUpdate pendingUpdate) {
         pendingUpdateRepository.delete(pendingUpdate);
     }
-    public PendingUpdate findById(String id){
+
+    @Override
+    public PendingUpdate findById(String id) {
         return pendingUpdateRepository.findById(id).orElse(null);
     }
-    public Iterable<PendingUpdate> findAll(){
+
+    @Override
+    public Iterable<PendingUpdate> findAll() {
         return pendingUpdateRepository.findAll();
     }
 }

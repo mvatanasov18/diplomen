@@ -15,11 +15,11 @@ import java.util.UUID;
 @ToString
 public class Teacher {
     @Id
-    @Column(name = "Id",unique = true,nullable = false,columnDefinition = "varchar(36)")
+    @Column(name = "Id", unique = true, nullable = false, columnDefinition = "varchar(36)")
     private String id;
 
     @OneToOne
-    @JoinColumn(name = "User_Id",columnDefinition = "varchar(36)")
+    @JoinColumn(name = "User_Id", columnDefinition = "varchar(36)")
     private User user;
 
     @OneToMany(mappedBy = "teacher")
@@ -27,7 +27,7 @@ public class Teacher {
 
 
     public Teacher() {
-        id= UUID.randomUUID().toString();
+        id = UUID.randomUUID().toString();
     }
 
     public String getId() {

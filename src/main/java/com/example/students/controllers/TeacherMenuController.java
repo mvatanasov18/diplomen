@@ -1,7 +1,6 @@
 package com.example.students.controllers;
 
 import com.example.students.models.Session;
-import com.example.students.models.Student;
 import com.example.students.models.Teacher;
 import com.example.students.models.User;
 import com.example.students.services.*;
@@ -28,9 +27,9 @@ public class TeacherMenuController {
     @GetMapping
     public ModelAndView getStudentsMenuIndexPage(HttpServletRequest request) {
         if (!cookieService.isSessionPresent(request.getCookies())) {
-            Session session= sessionService.findById(cookieService.getValue(request.getCookies()));
+            Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
             String role = roleService.getRole(session.getUser());
-            if(role.equals("principal")) {
+            if (role.equals("principal")) {
                 Teacher teacher = new Teacher();
                 teacher.getUser().setSchool(session.getUser().getSchool());
                 System.out.println(teacher);

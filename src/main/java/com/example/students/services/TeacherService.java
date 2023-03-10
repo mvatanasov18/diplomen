@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class TeacherService implements com.example.students.services.Service<Teacher> {
-     private  final TeacherRepository teacherRepository;
+    private final TeacherRepository teacherRepository;
 
 
     @Override
@@ -31,7 +31,8 @@ public class TeacherService implements com.example.students.services.Service<Tea
     public Iterable<Teacher> findAll() {
         return teacherRepository.findAll();
     }
-    public Teacher findByUserId(String id){
+
+    public Teacher findByUserId(String id) {
         return teacherRepository.findTeacherByUserId(id);
     }
 }

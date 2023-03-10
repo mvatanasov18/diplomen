@@ -10,17 +10,19 @@ import org.springframework.stereotype.Service;
 public class SessionService {
     private final SessionRepository sessionRepository;
 
-    public Session saveSession(Session session){
+    public Session saveSession(Session session) {
         return sessionRepository.save(session);
     }
-    public void deleteSession(Session session){
+
+    public void deleteSession(Session session) {
         sessionRepository.delete(session);
     }
 
-    public Session findById(String id){
+    public Session findById(String id) {
         return sessionRepository.findById(id).orElse(null);
     }
-    public Session findByUserId(String userId){
+
+    public Session findByUserId(String userId) {
         return sessionRepository.findByUserId(userId);
     }
 

@@ -1,7 +1,7 @@
 package com.example.students.services;
 
 import com.example.students.models.Principal;
-import com.example.students.repositories.*;
+import com.example.students.repositories.PrincipalRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +12,9 @@ public class PrincipalService implements com.example.students.services.Service<P
 
     private final PrincipalRepository principalRepository;
 
-
-    public Principal save(Principal principal){
-          return  principalRepository.save(principal);
+    @Override
+    public Principal save(Principal principal) {
+        return principalRepository.save(principal);
     }
 
     @Override
@@ -22,10 +22,12 @@ public class PrincipalService implements com.example.students.services.Service<P
         principalRepository.delete(principal);
     }
 
-    public Principal findPrincipalByUserId(String id){
+    public Principal findPrincipalByUserId(String id) {
         return principalRepository.findPrincipalByUserId(id);
     }
-    public Principal findById(String id){
+
+    @Override
+    public Principal findById(String id) {
         return principalRepository.findById(id).orElse(null);
     }
 

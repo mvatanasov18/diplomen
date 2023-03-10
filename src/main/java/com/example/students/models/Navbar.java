@@ -7,7 +7,7 @@ public class Navbar {
     private Map<String, String> elements;
 
     public Navbar() {
-        elements=new HashMap<>();
+        elements = new HashMap<>();
     }
 
     public Navbar(Map<String, String> elements) {

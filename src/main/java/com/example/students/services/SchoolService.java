@@ -9,20 +9,24 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class SchoolService implements com.example.students.services.Service<School> {
     private final SchoolRepository schoolRepository;
+
     @Override
-    public School save(School school){
+    public School save(School school) {
         return schoolRepository.save(school);
     }
+
     @Override
-    public void delete(School school){
+    public void delete(School school) {
         schoolRepository.delete(school);
     }
+
     @Override
-    public School findById(String id){
+    public School findById(String id) {
         return schoolRepository.findById(id).orElse(null);
     }
-   @Override
-    public Iterable<School> findAll(){
+
+    @Override
+    public Iterable<School> findAll() {
         return schoolRepository.findAll();
     }
 }

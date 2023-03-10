@@ -33,7 +33,7 @@ public class RegisterController {
     @GetMapping
     public ModelAndView getRegister(HttpServletRequest request) {
         if (cookieService.isSessionPresent(request.getCookies())) {
-            return new ModelAndView("register").addObject("user", new User()).addObject("address", new Address()).addObject("school", new School()).addObject("navElements", navbarService.getNavbar(cookieService.getValue(request.getCookies()),sessionService));
+            return new ModelAndView("register").addObject("user", new User()).addObject("address", new Address()).addObject("school", new School()).addObject("navElements", navbarService.getNavbar(cookieService.getValue(request.getCookies()), sessionService));
 
         }
         throw new RuntimeException();
@@ -69,6 +69,6 @@ public class RegisterController {
             }
             return "/index";
         }
-        throw  new RuntimeException();
+        throw new RuntimeException();
     }
 }

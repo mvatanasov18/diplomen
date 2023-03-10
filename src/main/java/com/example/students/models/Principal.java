@@ -25,7 +25,7 @@ public class Principal {
 
     public Principal() {
         id = UUID.randomUUID().toString();
-        isVerified=false;
+        isVerified = false;
     }
 
     public String getId() {

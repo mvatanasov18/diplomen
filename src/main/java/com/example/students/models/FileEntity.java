@@ -14,19 +14,18 @@ import java.util.UUID;
 @AllArgsConstructor
 public class FileEntity {
     @Id
-    @Column(name = "Id",columnDefinition = "varchar(36)",nullable = false,unique = true)
+    @Column(name = "Id", columnDefinition = "varchar(36)", nullable = false, unique = true)
     private String id;
-    @Column(name = "File_Content",columnDefinition = "varbinary(max)",nullable = false)
+    @Column(name = "File_Content", columnDefinition = "varbinary(max)", nullable = false)
     private byte[] fileContent;
 
     @ManyToOne
-    @JoinColumn(name = "Task_Id",nullable = false)
+    @JoinColumn(name = "Task_Id", nullable = false)
     private Task task;
 
     public FileEntity() {
-        id= UUID.randomUUID().toString();
+        id = UUID.randomUUID().toString();
     }
-
 
 
     public String getId() {

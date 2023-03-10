@@ -29,18 +29,14 @@ public class StudentMenuController {
     public ModelAndView getTeacherMenuIndexPage(HttpServletRequest request) {
         if (cookieService.isSessionPresent(request.getCookies())) {
             throw new RuntimeException();
-        }
-        else {
-            Session session= sessionService.findById(cookieService.getValue(request.getCookies()));
+        } else {
+            Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
             String role = roleService.getRole(session.getUser());
-            if(role.equals("principal")) {
+            if (role.equals("principal")) {
                 Student student = new Student();
                 student.getUser().setSchool(session.getUser().getSchool());
                 System.out.println(student);
-                return new ModelAndView("/teacher-menu-index")
-                        .addObject("user", new User())
-                        .addObject("navElements", navbarService.getNavbar(cookieService.getValue(request.getCookies()), sessionService))
-                        .addObject("student", student);
+                return new ModelAndView("/teacher-menu-index").addObject("user", new User()).addObject("navElements", navbarService.getNavbar(cookieService.getValue(request.getCookies()), sessionService)).addObject("student", student);
             }
         }
         throw new UserDoesNotHavePermissionException();

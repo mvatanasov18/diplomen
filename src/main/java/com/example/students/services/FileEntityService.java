@@ -1,13 +1,9 @@
 package com.example.students.services;
 
-import com.example.students.models.Admin;
 import com.example.students.models.FileEntity;
-import com.example.students.repositories.AdminRepository;
 import com.example.students.repositories.FileEntityRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 
 @Service
@@ -15,16 +11,23 @@ import java.util.Optional;
 public class FileEntityService implements com.example.students.services.Service<FileEntity> {
     private final FileEntityRepository fileEntityRepository;
 
-    public FileEntity save(FileEntity fileEntity){
+    @Override
+    public FileEntity save(FileEntity fileEntity) {
         return fileEntityRepository.save(fileEntity);
     }
-    public void delete(FileEntity fileEntity){
+
+    @Override
+    public void delete(FileEntity fileEntity) {
         fileEntityRepository.delete(fileEntity);
     }
-    public FileEntity findById(String id){
+
+    @Override
+    public FileEntity findById(String id) {
         return fileEntityRepository.findById(id).orElse(null);
     }
-    public Iterable<FileEntity> findAll(){
+
+    @Override
+    public Iterable<FileEntity> findAll() {
         return fileEntityRepository.findAll();
     }
 }

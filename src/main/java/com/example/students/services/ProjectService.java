@@ -9,23 +9,28 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class ProjectService implements com.example.students.services.Service<Project> {
     private final ProjectRepository projectRepository;
+
     @Override
-    public Project save(Project project){
+    public Project save(Project project) {
         return projectRepository.save(project);
     }
-@Override
-    public void delete(Project project){
+
+    @Override
+    public void delete(Project project) {
         projectRepository.delete(project);
     }
-@Override
-    public Project findById(String id){
+
+    @Override
+    public Project findById(String id) {
         return projectRepository.findById(id).orElse(null);
     }
-    public Iterable<Project> findAllByAdminId(String id){
+
+    public Iterable<Project> findAllByAdminId(String id) {
         return projectRepository.findAllByAdmin_Id(id);
     }
+
     @Override
-    public Iterable<Project> findAll(){
+    public Iterable<Project> findAll() {
         return projectRepository.findAll();
     }
 }

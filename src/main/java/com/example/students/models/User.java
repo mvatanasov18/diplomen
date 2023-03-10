@@ -36,12 +36,12 @@ public class User {
 
     public User() {
         id = UUID.randomUUID().toString();
-        username="";
-        password="";
-        email="";
-        firstName="";
-        lastName="";
-        school=new School();
+        username = "";
+        password = "";
+        email = "";
+        firstName = "";
+        lastName = "";
+        school = new School();
 
     }
 
@@ -52,16 +52,13 @@ public class User {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.salt=salt;
+        this.salt = salt;
     }
 
     public User(String id, String username, String password, String email, String firstName, String lastName, School school, byte[] salt) {
-        this(id, username, password, email, firstName, lastName,salt);
+        this(id, username, password, email, firstName, lastName, salt);
         this.school = school;
     }
-
-
-
 
 
     public String getId() {
@@ -70,15 +67,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "id='" + id + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", school=" + school +
-                '}';
+        return "User{" + "id='" + id + '\'' + ", username='" + username + '\'' + ", password='" + password + '\'' + ", email='" + email + '\'' + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", school=" + school + '}';
     }
 
 
@@ -96,10 +85,10 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password=password;
+        this.password = password;
     }
 
-    public void hashPassword(){
+    public void hashPassword() {
         PasswordHasher passwordHasher = new PasswordHasher();
         if (this.salt != null) {
             passwordHasher.setSalt(salt);

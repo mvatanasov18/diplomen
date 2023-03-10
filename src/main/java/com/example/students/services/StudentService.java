@@ -4,10 +4,11 @@ package com.example.students.services;
 import com.example.students.models.Student;
 import com.example.students.repositories.StudentRepository;
 import lombok.AllArgsConstructor;
+
 @org.springframework.stereotype.Service
 @AllArgsConstructor
-public class StudentService implements com.example.students.services.Service<Student>{
-private final StudentRepository studentRepository;
+public class StudentService implements com.example.students.services.Service<Student> {
+    private final StudentRepository studentRepository;
 
     @Override
     public Student save(Student student) {

@@ -36,7 +36,7 @@ public class Student {
 
     public Student() {
         id = UUID.randomUUID().toString();
-        user=new User();
+        user = new User();
     }
 
     public String getId() {

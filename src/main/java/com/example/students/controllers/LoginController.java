@@ -1,6 +1,5 @@
 package com.example.students.controllers;
 
-import com.example.students.exeptions.EmailAlreadyTakenException;
 import com.example.students.exeptions.InvalidCredentialsException;
 import com.example.students.models.Session;
 import com.example.students.models.User;
@@ -10,10 +9,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Arrays;
 import java.util.UUID;
 
 @Controller
@@ -29,16 +30,17 @@ public class LoginController {
     private final CookieService cookieService;
 
     @GetMapping
-    public ModelAndView getLogin( HttpServletRequest request) {
-        if(cookieService.isSessionPresent(request.getCookies())){
-        return new ModelAndView("/login")
-                .addObject("user",new User())
-                .addObject("navElements",navbarService.getNavbar(cookieService.getValue(request.getCookies()),sessionService));}
+    public ModelAndView getLogin(HttpServletRequest request) {
+        if (cookieService.isSessionPresent(request.getCookies())) {
+            return new ModelAndView("/login")
+                    .addObject("user", new User())
+                    .addObject("navElements", navbarService.getNavbar(cookieService.getValue(request.getCookies()), sessionService));
+        }
         throw new RuntimeException();
     }
 
     @GetMapping(value = "/logout")
-    public String getLogout( HttpServletResponse response) {
+    public String getLogout(HttpServletResponse response) {
         Cookie cookie = new Cookie("session", null);
         cookie.setMaxAge(0);
         cookie.setHttpOnly(true);
@@ -48,9 +50,8 @@ public class LoginController {
     }
 
 
-
     @PostMapping
-    public ModelAndView postLogin(@ModelAttribute User loginUser, HttpServletResponse response,HttpServletRequest request) {
+    public ModelAndView postLogin(@ModelAttribute User loginUser, HttpServletResponse response, HttpServletRequest request) {
         if (cookieService.isSessionPresent(request.getCookies())) {
             User user = userService.findByUsername(loginUser.getUsername());
 
