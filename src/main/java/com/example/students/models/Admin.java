@@ -23,6 +23,7 @@ public class Admin {
 
     public Admin() {
         id = UUID.randomUUID().toString();
+        user=new User();
     }
 
     public String getId() {

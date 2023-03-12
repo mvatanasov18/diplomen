@@ -45,9 +45,7 @@ public class RegisterController {
         if (cookieService.isSessionPresent(request.getCookies())) {
             //check if data is valid
             try {
-                if (userService.checkEmailAndUsername(user)) {
-                    throw new InvalidCredentialsException();
-                }
+
                 user.hashPassword();
                 school.setAddress(address);
                 user.setSchool(school);
@@ -59,6 +57,7 @@ public class RegisterController {
                 userService.save(user);
 
                 if (principalService.save(principal) != null) {
+                    System.out.println(user);
                     return "redirect:/login";
                 }
             } catch (Exception e) {

@@ -30,55 +30,56 @@
     </div>
 </nav>
 <div class="center-items">
-    <h1 class="display-2 "> Students menu index</h1>
+    <h1 class="display-2 "> Teachers menu index</h1>
 
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStudentModal">
-        Add student
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTeacherModal">
+        Add teacher
     </button>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentModalLabel" aria-hidden="true"
+<div class="modal fade" id="addTeacherModal" tabindex="-1" aria-labelledby="addTeacherModalLabel" aria-hidden="true"
      style="color:black">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="addStudentModalLabel">Add student form</h1>
+                <h1 class="modal-title fs-5" id="addTeacherModalLabel">Add Teacher Form</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <form action="http://localhost:8080/teachers" th:action="@{/teachers}"  method="post" >
             <div class="modal-body">
-                <form action="http://localhost:8080/students" method="post" class="center-items">
+
+
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">@</span>
-                        <input type="text" th:field="*{student.user.username}" class="form-control myInput"
+                        <input type="text" th:field="*{teacher.user.username}" class="form-control myInput"
                                placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" required>
                         <span class="input-group-text mySpan" id="basic-addon2">🔒</span>
-                        <input type="password" th:field="*{student.user.password}" class="form-control "
+                        <input type="password" th:field="*{teacher.user.password}" class="form-control "
                                placeholder="Password" aria-label="Password" aria-describedby="basic-addon2" required>
 
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text mySpan" id="basic-addon5">📧</span>
-                        <input type="email" th:field="*{student.user.email}" class="form-control" placeholder="Email"
+                        <input type="email" th:field="*{teacher.user.email}" class="form-control" placeholder="Email"
                                aria-label="Email" aria-describedby="basic-addon5" required>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon3">🧑</span>
-                        <input type="text" th:field="*{student.user.firstName}" class="form-control myInput"
+                        <input type="text" th:field="*{teacher.user.firstName}" class="form-control myInput"
                                placeholder="First Name" aria-label="First Name" aria-describedby="basic-addon3"
                                required>
                         <span class="input-group-text mySpan" id="basic-addon4">👪</span>
-                        <input type="text" th:field="*{student.user.lastName}" class="form-control"
+                        <input type="text" th:field="*{teacher.user.lastName}" class="form-control"
                                placeholder="Last Name" aria-label="Last Name" aria-describedby="basic-addon4" required>
 
                     </div>
-                    <div class="input-group mb-3">
-                    </div>
-                </form>
+
             </div>
             <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
+            </form>
         </div>
     </div>
 </div>

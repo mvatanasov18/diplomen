@@ -1,6 +1,8 @@
 package com.example.students.controllers;
 
+import com.example.students.exeptions.UserDoesNotHavePermissionException;
 import com.example.students.models.Session;
+import com.example.students.models.Student;
 import com.example.students.models.Teacher;
 import com.example.students.models.User;
 import com.example.students.services.*;
@@ -22,31 +24,15 @@ public class TeacherMenuController {
     private final NavbarService navbarService;
     private final CookieService cookieService;
     private final RoleService roleService;
+    private final UserService userService;
     private final TeacherService teacherService;
 
-    @GetMapping
-    public ModelAndView getStudentsMenuIndexPage(HttpServletRequest request) {
-        if (!cookieService.isSessionPresent(request.getCookies())) {
-            Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
-            String role = roleService.getRole(session.getUser());
-            if (role.equals("principal")) {
-                Teacher teacher = new Teacher();
-                teacher.getUser().setSchool(session.getUser().getSchool());
-                System.out.println(teacher);
-                return new ModelAndView("/students-menu-index")
-                        .addObject("user", new User())
-                        .addObject("navElements", navbarService.getNavbar(cookieService.getValue(request.getCookies()), sessionService))
-                        .addObject("teacher", teacher);
-            }
-        }
-        throw new RuntimeException();
-    }
 
-    @PostMapping
-    public ModelAndView postStudent(@ModelAttribute Teacher teacher, HttpServletRequest request) {
-        //todo check is the user sending the request is principal
-        // - check the student's data
-        // - save the student entity using the student service
+
+
+
+    @GetMapping
+    public ModelAndView getTeacherMenuIndexPage(HttpServletRequest request) {
         if (cookieService.isSessionPresent(request.getCookies())) {
             throw new RuntimeException();
         } else {
@@ -54,10 +40,35 @@ public class TeacherMenuController {
             String role = roleService.getRole(session.getUser());
             if (role.equals("principal")) {
 
-
-                teacherService.save(teacher);
+                return new ModelAndView("/teachers-menu-index")
+                        .addObject("navElements", navbarService
+                                .getNavbar(cookieService.getValue(request.getCookies()), sessionService))
+                        .addObject("teacher", new Teacher());
             }
-            return null;
+        }
+        throw new UserDoesNotHavePermissionException();
+    }
+
+
+
+    @PostMapping
+    public ModelAndView postTeacher(@ModelAttribute Teacher teacher, HttpServletRequest request) {
+        //todo check is the user sending the request is principal
+        // - check the teacher's data
+        // - save the teacher entity using the teacher service
+        if (cookieService.isSessionPresent(request.getCookies())) {
+            throw new RuntimeException();
+        } else {
+            Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
+            String role = roleService.getRole(session.getUser());
+            if (role.equals("principal")) {
+                teacher.getUser().setSchool(session.getUser().getSchool());
+                System.out.println(teacher);
+                userService.save(teacher.getUser());
+                teacherService.save(teacher);
+                return new ModelAndView("redirect:/teachers");
+            }
+            throw new UserDoesNotHavePermissionException();
         }
     }
 }

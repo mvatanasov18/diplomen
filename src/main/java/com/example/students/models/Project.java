@@ -4,8 +4,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.springframework.data.web.HateoasPageableHandlerMethodArgumentResolver;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -42,6 +45,12 @@ public class Project {
 
     public Project() {
         id = UUID.randomUUID().toString();
+        name="";
+        description="";
+        dateCreated=LocalDateTime.now();
+        dueDate=LocalDateTime.now().plusMonths(1);
+        admin=new Admin();
+        teams= new HashSet<>();
     }
 
     public Set<Team> getTeams() {

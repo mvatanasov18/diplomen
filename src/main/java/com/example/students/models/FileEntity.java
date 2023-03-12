@@ -25,6 +25,8 @@ public class FileEntity {
 
     public FileEntity() {
         id = UUID.randomUUID().toString();
+        fileContent=new byte[0];
+        task=new Task();
     }
 
 

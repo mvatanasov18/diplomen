@@ -20,6 +20,7 @@ public class HomeController {
     @GetMapping(value = "/")
     public ModelAndView getIndex(HttpServletRequest request) {
         return new ModelAndView("index")
-                .addObject("navElements", navbarService.getNavbar(cookieService.getValue(request.getCookies()), sessionService));
+                .addObject("navElements", navbarService
+                        .getNavbar(cookieService.getValue(request.getCookies()), sessionService));
     }
 }

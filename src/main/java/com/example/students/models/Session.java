@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -19,13 +20,16 @@ public class Session {
     @Column(name = "role_name")
     private String roleName;
     @Column(name = "time_created")
-    private Timestamp timeCreated;
+    private LocalDateTime timeCreated;
     @OneToOne()
     @JoinColumn(name = "user_id")
     private User user;
 
     public Session() {
         id = UUID.randomUUID().toString();
+        roleName="";
+        timeCreated=LocalDateTime.now();
+        user=new User();
     }
 
     public String getId() {
@@ -40,11 +44,11 @@ public class Session {
         this.roleName = roleName;
     }
 
-    public Timestamp getTimeCreated() {
+    public LocalDateTime getTimeCreated() {
         return timeCreated;
     }
 
-    public void setTimeCreated(Timestamp timeCreated) {
+    public void setTimeCreated(LocalDateTime timeCreated) {
         this.timeCreated = timeCreated;
     }
 

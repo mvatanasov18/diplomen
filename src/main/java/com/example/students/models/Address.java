@@ -28,6 +28,10 @@ public class Address {
 
     public Address() {
         this.id = UUID.randomUUID().toString();
+        this.city="";
+        this.houseNumber =0;
+        this.street="";
+        this.additionalInfo="";
     }
 
     public String getId() {

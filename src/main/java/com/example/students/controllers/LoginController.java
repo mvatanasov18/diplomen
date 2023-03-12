@@ -1,6 +1,7 @@
 package com.example.students.controllers;
 
 import com.example.students.exeptions.InvalidCredentialsException;
+import com.example.students.exeptions.UserDoesNotHavePermissionException;
 import com.example.students.models.Session;
 import com.example.students.models.User;
 import com.example.students.services.*;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.UUID;
 
 @Controller
@@ -34,9 +37,10 @@ public class LoginController {
         if (cookieService.isSessionPresent(request.getCookies())) {
             return new ModelAndView("/login")
                     .addObject("user", new User())
-                    .addObject("navElements", navbarService.getNavbar(cookieService.getValue(request.getCookies()), sessionService));
+                    .addObject("navElements",
+                            navbarService.getNavbar(cookieService.getValue(request.getCookies()), sessionService));
         }
-        throw new RuntimeException();
+        throw new UserDoesNotHavePermissionException();
     }
 
     @GetMapping(value = "/logout")
@@ -56,10 +60,14 @@ public class LoginController {
             User user = userService.findByUsername(loginUser.getUsername());
 
             if (user != null) {
+                System.out.println(Arrays.toString(user.getSalt()));
+
                 loginUser.setSalt(user.getSalt());
+                System.out.println(Arrays.toString(loginUser.getSalt()));
                 loginUser.hashPassword();
 
-
+                System.out.println(loginUser);
+                System.out.println(user);
                 if (userService.checkPassword(user, loginUser)) {
                     System.out.println("Password was correct");
                     String id = UUID.randomUUID().toString();
@@ -69,9 +77,7 @@ public class LoginController {
                     if (temp != null) {
                         sessionService.deleteSession(temp);
                     }
-                    Session session = new Session(id,
-                            roleService.getRole(user),
-                            new java.sql.Timestamp(new java.util.Date().getTime()), user);
+                    Session session = new Session(id,roleService.getRole(user),LocalDateTime.now(), user);
                     if (sessionService.saveSession(session) != null) {
                         System.out.println("creating a cookie");
                         Cookie cookie = new Cookie("session", id);
@@ -82,9 +88,10 @@ public class LoginController {
                         return new ModelAndView("redirect:/");
                     }
                 }
+                throw new InvalidCredentialsException();
             }
             throw new InvalidCredentialsException();
         }
-        throw new RuntimeException();
+        throw new UserDoesNotHavePermissionException();
     }
 }

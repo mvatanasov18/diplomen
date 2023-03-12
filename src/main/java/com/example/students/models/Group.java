@@ -7,6 +7,7 @@ import lombok.ToString;
 import org.hibernate.type.descriptor.jdbc.NCharJdbcType;
 import org.hibernate.type.descriptor.jdbc.TinyIntJdbcType;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -21,10 +22,10 @@ public class Group {
     private String id;
 
     @Column(name = "Grade", columnDefinition = "tinyint CHECK(Grade IN (2,3,4,5,6))")
-    private TinyIntJdbcType grade;
+    private Integer grade;
 
     @Column(name = "Letter", columnDefinition = "nchar")
-    private NCharJdbcType letter;
+    private char letter;
 
     @OneToOne
     @JoinColumn(name = "Teacher_Id", columnDefinition = "varchar(36)")
@@ -34,26 +35,30 @@ public class Group {
 
     public Group() {
         id = UUID.randomUUID().toString();
+        grade=1;
+        letter='a';
+        teacher=new Teacher();
+        students=new HashSet<>();
     }
 
     public String getId() {
         return id;
     }
 
-    public TinyIntJdbcType getGrade() {
+    public int getGrade() {
         return grade;
     }
 
-    public Group setGrade(TinyIntJdbcType grade) {
+    public Group setGrade(int grade) {
         this.grade = grade;
         return this;
     }
 
-    public NCharJdbcType getLetter() {
+    public char getLetter() {
         return letter;
     }
 
-    public Group setLetter(NCharJdbcType letter) {
+    public Group setLetter(char letter) {
         this.letter = letter;
         return this;
     }

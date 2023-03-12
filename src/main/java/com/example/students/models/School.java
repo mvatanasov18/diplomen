@@ -23,6 +23,8 @@ public class School {
 
     public School() {
         this.id = UUID.randomUUID().toString();
+        name="";
+        address=new Address();
     }
 
     public String getId() {

@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -30,8 +31,8 @@ public class PendingUpdate {
     private String firstName;
     @Column(name = "Last_Name", columnDefinition = "nvarchar(100)")
     private String lastName;
-    @Column(name = "Changes_Made", columnDefinition = "timestamp")
-    private Timestamp changesMade;
+    @Column(name = "Changes_Made")
+    private LocalDateTime changesMade;
     @ManyToOne
     @JoinColumn(name = "Admin_Id")
     private Admin admin;
@@ -42,6 +43,14 @@ public class PendingUpdate {
 
     public PendingUpdate() {
         id = UUID.randomUUID().toString();
+        username="";
+        password="";
+        email="";
+        firstName="";
+        lastName="";
+        changesMade=LocalDateTime.now();
+        admin=new Admin();
+        user=new User();
     }
 
     public String getId() {
@@ -93,11 +102,11 @@ public class PendingUpdate {
         return this;
     }
 
-    public Timestamp getChangesMade() {
+    public LocalDateTime getChangesMade() {
         return changesMade;
     }
 
-    public PendingUpdate setChangesMade(Timestamp changesMade) {
+    public PendingUpdate setChangesMade(LocalDateTime changesMade) {
         this.changesMade = changesMade;
         return this;
     }

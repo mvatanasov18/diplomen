@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -36,6 +37,11 @@ public class Task {
 
     public Task() {
         id = UUID.randomUUID().toString();
+        name="";
+        description="";
+        dueDate=LocalDateTime.now();
+        students=new HashSet<>();
+        teacher=new Teacher();
     }
 
     public String getId() {

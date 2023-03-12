@@ -42,7 +42,7 @@ public class GlobalExceptionHandler {
         return new ModelAndView("custom-error").addObject("message", "An error occurred!");
     }
 
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ModelAndView handleNoUserFoundException(UserNotFoundException userNotFoundException) {
@@ -51,7 +51,7 @@ public class GlobalExceptionHandler {
                 .addObject("message", "No such user with this id!");
     }
 
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(UserDoesNotHavePermissionException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ModelAndView handleUserDoesNotHavePermissionException(UserDoesNotHavePermissionException userDoesNotHavePermissionException) {

@@ -26,6 +26,7 @@ public class Principal {
     public Principal() {
         id = UUID.randomUUID().toString();
         isVerified = false;
+        user=new User();
     }
 
     public String getId() {

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -16,46 +17,48 @@ public class NavbarService {
     //future idea if there is time:
     //statistics about the school
     private Map<String, String> setMapForPrincipal() {
-        Map<String, String> elements = new HashMap<>();
-
+        Map<String, String> elements = new LinkedHashMap<>();
+        elements.put("/school", "School Menu");
+        elements.put("/teachers", "Teachers Menu");
+        elements.put("/groups", "Classes Menu");
+        elements.put("/students", "Students Menu");
         elements.put("/profile", "Profile");
         elements.put("/login/logout", "Logout");
-        elements.put("/students", "Students Menu");
-        elements.put("/teachers", "Teachers Menu");
-        elements.put("/school", "School Menu");
 
         return elements;
     }
 
     private Map<String, String> setMapForStudent() {
-        Map<String, String> elements = new HashMap<>();
-        elements.put("/login/logout", "Logout");
-        elements.put("/profile", "Profile");
-        elements.put("/calendar", "Calendar");
-        elements.put("/tasks", "Tasks");
-        elements.put("/projects", "Projects");
+        Map<String, String> elements = new LinkedHashMap<>();
         elements.put("/teams", "Teams");
+        elements.put("/projects", "Projects");
+        elements.put("/tasks", "Tasks");
+        elements.put("/calendar", "Calendar");
+        elements.put("/profile", "Profile");
+        elements.put("/login/logout", "Logout");
 
         return elements;
     }
 
     private Map<String, String> setMapForTeacher() {
-        Map<String, String> elements = new HashMap<>();
-        elements.put("/login/logout", "Logout");
-        elements.put("/profile", "Profile");
-        elements.put("/tasksMenu", "Tasks Menu");
-        elements.put("/projectsMenu", "Projects Menu");
+        Map<String, String> elements = new LinkedHashMap<>();
         elements.put("/teamsMenu", "Teams Menu");
+        elements.put("/projectsMenu", "Projects Menu");
+        elements.put("/tasksMenu", "Tasks Menu");
+        elements.put("/profile", "Profile");
+        elements.put("/login/logout", "Logout");
         return elements;
     }
 
     private Map<String, String> setMapForAdmin() {
-        Map<String, String> elements = new HashMap<>();
-        elements.put("/login/logout", "Logout");
-        elements.put("/profile", "Profile");
+        Map<String, String> elements = new LinkedHashMap<>();
+        elements.put("/groups", "Classes Menu");
         elements.put("/students", "Students Menu");
-        elements.put("/projectsMenu", "Projects Menu");
         elements.put("/teamsMenu", "Teams Menu");
+        elements.put("/projectsMenu", "Projects Menu");
+        elements.put("/profile", "Profile");
+        elements.put("/login/logout", "Logout");
+
         return elements;
     }
 

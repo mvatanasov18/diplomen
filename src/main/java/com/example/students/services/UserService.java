@@ -1,5 +1,7 @@
 package com.example.students.services;
 
+import com.example.students.exeptions.InvalidCredentialsException;
+import com.example.students.exeptions.UsernameAlreadyTakenException;
 import com.example.students.models.User;
 import com.example.students.repositories.UserRepository;
 import lombok.AllArgsConstructor;
@@ -12,7 +14,12 @@ public class UserService implements com.example.students.services.Service<User> 
 
     @Override
     public User save(User user) {
-        return userRepository.save(user);
+
+        if (checkUser(user)) {
+            user.hashPassword();
+            return userRepository.save(user);
+        }
+        throw new IllegalArgumentException();
     }
 
     @Override
@@ -38,7 +45,20 @@ public class UserService implements com.example.students.services.Service<User> 
         return userRepository.findAll();
     }
 
-    public boolean checkEmailAndUsername(User user) {
-        return userRepository.existsByEmail(user.getEmail()) || userRepository.existsByUsername(user.getUsername());
+    public boolean checkUser(User user) {
+        if (isUsernameUnique(user.getUsername())
+                || isEmailUnique(user.getEmail())) {
+            return true;
+        }
+
+        throw  new InvalidCredentialsException();
+    }
+
+    private boolean isEmailUnique(String email) {
+        return !userRepository.existsByEmail(email);
+    }
+
+    private boolean isUsernameUnique(String username) {
+        return !userRepository.existsByEmail(username);
     }
 }

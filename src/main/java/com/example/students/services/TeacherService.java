@@ -6,6 +6,8 @@ import com.example.students.repositories.TeacherRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class TeacherService implements com.example.students.services.Service<Teacher> {
@@ -34,5 +36,8 @@ public class TeacherService implements com.example.students.services.Service<Tea
 
     public Teacher findByUserId(String id) {
         return teacherRepository.findTeacherByUserId(id);
+    }
+    public List<Teacher> findAllNotAssignedToClassBySchoolId(String id){
+        return teacherRepository.findAllNotAssignedToClassBySchoolId(id);
     }
 }

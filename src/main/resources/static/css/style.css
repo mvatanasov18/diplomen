@@ -1,7 +1,7 @@
 @import "scroll.css";
 
 body{
-    background: linear-gradient(176deg, rgb(18, 24, 27) 50%, rgb(35 47 74) 100%) fixed;
+    background: linear-gradient(176deg, rgb(18, 24, 27) 50%, rgb(35 47 74) 100%) fixed ;
 }
 #body{
     color: azure;

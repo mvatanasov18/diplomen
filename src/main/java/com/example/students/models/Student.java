@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -37,6 +38,9 @@ public class Student {
     public Student() {
         id = UUID.randomUUID().toString();
         user = new User();
+        teams=new HashSet<>();
+        group=new Group();
+        tasks=new HashSet<>();
     }
 
     public String getId() {
