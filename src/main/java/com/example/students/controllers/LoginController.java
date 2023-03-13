@@ -60,14 +60,10 @@ public class LoginController {
             User user = userService.findByUsername(loginUser.getUsername());
 
             if (user != null) {
-                System.out.println(Arrays.toString(user.getSalt()));
 
                 loginUser.setSalt(user.getSalt());
-                System.out.println(Arrays.toString(loginUser.getSalt()));
                 loginUser.hashPassword();
 
-                System.out.println(loginUser);
-                System.out.println(user);
                 if (userService.checkPassword(user, loginUser)) {
                     System.out.println("Password was correct");
                     String id = UUID.randomUUID().toString();

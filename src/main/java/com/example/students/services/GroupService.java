@@ -5,6 +5,8 @@ import com.example.students.repositories.GroupRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 @AllArgsConstructor
@@ -30,4 +32,9 @@ public class GroupService implements com.example.students.services.Service<Group
     public Iterable<Group> findAll() {
         return groupRepository.findAll();
     }
+
+    public List<Group> findAllBySchoolId(String id) {
+        return groupRepository.findAllBySchoolId(id);
+    }
+
 }

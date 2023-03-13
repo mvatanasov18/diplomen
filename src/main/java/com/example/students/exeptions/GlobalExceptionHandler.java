@@ -59,4 +59,13 @@ public class GlobalExceptionHandler {
         return new ModelAndView("custom-error")
                 .addObject("message", "You don't have permission to view this page!");
     }
+
+    @ExceptionHandler(NoAvailableTeachersException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ModelAndView handleNoAvailableTeachersException(NoAvailableTeachersException noAvailableTeachersException) {
+
+        return new ModelAndView("custom-error")
+                .addObject("message", "Add teachers before you create a class!");
+    }
 }

@@ -92,10 +92,8 @@ public class User {
     public void hashPassword() {
         PasswordHasher passwordHasher = new PasswordHasher();
         if (this.salt != null) {
-            System.out.println("old salt");
             passwordHasher.setSalt(salt);
         }
-        System.out.println(Arrays.toString(passwordHasher.getSalt()));
         this.password = passwordHasher.hashPassword(password);
         this.salt = passwordHasher.getSalt();
     }

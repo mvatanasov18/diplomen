@@ -15,7 +15,6 @@ import java.util.UUID;
 @Table(name = "Groups")
 @AllArgsConstructor
 @EqualsAndHashCode
-@ToString
 public class Group {
     @Id
     @Column(name = "Id", unique = true, nullable = false, columnDefinition = "varchar(36)")
@@ -79,5 +78,15 @@ public class Group {
     public Group setStudents(Set<Student> students) {
         this.students = students;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "id='" + id + '\'' +
+                ", grade=" + grade +
+                ", letter=" + letter +
+                ", teacher=" + teacher +
+                '}';
     }
 }

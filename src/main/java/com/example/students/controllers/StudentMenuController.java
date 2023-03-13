@@ -22,6 +22,7 @@ public class StudentMenuController {
     private final RoleService roleService;
     private final StudentService studentService;
     private final UserService userService;
+    private final GroupService groupService;
 
     @GetMapping
     public ModelAndView getStudentsMenuIndexPage(HttpServletRequest request) {
