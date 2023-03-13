@@ -64,6 +64,9 @@ public class TeacherMenuController {
             if (role.equals("principal")) {
                 teacher.getUser().setSchool(session.getUser().getSchool());
                 System.out.println(teacher);
+
+                teacher.getUser().hashPassword();
+
                 userService.save(teacher.getUser());
                 teacherService.save(teacher);
                 return new ModelAndView("redirect:/teachers");

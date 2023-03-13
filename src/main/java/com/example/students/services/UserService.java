@@ -1,7 +1,6 @@
 package com.example.students.services;
 
 import com.example.students.exeptions.InvalidCredentialsException;
-import com.example.students.exeptions.UsernameAlreadyTakenException;
 import com.example.students.models.User;
 import com.example.students.repositories.UserRepository;
 import lombok.AllArgsConstructor;
@@ -16,7 +15,6 @@ public class UserService implements com.example.students.services.Service<User> 
     public User save(User user) {
 
         if (checkUser(user)) {
-            user.hashPassword();
             return userRepository.save(user);
         }
         throw new IllegalArgumentException();
