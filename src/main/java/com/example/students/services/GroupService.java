@@ -5,7 +5,9 @@ import com.example.students.repositories.GroupRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -36,5 +38,18 @@ public class GroupService implements com.example.students.services.Service<Group
     public List<Group> findAllBySchoolId(String id) {
         return groupRepository.findAllBySchoolId(id);
     }
+    public void deleteById(String groupId) {
+        groupRepository.deleteById(groupId);
+    }
 
+    public boolean checkGroupByIdAndSchoolId(String id,String schoolId){
+        List<Group> groups =  findAllBySchoolId(schoolId);
+        Map<String,Group> hashGroups =new HashMap<>();
+
+        for(Group group:groups){
+            hashGroups.put(group.getId(), group);
+        }
+
+        return  hashGroups.containsKey(id);
+    }
 }

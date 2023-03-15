@@ -11,7 +11,6 @@ import java.util.UUID;
 @Table(name = "Admins")
 @AllArgsConstructor
 @EqualsAndHashCode
-@ToString
 public class Admin {
     @Id
     @Column(name = "id", columnDefinition = "varchar(36)")
@@ -24,6 +23,14 @@ public class Admin {
     public Admin() {
         id = UUID.randomUUID().toString();
         user=new User();
+    }
+
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "id='" + id + '\'' +
+                ", user id=" + user.getId() +
+                '}';
     }
 
     public String getId() {

@@ -13,7 +13,6 @@ import java.util.UUID;
 @Table(name = "Teachers")
 @AllArgsConstructor
 @EqualsAndHashCode
-@ToString
 public class Teacher {
     @Id
     @Column(name = "Id", unique = true, nullable = false, columnDefinition = "varchar(36)")
@@ -26,11 +25,21 @@ public class Teacher {
     @OneToMany(mappedBy = "teacher")
     private Set<Task> tasks;
 
+    @OneToOne(mappedBy = "teacher")
+    private Group group;
 
     public Teacher() {
         id = UUID.randomUUID().toString();
-        user=new User();
-        tasks=new HashSet<>();
+        user = new User();
+        tasks = new HashSet<>();
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
     public String getId() {
@@ -53,5 +62,14 @@ public class Teacher {
     public Teacher setTasks(Set<Task> tasks) {
         this.tasks = tasks;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "id='" + id + '\'' +
+                ", user=" + user +
+                ", tasks=" + tasks +
+                '}';
     }
 }

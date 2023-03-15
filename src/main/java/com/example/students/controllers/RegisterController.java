@@ -33,16 +33,19 @@ public class RegisterController {
     @GetMapping
     public ModelAndView getRegister(HttpServletRequest request) {
         if (cookieService.isSessionPresent(request.getCookies())) {
+            throw new RuntimeException();
+        } else {
             return new ModelAndView("register").addObject("user", new User()).addObject("address", new Address()).addObject("school", new School()).addObject("navElements", navbarService.getNavbar(cookieService.getValue(request.getCookies()), sessionService));
 
         }
-        throw new RuntimeException();
     }
 
     @PostMapping
     @Transactional(rollbackFor = InvalidCredentialsException.class)
     public String postRegister(@ModelAttribute User user, @ModelAttribute Address address, @ModelAttribute School school, HttpServletRequest request) {
         if (cookieService.isSessionPresent(request.getCookies())) {
+            throw new RuntimeException();
+        } else {
             //check if data is valid
             try {
 
@@ -68,6 +71,5 @@ public class RegisterController {
             }
             return "/index";
         }
-        throw new RuntimeException();
     }
 }

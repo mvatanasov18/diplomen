@@ -5,11 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 @Entity
 @Table(name = "Files")
-@ToString
 @EqualsAndHashCode
 @AllArgsConstructor
 public class FileEntity {
@@ -50,5 +50,14 @@ public class FileEntity {
     public FileEntity setTask(Task task) {
         this.task = task;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "FileEntity{" +
+                "id='" + id + '\'' +
+                ", fileContent=" + Arrays.toString(fileContent) +
+                ", task_id=" + task.getId() +
+                '}';
     }
 }

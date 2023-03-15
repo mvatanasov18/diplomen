@@ -11,7 +11,6 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "PendingUpdates")
-@ToString
 @EqualsAndHashCode
 @AllArgsConstructor
 public class PendingUpdate {
@@ -127,5 +126,20 @@ public class PendingUpdate {
     public PendingUpdate setUser(User user) {
         this.user = user;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "PendingUpdate{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", changesMade=" + changesMade +
+                ", admin_id=" + admin.getId() +
+                ", user_id=" + user.getId() +
+                '}';
     }
 }

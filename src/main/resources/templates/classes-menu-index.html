@@ -36,9 +36,6 @@
         Add class
     </button>
 
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteGroupModal">
-        Delete class
-    </button>
 </div>
 
 <!-- Modal -->
@@ -56,7 +53,7 @@
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">1-12</span>
                         <input type="number" th:field="*{newGroup.grade}" class="form-control myInput"
-                               placeholder="Grade" aria-label="Grade" aria-describedby="basic-addon1" required>
+                               placeholder="Grade" aria-label="Grade" aria-describedby="basic-addon1" required min="1">
                         <span class="input-group-text mySpan" id="basic-addon2">🔤</span>
                         <input type="text" th:field="*{newGroup.letter}" class="form-control "
                                placeholder="Letter" aria-label="Letter" aria-describedby="basic-addon2" size="1" required>
@@ -83,38 +80,25 @@
     </div>
 </div>
 
-<div class="modal fade" id="deleteGroupModal" tabindex="-1" aria-labelledby="deleteGroupModalLabel" aria-hidden="true"
-     style="color:black">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="deleteGroupModalLabel">Delete group form</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="/groups/delete" method="post">
-                <div class="modal-body">
-
-                    <div class="form-group">
-                        <label for="deleteBody">Choose class to delete:</label>
-
-                        <select id="deleteBody"  th:each="group:${groups}">
-                            <option th:value="group"
-                                    th:text="*{group.grade+' '+group.letter}"></option>
-
-                        </select>
-                    </div>
-
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
+<table class="table" style="color:whitesmoke;width: 70%;margin-left: 15%" th:unless="${#lists.isEmpty(groups)}">
+    <thead>
+        <tr>
+            <th scope="col" >id</th>
+            <th scope="col">Grade</th>
+            <th scope="col">Letter</th>
+            <th scope="col">Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr  th:each="group:${groups}">
+            <td th:text="${group.id}"></td>
+            <td th:text="${group.grade}"></td>
+            <td th:text="${group.letter}"></td>
+            <td> <form method="post" th:action="@{/groups/delete/{id}(id=${group.id})}">
+                <button type="submit" class="btn btn-danger"> Delete </button></form></td>
+        </tr>
+    </tbody>
+</table>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         crossorigin="anonymous"></script>

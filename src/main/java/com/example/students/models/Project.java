@@ -14,7 +14,6 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "Projects")
-@ToString
 @AllArgsConstructor
 @EqualsAndHashCode
 public class Project {
@@ -109,5 +108,16 @@ public class Project {
     public Project setAdmin(Admin admin) {
         this.admin = admin;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", dateCreated=" + dateCreated +
+                ", dueDate=" + dueDate +
+                ", admin_id=" + admin.getId() +
+                '}';
     }
 }

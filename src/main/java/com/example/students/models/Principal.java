@@ -9,7 +9,6 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "Principals")
-@ToString
 @EqualsAndHashCode
 @AllArgsConstructor
 public class Principal {
@@ -17,10 +16,10 @@ public class Principal {
     @Column(name = "Id", columnDefinition = "varchar(36)")
     private String id;
 
-    @Column(name = "Is_Verified")
+    @Column(name = "is_verified")
     private Boolean isVerified;
     @OneToOne
-    @JoinColumn(name = "User_Id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Principal() {
@@ -49,5 +48,14 @@ public class Principal {
     public Principal setUser(User user) {
         this.user = user;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Principal{" +
+                "id='" + id + '\'' +
+                ", isVerified=" + isVerified +
+                ", user_id=" + user.getId() +
+                '}';
     }
 }

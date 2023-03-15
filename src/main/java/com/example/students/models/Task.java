@@ -14,7 +14,6 @@ import java.util.UUID;
 @Table(name = "Tasks")
 @AllArgsConstructor
 @EqualsAndHashCode
-@ToString
 public class Task {
     @Id
     @Column(name = "Id", columnDefinition = "varchar(36)", nullable = false, unique = true)
@@ -100,5 +99,17 @@ public class Task {
     public Task setTeacher(Teacher teacher) {
         this.teacher = teacher;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", dateCreated=" + dateCreated +
+                ", dueDate=" + dueDate +
+                ", teacher_id=" + teacher.getId() +
+                '}';
     }
 }

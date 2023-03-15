@@ -13,7 +13,6 @@ import java.util.UUID;
 @Table(name = "Teams")
 @AllArgsConstructor
 @EqualsAndHashCode
-@ToString
 public class Team {
     @Id
     @Column(name = "Id", nullable = false, columnDefinition = "varchar(36)")
@@ -68,5 +67,13 @@ public class Team {
     public Team setName(String name) {
         this.name = name;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Team{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

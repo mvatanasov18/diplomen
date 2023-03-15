@@ -28,14 +28,10 @@ public class TeacherMenuController {
     private final TeacherService teacherService;
 
 
-
-
-
     @GetMapping
     public ModelAndView getTeacherMenuIndexPage(HttpServletRequest request) {
         if (cookieService.isSessionPresent(request.getCookies())) {
-            throw new RuntimeException();
-        } else {
+
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
             String role = roleService.getRole(session.getUser());
             if (role.equals("principal")) {
@@ -57,8 +53,6 @@ public class TeacherMenuController {
         // - check the teacher's data
         // - save the teacher entity using the teacher service
         if (cookieService.isSessionPresent(request.getCookies())) {
-            throw new RuntimeException();
-        } else {
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
             String role = roleService.getRole(session.getUser());
             if (role.equals("principal")) {
@@ -71,7 +65,9 @@ public class TeacherMenuController {
                 teacherService.save(teacher);
                 return new ModelAndView("redirect:/teachers");
             }
-            throw new UserDoesNotHavePermissionException();
         }
+
+            throw new UserDoesNotHavePermissionException();
+
     }
 }

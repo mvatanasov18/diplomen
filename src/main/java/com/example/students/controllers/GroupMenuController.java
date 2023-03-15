@@ -29,7 +29,7 @@ public class GroupMenuController {
 
     @GetMapping
     public ModelAndView getGroupsMenuIndexPage(HttpServletRequest request) {
-        if (!cookieService.isSessionPresent(request.getCookies())) {
+        if (cookieService.isSessionPresent(request.getCookies())) {
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
             String role = roleService.getRole(session.getUser());
 
@@ -43,7 +43,6 @@ public class GroupMenuController {
                 }
 
                 return new ModelAndView("/classes-menu-index")
-                        .addObject("user", new User())
                         .addObject("navElements", navbarService
                                 .getNavbar(cookieService.getValue(request.getCookies()), sessionService))
                         .addObject("newGroup", new Group())
@@ -57,8 +56,6 @@ public class GroupMenuController {
     @PostMapping
     public ModelAndView postGroup(@ModelAttribute Group group, HttpServletRequest request) {
         if (cookieService.isSessionPresent(request.getCookies())) {
-            throw new UserDoesNotHavePermissionException();
-        } else {
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
             String role = roleService.getRole(session.getUser());
             if (role.equals("principal")) {
@@ -66,23 +63,26 @@ public class GroupMenuController {
                 return new ModelAndView("redirect:/groups");
             }
             return null;
+
         }
+        throw new UserDoesNotHavePermissionException();
     }
 
-    @PostMapping(value = "delete")
-    public ModelAndView deleteGroup(@ModelAttribute Group group, HttpServletRequest request){
+    @PostMapping(value = "/delete/{id}")
+    public ModelAndView deleteGroup( HttpServletRequest request, @PathVariable String id){
         if (cookieService.isSessionPresent(request.getCookies())) {
-            throw new UserDoesNotHavePermissionException();
-        } else {
+
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
             String role = roleService.getRole(session.getUser());
             if (role.equals("principal")) {
-                System.out.println(group);
-
-                groupService.delete(group);
-                return new ModelAndView("redirect:/groups");
+                String schoolId= session.getUser().getSchool().getId();
+                if( groupService.checkGroupByIdAndSchoolId(id,schoolId)){
+                    groupService.deleteById(id);
+                    return new ModelAndView("redirect:/groups");
+                }
             }
-            return null;
         }
+        throw new UserDoesNotHavePermissionException();
     }
+
 }

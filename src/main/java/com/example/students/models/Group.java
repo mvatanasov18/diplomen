@@ -13,7 +13,6 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "Groups")
-@AllArgsConstructor
 @EqualsAndHashCode
 public class Group {
     @Id
@@ -36,8 +35,23 @@ public class Group {
         id = UUID.randomUUID().toString();
         grade=1;
         letter='a';
-        teacher=new Teacher();
         students=new HashSet<>();
+    }
+
+    public Group(String id, Integer grade, char letter) {
+        this.id = id;
+        this.grade = grade;
+        this.letter = letter;
+    }
+
+    public void setGrade(Integer grade) {
+        this.grade = grade;
+    }
+
+    public Group(String id, Integer grade, char letter, Teacher teacher, Set<Student> students) {
+        this(id,grade,letter);
+        this.teacher = teacher;
+        this.students = students;
     }
 
     public String getId() {
@@ -86,7 +100,6 @@ public class Group {
                 "id='" + id + '\'' +
                 ", grade=" + grade +
                 ", letter=" + letter +
-                ", teacher=" + teacher +
                 '}';
     }
 }

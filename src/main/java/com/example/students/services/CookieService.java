@@ -17,6 +17,6 @@ public class CookieService {
     }
 
     public boolean isSessionPresent(Cookie[] cookies) {
-        return getValue(cookies).equals("");
+        return !getValue(cookies).equals("");
     }
 }

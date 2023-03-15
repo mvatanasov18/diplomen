@@ -19,4 +19,5 @@ public interface GroupRepository extends JpaRepository<Group, String> {
             "ON u.id = t.[user_id] " +
             "WHERE u.school_id = :id ",nativeQuery = true)
     List<Group> findAllBySchoolId(String id);
+
 }

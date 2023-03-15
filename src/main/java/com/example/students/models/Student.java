@@ -13,7 +13,6 @@ import java.util.UUID;
 @Table(name = "Students")
 @AllArgsConstructor
 @EqualsAndHashCode
-@ToString
 public class Student {
     @Id
     @Column(name = "Id", nullable = false, columnDefinition = "varchar(36)")
@@ -81,5 +80,14 @@ public class Student {
     public Student setTeams(Set<Team> teams) {
         this.teams = teams;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id='" + id + '\'' +
+                ", user=" + user +
+                ", group_id=" + group.getId() +
+                '}';
     }
 }

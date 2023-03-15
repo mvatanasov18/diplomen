@@ -57,6 +57,8 @@ public class LoginController {
     @PostMapping
     public ModelAndView postLogin(@ModelAttribute User loginUser, HttpServletResponse response, HttpServletRequest request) {
         if (cookieService.isSessionPresent(request.getCookies())) {
+            throw new UserDoesNotHavePermissionException();
+        } else {
             User user = userService.findByUsername(loginUser.getUsername());
 
             if (user != null) {
@@ -73,7 +75,7 @@ public class LoginController {
                     if (temp != null) {
                         sessionService.deleteSession(temp);
                     }
-                    Session session = new Session(id,roleService.getRole(user),LocalDateTime.now(), user);
+                    Session session = new Session(id, roleService.getRole(user), LocalDateTime.now(), user);
                     if (sessionService.saveSession(session) != null) {
                         System.out.println("creating a cookie");
                         Cookie cookie = new Cookie("session", id);
@@ -88,6 +90,5 @@ public class LoginController {
             }
             throw new InvalidCredentialsException();
         }
-        throw new UserDoesNotHavePermissionException();
     }
 }
