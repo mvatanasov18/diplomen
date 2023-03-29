@@ -35,12 +35,13 @@ public class LoginController {
     @GetMapping
     public ModelAndView getLogin(HttpServletRequest request) {
         if (cookieService.isSessionPresent(request.getCookies())) {
+            throw new UserDoesNotHavePermissionException();
+        } else {
             return new ModelAndView("/login")
                     .addObject("user", new User())
                     .addObject("navElements",
                             navbarService.getNavbar(cookieService.getValue(request.getCookies()), sessionService));
         }
-        throw new UserDoesNotHavePermissionException();
     }
 
     @GetMapping(value = "/logout")
@@ -57,6 +58,7 @@ public class LoginController {
     @PostMapping
     public ModelAndView postLogin(@ModelAttribute User loginUser, HttpServletResponse response, HttpServletRequest request) {
         if (cookieService.isSessionPresent(request.getCookies())) {
+            System.out.println("ima kookie");
             throw new UserDoesNotHavePermissionException();
         } else {
             User user = userService.findByUsername(loginUser.getUsername());

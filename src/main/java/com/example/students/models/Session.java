@@ -17,7 +17,7 @@ import java.util.UUID;
 public class Session {
     @Id
     private String id;
-    @Column(name = "role_name")
+    @Column(name = "RoleName")
     private String roleName;
     @Column(name = "time_created")
     private LocalDateTime timeCreated;

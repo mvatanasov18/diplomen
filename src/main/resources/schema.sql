@@ -108,22 +108,22 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Addresses]
 (
-    [id]              [varchar](36)   NOT NULL PRIMARY KEY,
-    [city]            [nvarchar](100) NOT NULL,
-    [house_number]    [int]           NOT NULL CHECK ([house_number] > 0),
-    [street]          [nvarchar](100) NOT NULL,
-    [additional_info] [nvarchar](100) NULL,
+    [Id]              [varchar](36)   NOT NULL PRIMARY KEY,
+    [City]            [nvarchar](100) NOT NULL,
+    [HouseNumber]    [int]           NOT NULL CHECK ([house_number] > 0),
+    [Street]          [nvarchar](100) NOT NULL,
+    [AdditionalInfo] [nvarchar](100) NULL,
 )
 CREATE TABLE [dbo].[Schools]
 (
-    [id]         [varchar](36)   NOT NULL PRIMARY KEY,
-    [name]       [nvarchar](255) NOT NULL,
-    [address_id] [varchar](36)   NOT NULL UNIQUE,
-    FOREIGN KEY ([address_id]) REFERENCES Addresses (id)
+    [Id]         [varchar](36)   NOT NULL PRIMARY KEY,
+    [Name]       [nvarchar](255) NOT NULL,
+    [AddressId] [varchar](36)   NOT NULL UNIQUE,
+    FOREIGN KEY ([AddressId]) REFERENCES Addresses (Id)
 )
 CREATE TABLE [dbo].[Users]
 (
-    [id]         [varchar](36)   NOT NULL PRIMARY KEY,
+    [Id]         [varchar](36)   NOT NULL PRIMARY KEY,
     [username]   [varchar](150)  NOT NULL UNIQUE,
     [password]   [varchar](500)  NOT NULL,
     [email]      [varchar](255)  NOT NULL UNIQUE,

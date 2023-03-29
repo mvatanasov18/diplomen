@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ModelAndView handleOtherExceptions(Exception exception) {
-
+        exception.printStackTrace();
         return new ModelAndView("custom-error").addObject("message", "An error occurred!");
     }
 
