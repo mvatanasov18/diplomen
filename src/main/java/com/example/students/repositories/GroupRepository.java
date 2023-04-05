@@ -3,6 +3,7 @@ package com.example.students.repositories;
 import com.example.students.models.Group;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -18,6 +19,6 @@ public interface GroupRepository extends JpaRepository<Group, String> {
             "INNER JOIN Users AS u " +
             "ON u.Id = t.[UserId] " +
             "WHERE u.SchoolId = :id ",nativeQuery = true)
-    List<Group> findAllBySchoolId(String id);
+    List<Group> findAllBySchoolId(@Param("id") String id);
 
 }
