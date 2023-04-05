@@ -17,7 +17,7 @@ public class Admin {
     private String id;
 
     @OneToOne
-    @JoinColumn(name = "user_Id")
+    @JoinColumn(name = "UserId")
     private User user;
 
     public Admin() {

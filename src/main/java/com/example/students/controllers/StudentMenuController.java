@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(value = "/students")
+@RequestMapping(value = "/studentsMenu")
 @AllArgsConstructor
 public class StudentMenuController {
 

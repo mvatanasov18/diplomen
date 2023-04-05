@@ -15,15 +15,15 @@ import java.util.UUID;
 @EqualsAndHashCode
 public class Address {
     @Id
-    @Column(name = "id", columnDefinition = "varchar(36) NOT NULL")
+    @Column(name = "Id", columnDefinition = "varchar(36) NOT NULL")
     private String id;
     @Column(name = "City", columnDefinition = "nvarchar(100) NOT NULL")
     private String city;
-    @Column(name = "House_Number", columnDefinition = "int CHECK(HouseNumber>0) NOT NULL")
+    @Column(name = "HouseNumber", columnDefinition = "int CHECK(HouseNumber>0) NOT NULL")
     private Integer houseNumber;
     @Column(name = "Street", columnDefinition = "nvarchar(100) NOT NULL")
     private String street;
-    @Column(name = "Additional_Info", columnDefinition = "nvarchar(100)")
+    @Column(name = "AdditionalInfo", columnDefinition = "nvarchar(100)")
     private String additionalInfo;
 
     public Address() {

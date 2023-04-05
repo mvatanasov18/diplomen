@@ -18,46 +18,47 @@ public class NavbarService {
     //statistics about the school
     private Map<String, String> setMapForPrincipal() {
         Map<String, String> elements = new LinkedHashMap<>();
-        elements.put("/school", "School Menu");
-        elements.put("/teachers", "Teachers Menu");
-        elements.put("/groups", "Classes Menu");
-        elements.put("/students", "Students Menu");
-        elements.put("/profile", "Profile");
-        elements.put("/login/logout", "Logout");
+        elements.put("/school", "Промяна на училищни данни");
+        elements.put("/adminsMenu", "Меню за администрация");
+        elements.put("/teachersMenu", "Меню за учителите");
+        elements.put("/groupsMenu", "Меню за класовете");
+        elements.put("/studentsMenu", "Меню за учениците");
+        elements.put("/profile", "Профил");
+        elements.put("/login/logout", "Излез");
 
         return elements;
     }
 
     private Map<String, String> setMapForStudent() {
         Map<String, String> elements = new LinkedHashMap<>();
-        elements.put("/teams", "Teams");
-        elements.put("/projects", "Projects");
-        elements.put("/tasks", "Tasks");
-        elements.put("/calendar", "Calendar");
-        elements.put("/profile", "Profile");
-        elements.put("/login/logout", "Logout");
+        elements.put("/teams", "Отбори");
+        elements.put("/projects", "Проекти");
+        elements.put("/tasks", "Домашни работи");
+        elements.put("/calendar", "Календар");
+        elements.put("/profile", "Профил");
+        elements.put("/login/logout", "Излез");
 
         return elements;
     }
 
     private Map<String, String> setMapForTeacher() {
         Map<String, String> elements = new LinkedHashMap<>();
-        elements.put("/teamsMenu", "Teams Menu");
-        elements.put("/projectsMenu", "Projects Menu");
-        elements.put("/tasksMenu", "Tasks Menu");
-        elements.put("/profile", "Profile");
-        elements.put("/login/logout", "Logout");
+        elements.put("/teamsMenu", "Меню за отборите");
+        elements.put("/projectsMenu", "Меню за проектите");
+        elements.put("/tasksMenu", "Меню за домашните");
+        elements.put("/profile", "Профил");
+        elements.put("/login/logout", "Излез");
         return elements;
     }
 
     private Map<String, String> setMapForAdmin() {
         Map<String, String> elements = new LinkedHashMap<>();
-        elements.put("/groups", "Classes Menu");
-        elements.put("/students", "Students Menu");
-        elements.put("/teamsMenu", "Teams Menu");
-        elements.put("/projectsMenu", "Projects Menu");
-        elements.put("/profile", "Profile");
-        elements.put("/login/logout", "Logout");
+        elements.put("/groupsMenu", "Меню за класовете");
+        elements.put("/studentsMenu", "Меню за учениците");
+        elements.put("/teamsMenu", "Меню за отборите");
+        elements.put("/projectsMenu", "Меню за проектите");
+        elements.put("/profile", "Профил");
+        elements.put("/login/logout", "Излез");
 
         return elements;
     }
@@ -78,9 +79,9 @@ public class NavbarService {
 
         if (sessionId.equals("")) {
             Map<String, String> temp = new TreeMap<>();
-            temp.put("/login", "Login");
-            temp.put("/register", "Register");
-            temp.put("/", "Home");
+            temp.put("/login", "Вписване");
+            temp.put("/register", "Регистрация");
+            temp.put("/", "Начало");
             return new Navbar(temp);
 
 

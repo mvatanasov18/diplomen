@@ -15,7 +15,7 @@ public class GlobalExceptionHandler {
     public ModelAndView handleEmailAlreadyTakenException(EmailAlreadyTakenException exception) {
 
         return new ModelAndView("custom-error")
-                .addObject("message", "Email already taken!");
+                .addObject("message", "Имейлът вече е заето");
     }
 
     @ExceptionHandler(UsernameAlreadyTakenException.class)
@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ModelAndView handleUsernameAlreadyTakenException(UsernameAlreadyTakenException exception) {
 
-        return new ModelAndView("custom-error").addObject("message", "Username already taken!");
+        return new ModelAndView("custom-error").addObject("message", "Потребителското име вече е заето!");
     }
 
     @ExceptionHandler(InvalidCredentialsException.class)
@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ModelAndView handleInvalidCredentialsException(InvalidCredentialsException exception) {
 
-        return new ModelAndView("custom-error").addObject("message", "Invalid credentials!");
+        return new ModelAndView("custom-error").addObject("message", "Грешни данни за вписване!");
     }
 
     @ExceptionHandler(Exception.class)
@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ModelAndView handleOtherExceptions(Exception exception) {
         exception.printStackTrace();
-        return new ModelAndView("custom-error").addObject("message", "An error occurred!");
+        return new ModelAndView("custom-error").addObject("message", "Грешка! Моля затворете страницата и опитайте отново! Ако грешката продължава моля посетете: https://github.com/codingburgas/2223-dzi-java-mvatanasov18");
     }
 
     @ExceptionHandler(UserNotFoundException.class)
@@ -48,7 +48,7 @@ public class GlobalExceptionHandler {
     public ModelAndView handleNoUserFoundException(UserNotFoundException userNotFoundException) {
 
         return new ModelAndView("custom-error")
-                .addObject("message", "No such user with this id!");
+                .addObject("message", "Няма потребител с такъв идентификационен номер!");
     }
 
     @ExceptionHandler(UserDoesNotHavePermissionException.class)
@@ -57,7 +57,7 @@ public class GlobalExceptionHandler {
     public ModelAndView handleUserDoesNotHavePermissionException(UserDoesNotHavePermissionException userDoesNotHavePermissionException) {
 
         return new ModelAndView("custom-error")
-                .addObject("message", "You don't have permission to view this page!");
+                .addObject("message", "Не сте оторизирани да посещавате тази страница! Моля впишете се и пробвайте пак?");
     }
 
     @ExceptionHandler(NoAvailableTeachersException.class)
@@ -66,6 +66,6 @@ public class GlobalExceptionHandler {
     public ModelAndView handleNoAvailableTeachersException(NoAvailableTeachersException noAvailableTeachersException) {
 
         return new ModelAndView("custom-error")
-                .addObject("message", "Add teachers before you create a class!");
+                .addObject("message", "Добавете учители преди да създавате класове!");
     }
 }

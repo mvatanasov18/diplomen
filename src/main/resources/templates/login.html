@@ -29,23 +29,23 @@
     </div>
 </nav>
 
-<h1 class="display-3" style="text-align: center">Login page</h1>
+<h1 class="display-3" style="text-align: center">Вписване</h1>
 
 
 <form id="form" method="post" th:action="@{/login}">
     <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1">@</span>
-        <input type="text" th:field="*{user.username}" class="form-control myInput" placeholder="Username"
+        <input type="text" th:field="*{user.username}" class="form-control myInput" placeholder="Потребителско име"
                aria-label="Username" aria-describedby="basic-addon1" required>
     </div>
     <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon2">🔒</span>
-        <input type="password" th:field="*{user.password}" class="form-control myInput" placeholder="Password"
+        <input type="password" th:field="*{user.password}" class="form-control myInput" placeholder="Парола"
                aria-label="Password" aria-describedby="basic-addon2" required>
     </div>
 
 
-    <button style="float: right;" type="submit" class="btn btn-primary">Submit</button>
+    <button style="float: right;" type="submit" class="btn btn-primary">Изпрати</button>
 </form>
 
 

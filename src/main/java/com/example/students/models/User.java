@@ -12,26 +12,26 @@ import java.util.UUID;
 @EqualsAndHashCode
 public class User {
     @Id
-    @Column(name = "id", columnDefinition = "varchar(36)")
+    @Column(name = "Id", columnDefinition = "varchar(36)")
     private final String id;
 
-    @Column(name = "username", columnDefinition = "varchar(150)")
+    @Column(name = "Username", columnDefinition = "varchar(150)")
     private String username;
 
-    @Column(name = "password", columnDefinition = "varchar(255)")
+    @Column(name = "Password", columnDefinition = "varchar(255)")
     private String password;
 
-    @Column(name = "email", columnDefinition = "varchar(255)", unique = true)
+    @Column(name = "Email", columnDefinition = "varchar(255)", unique = true)
     private String email;
-    @Column(name = "first_name", columnDefinition = "nvarchar(100)")
+    @Column(name = "FirstName", columnDefinition = "nvarchar(100)")
     private String firstName;
-    @Column(name = "last_name", columnDefinition = "nvarchar(100)")
+    @Column(name = "LastName", columnDefinition = "nvarchar(100)")
     private String lastName;
 
-    @Column(name = "salt")
+    @Column(name = "Salt")
     private byte[] salt;
     @ManyToOne
-    @JoinColumn(name = "school_id")
+    @JoinColumn(name = "SchoolId")
     private School school;
 
 

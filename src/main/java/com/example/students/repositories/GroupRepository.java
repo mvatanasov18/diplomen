@@ -8,16 +8,16 @@ import java.util.List;
 
 public interface GroupRepository extends JpaRepository<Group, String> {
     @Query(value="SELECT " +
-            "g.id, " +
-            "g.grade, " +
-            "g.letter, " +
-            "g.teacher_id " +
+            "g.Id, " +
+            "g.Grade, " +
+            "g.Letter, " +
+            "g.TeacherId " +
             "FROM Groups AS g " +
             "INNER JOIN Teachers AS t " +
-            "ON t.id = g.teacher_id " +
+            "ON t.Id = g.TeacherId " +
             "INNER JOIN Users AS u " +
-            "ON u.id = t.[user_id] " +
-            "WHERE u.school_id = :id ",nativeQuery = true)
+            "ON u.Id = t.[UserId] " +
+            "WHERE u.SchoolId = :id ",nativeQuery = true)
     List<Group> findAllBySchoolId(String id);
 
 }

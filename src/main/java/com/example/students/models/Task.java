@@ -22,16 +22,16 @@ public class Task {
     private String name;
     @Column(name = "Description", columnDefinition = "nvarchar(max)")
     private String description;
-    @Column(name = "Date_Created", columnDefinition = "datetime2(0)")
+    @Column(name = "DateCreated", columnDefinition = "datetime2(0)")
     private LocalDateTime dateCreated;
-    @Column(name = "Due_Date", columnDefinition = "datetime2(0) CHECK(DateCreated<=DueDate)")
+    @Column(name = "DueDate", columnDefinition = "datetime2(0) CHECK(DateCreated<=DueDate)")
     private LocalDateTime dueDate;
 
     @ManyToMany
-    @JoinTable(name = "StudentsTasks", joinColumns = @JoinColumn(name = "Task_Id"), inverseJoinColumns = @JoinColumn(name = "Student_Id"))
+    @JoinTable(name = "StudentsTasks", joinColumns = @JoinColumn(name = "TaskId"), inverseJoinColumns = @JoinColumn(name = "StudentId"))
     private Set<Student> students;
     @ManyToOne
-    @JoinColumn(name = "Teacher_Id", nullable = false)
+    @JoinColumn(name = "TeacherId", nullable = false)
     private Teacher teacher;
 
     public Task() {

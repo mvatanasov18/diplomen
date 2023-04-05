@@ -27,60 +27,60 @@
         </div>
     </div>
 </nav>
-<h1 class="display-3" style="text-align: center">Registration form</h1>
+<h1 class="display-3" style="text-align: center">Регистрация</h1>
 
 
 <form id="form" method="post" th:action="@{/register}">
     <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1">@</span>
-        <input type="text" th:field="*{user.username}" class="form-control myInput" placeholder="Username"
+        <input type="text" th:field="*{user.username}" class="form-control myInput" placeholder="Потребителско име"
                aria-label="Username" aria-describedby="basic-addon1" required>
 
         <span class="input-group-text mySpan" id="basic-addon5">📧</span>
-        <input type="email" th:field="*{user.email}" class="form-control" placeholder="Email" aria-label="Email"
+        <input type="email" th:field="*{user.email}" class="form-control" placeholder="Имейл" aria-label="Email"
                aria-describedby="basic-addon5" required>
     </div>
     <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon2">🔒</span>
-        <input type="password" th:field="*{user.password}" class="form-control" placeholder="Password"
+        <input type="password" th:field="*{user.password}" class="form-control" placeholder="Парола"
                aria-label="Password" aria-describedby="basic-addon2" required>
     </div>
 
     <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon3">🧑</span>
-        <input type="text" th:field="*{user.firstName}" class="form-control myInput" placeholder="First Name"
+        <input type="text" th:field="*{user.firstName}" class="form-control myInput" placeholder="Име"
                aria-label="First Name" aria-describedby="basic-addon3" required>
         <span class="input-group-text mySpan" id="basic-addon4">👪</span>
-        <input type="text" th:field="*{user.lastName}" class="form-control" placeholder="Last Name"
+        <input type="text" th:field="*{user.lastName}" class="form-control" placeholder="Фамилия"
                aria-label="Last Name" aria-describedby="basic-addon4" required>
     </div>
 
     <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon6">🏫</span>
-        <input type="text" th:field="*{school.name}" class="form-control" placeholder="SchoolName"
+        <input type="text" th:field="*{school.name}" class="form-control" placeholder="Име на училището"
                aria-label="SchoolName" aria-describedby="basic-addon6" required>
     </div>
 
     <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon7">🏙️</span>
-        <input type="text" th:field="*{address.city}" class="form-control myInput" placeholder="City" aria-label="City"
+        <input type="text" th:field="*{address.city}" class="form-control myInput" placeholder="Град" aria-label="City"
                aria-describedby="basic-addon7" required>
         <span class="input-group-text mySpan" id="basic-addon8">🏠</span>
-        <input type="number" th:field="*{address.houseNumber}" class="form-control" placeholder="Number"
+        <input type="number" th:field="*{address.houseNumber}" class="form-control" placeholder="Номер"
                aria-label="Number" aria-describedby="basic-addon8" required min="0" max="9999999999">
     </div>
 
     <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon9">🛣️</span>
-        <input type="text" th:field="*{address.street}" class="form-control" placeholder="Street" aria-label="Street"
+        <input type="text" th:field="*{address.street}" class="form-control" placeholder="Улица" aria-label="Street"
                aria-describedby="basic-addon9" required>
     </div>
     <div class="input-group mb-3">
-        <textarea th:field="*{address.additionalInfo}" placeholder="Additional Info" class="form-control"
+        <textarea th:field="*{address.additionalInfo}" placeholder="Допълнителна информация" class="form-control"
                   rows="2"></textarea>
     </div>
 
-    <button style="float:right" type="submit" class="btn btn-primary">Submit</button>
+    <button style="float:right" type="submit" class="btn btn-primary">Изпрати</button>
 </form>
 
 

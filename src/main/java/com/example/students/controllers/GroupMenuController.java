@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/groups")
+@RequestMapping(value = "/groupsMenu")
 @AllArgsConstructor
 public class GroupMenuController {
 
@@ -60,7 +60,7 @@ public class GroupMenuController {
             String role = roleService.getRole(session.getUser());
             if (role.equals("principal")) {
                 groupService.save(group);
-                return new ModelAndView("redirect:/groups");
+                return new ModelAndView("redirect:/groupsMenu");
             }
             return null;
 
@@ -78,7 +78,7 @@ public class GroupMenuController {
                 String schoolId= session.getUser().getSchool().getId();
                 if( groupService.checkGroupByIdAndSchoolId(id,schoolId)){
                     groupService.deleteById(id);
-                    return new ModelAndView("redirect:/groups");
+                    return new ModelAndView("redirect:/groupsMenu");
                 }
             }
         }

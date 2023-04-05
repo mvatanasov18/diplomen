@@ -124,151 +124,151 @@ CREATE TABLE [dbo].[Schools]
 CREATE TABLE [dbo].[Users]
 (
     [Id]         [varchar](36)   NOT NULL PRIMARY KEY,
-    [username]   [varchar](150)  NOT NULL UNIQUE,
-    [password]   [varchar](500)  NOT NULL,
-    [email]      [varchar](255)  NOT NULL UNIQUE,
-    [first_name] [nvarchar](100) NOT NULL,
-    [last_name]  [nvarchar](100) NOT NULL,
-    [school_id]  [varchar](36)   NOT NULL,
-    salt         varbinary(16)   NOT NULL,
-    FOREIGN KEY ([school_id]) REFERENCES Schools (id)
+    [Username]   [varchar](150)  NOT NULL UNIQUE,
+    [Password]   [varchar](500)  NOT NULL,
+    [Email]      [varchar](255)  NOT NULL UNIQUE,
+    [FirstName] [nvarchar](100) NOT NULL,
+    [LastName]  [nvarchar](100) NOT NULL,
+    [SchoolId]  [varchar](36)   NOT NULL,
+    Salt         varbinary(16)   NOT NULL,
+    FOREIGN KEY ([SchoolId]) REFERENCES Schools (Id)
 )
 
 CREATE TABLE [dbo].[Admins]
 (
-    [id]      [varchar](36) NOT NULL PRIMARY KEY,
-    [user_id] [varchar](36) NOT NULL UNIQUE,
-    FOREIGN KEY ([user_id]) REFERENCES Users (id)
+    [Id]      [varchar](36) NOT NULL PRIMARY KEY,
+    [UserId] [varchar](36) NOT NULL UNIQUE,
+    FOREIGN KEY ([UserId]) REFERENCES Users (Id)
 )
 CREATE TABLE [dbo].[Principals]
 (
-    [id]          [varchar](36) NOT NULL PRIMARY KEY,
-    [user_id]     [varchar](36) NOT NULL UNIQUE,
-    [is_verified] [bit]         NOT NULL,
-    FOREIGN KEY ([user_id]) REFERENCES Users (id)
+    [Id]          [varchar](36) NOT NULL PRIMARY KEY,
+    [UserId]     [varchar](36) NOT NULL UNIQUE,
+    [IsVerified] [bit]         NOT NULL,
+    FOREIGN KEY ([UserId]) REFERENCES Users (Id)
 )
 
 CREATE TABLE [dbo].[Teachers]
 (
-    [id]      [varchar](36) NOT NULL PRIMARY KEY,
-    [user_id] [varchar](36) NOT NULL UNIQUE,
-    FOREIGN KEY ([user_id]) REFERENCES Users (id)
+    [Id]      [varchar](36) NOT NULL PRIMARY KEY,
+    [UserId] [varchar](36) NOT NULL UNIQUE,
+    FOREIGN KEY ([UserId]) REFERENCES Users (Id)
 )
 
 CREATE TABLE [dbo].[Groups]
 (
-    [id]         [varchar](36) NOT NULL PRIMARY KEY,
-    [grade]      [smallint]    NOT NULL CHECK (([grade] = (12) OR
-                                                [grade] = (11) OR
-                                                [grade] = (10) OR
-                                                [grade] = (9) OR
-                                                [grade] = (8) OR
-                                                [grade] = (7) OR
-                                                [grade] = (6) OR
-                                                [grade] = (5) OR
-                                                [grade] = (4) OR
-                                                [grade] = (3) OR
-                                                [grade] = (2) OR
-                                                [grade] = (1))),
-    [letter]     [nchar](1)    NULL,
-    [teacher_id] [varchar](36) NOT NULL UNIQUE,
-    FOREIGN KEY (teacher_id) REFERENCES Teachers (id)
+    [Id]         [varchar](36) NOT NULL PRIMARY KEY,
+    [Grade]      [smallint]    NOT NULL CHECK (([Grade] = (12) OR
+                                                [Grade] = (11) OR
+                                                [Grade] = (10) OR
+                                                [Grade] = (9) OR
+                                                [Grade] = (8) OR
+                                                [Grade] = (7) OR
+                                                [Grade] = (6) OR
+                                                [Grade] = (5) OR
+                                                [Grade] = (4) OR
+                                                [Grade] = (3) OR
+                                                [Grade] = (2) OR
+                                                [Grade] = (1))),
+    [Letter]     [nchar](1)    NULL,
+    [TeacherId] [varchar](36) NOT NULL UNIQUE,
+    FOREIGN KEY (TeacherId) REFERENCES Teachers (Id)
 )
 
 CREATE TABLE [dbo].[Students]
 (
-    [id]       [varchar](36) NOT NULL PRIMARY KEY,
-    [user_id]  [varchar](36) NOT NULL UNIQUE,
-    [group_id] [varchar](36) NOT NULL,
-    FOREIGN KEY ([user_id]) REFERENCES Users (id),
-    FOREIGN KEY ([group_id]) REFERENCES Groups (id)
+    [Id]       [varchar](36) NOT NULL PRIMARY KEY,
+    [UserId]  [varchar](36) NOT NULL UNIQUE,
+    [GroupId] [varchar](36) NOT NULL,
+    FOREIGN KEY ([UserId]) REFERENCES Users (Id),
+    FOREIGN KEY ([GroupId]) REFERENCES Groups (Id)
 )
 CREATE TABLE [dbo].[Tasks]
 (
-    [id]           [varchar](36)   NOT NULL PRIMARY KEY,
-    [name]         [nvarchar](255) NULL,
-    [description]  [nvarchar](max) NULL,
-    [date_created] [datetime2](0)  NOT NULL,
-    [due_date]     [datetime2](0)  NOT NULL,
-    [teacher_id]   [varchar](36)   NOT NULL,
-    FOREIGN KEY (teacher_id) REFERENCES Teachers (id)
+    [Id]           [varchar](36)   NOT NULL PRIMARY KEY,
+    [Name]         [nvarchar](255) NULL,
+    [Description]  [nvarchar](max) NULL,
+    [DateCreated] [datetime2](0)  NOT NULL,
+    [DueDate]     [datetime2](0)  NOT NULL,
+    [TeacherId]   [varchar](36)   NOT NULL,
+    FOREIGN KEY (TeacherId) REFERENCES Teachers (Id)
 )
 
 CREATE TABLE [dbo].[Files]
 (
-    [id]           [varchar](36)    NOT NULL PRIMARY KEY,
-    [file_content] [varbinary](max) NOT NULL,
-    [task_id]      [varchar](36)    NOT NULL,
-    FOREIGN KEY ([task_id]) REFERENCES Tasks (id)
+    [Id]           [varchar](36)    NOT NULL PRIMARY KEY,
+    [FileContent] [varbinary](max) NOT NULL,
+    [TaskId]      [varchar](36)    NOT NULL,
+    FOREIGN KEY ([TaskId]) REFERENCES Tasks (Id)
 )
 
 CREATE TABLE [dbo].[PendingUpdates]
 (
-    [id]           [varchar](36)    NOT NULL PRIMARY KEY,
-    [username]     [varchar](150)   NOT NULL UNIQUE,
-    [password]     [varbinary](max) NOT NULL,
-    [email]        [varchar](255)   NOT NULL UNIQUE,
-    [first_name]   [nvarchar](100)  NOT NULL,
-    [last_name]    [nvarchar](100)  NOT NULL,
-    [changes_made] datetime2(0)     NOT NULL,
-    [admin_id]     [varchar](36)    NOT NULL,
-    [user_id]      [varchar](36)    NOT NULL UNIQUE,
-    FOREIGN KEY ([user_id]) REFERENCES Users (id),
-    FOREIGN KEY ([admin_id]) REFERENCES Admins (id)
+    [Id]           [varchar](36)    NOT NULL PRIMARY KEY,
+    [Username]     [varchar](150)   NOT NULL UNIQUE,
+    [Password]     [varbinary](max) NOT NULL,
+    [Email]        [varchar](255)   NOT NULL UNIQUE,
+    [FirstName]   [nvarchar](100)  NOT NULL,
+    [LastName]    [nvarchar](100)  NOT NULL,
+    [ChangesMade] datetime2(0)     NOT NULL,
+    [AdminId]     [varchar](36)    NOT NULL,
+    [UserId]      [varchar](36)    NOT NULL UNIQUE,
+    FOREIGN KEY ([UserId]) REFERENCES Users (Id),
+    FOREIGN KEY ([AdminId]) REFERENCES Admins (Id)
 )
 CREATE TABLE [dbo].[Projects]
 (
-    [id]           [varchar](36)   NOT NULL PRIMARY KEY,
-    [name]         [nvarchar](255) NULL,
-    [description]  [nvarchar](max) NULL,
-    [date_created] [datetime2](0)  NOT NULL,
-    [due_date]     [datetime2](0)  NOT NULL,
-    [admin_id]     [varchar](36)   NOT NULL,
-    FOREIGN KEY ([admin_id]) REFERENCES Admins (id)
+    [Id]           [varchar](36)   NOT NULL PRIMARY KEY,
+    [Name]         [nvarchar](255) NULL,
+    [Description]  [nvarchar](max) NULL,
+    [DateCreated] [datetime2](0)  NOT NULL,
+    [DueDate]     [datetime2](0)  NOT NULL,
+    [AdminId]     [varchar](36)   NOT NULL,
+    FOREIGN KEY ([AdminId]) REFERENCES Admins (Id)
 )
 CREATE TABLE [dbo].[Sessions]
 (
-    [id]           [varchar](36) NOT NULL PRIMARY KEY,
-    [role_name]    [varchar](20) NOT NULL
-        CHECK (([role_name] = 'admin' OR
-                [role_name] = 'student' OR
-                [role_name] = 'teacher' OR
-                [role_name] = 'principal')),
-    [time_created] datetime2(0)  NOT NULL,
-    [user_id]      [varchar](36) NOT NULL UNIQUE,
-    FOREIGN KEY ([user_id]) REFERENCES Users (id)
+    [Id]           [varchar](36) NOT NULL PRIMARY KEY,
+    [RoleName]    [varchar](20) NOT NULL
+        CHECK (([RoleName] = 'admin' OR
+                [RoleName] = 'student' OR
+                [RoleName] = 'teacher' OR
+                [RoleName] = 'principal')),
+    [TimeCreated] datetime2(0)  NOT NULL,
+    [UserId]      [varchar](36) NOT NULL UNIQUE,
+    FOREIGN KEY ([UserId]) REFERENCES Users (Id)
 )
 CREATE TABLE [dbo].[StudentsTasks]
 (
-    [student_id] [varchar](36) NOT NULL,
-    [task_id]    [varchar](36) NOT NULL,
-    PRIMARY KEY ([student_id], [task_id]),
-    FOREIGN KEY ([student_id]) REFERENCES Students (id),
-    FOREIGN KEY ([task_id]) REFERENCES Tasks (id),
+    [StudentId] [varchar](36) NOT NULL,
+    [TaskId]    [varchar](36) NOT NULL,
+    PRIMARY KEY ([StudentId], [TaskId]),
+    FOREIGN KEY ([StudentId]) REFERENCES Students (Id),
+    FOREIGN KEY ([TaskId]) REFERENCES Tasks (Id),
 )
 
 CREATE TABLE [dbo].[Teams]
 (
-    [id]   [varchar](36)   NOT NULL PRIMARY KEY,
-    [name] [nvarchar](100) NOT NULL UNIQUE,
+    [Id]   [varchar](36)   NOT NULL PRIMARY KEY,
+    [Name] [nvarchar](100) NOT NULL UNIQUE,
 )
 
 CREATE TABLE [dbo].[StudentsTeams]
 (
-    [student_id] [varchar](36) NOT NULL,
-    [team_id]    [varchar](36) NOT NULL,
-    PRIMARY KEY ([student_id], [Team_id]),
-    FOREIGN KEY ([student_id]) REFERENCES Students (id),
-    FOREIGN KEY ([team_id]) REFERENCES Teams (id)
+    [StudentId] [varchar](36) NOT NULL,
+    [TeamId]    [varchar](36) NOT NULL,
+    PRIMARY KEY ([StudentId], [TeamId]),
+    FOREIGN KEY ([StudentId]) REFERENCES Students (Id),
+    FOREIGN KEY ([TeamId]) REFERENCES Teams (Id)
 )
 
 CREATE TABLE [dbo].[TeamsProjects]
 (
-    [project_id] [varchar](36) NOT NULL,
-    [team_id]    [varchar](36) NOT NULL,
-    PRIMARY KEY ([project_id], [team_id]),
-    FOREIGN KEY ([project_id]) REFERENCES Projects (id),
-    FOREIGN KEY ([team_id]) REFERENCES Teams (id)
+    [ProjectId] [varchar](36) NOT NULL,
+    [TeamId]    [varchar](36) NOT NULL,
+    PRIMARY KEY ([ProjectId], [TeamId]),
+    FOREIGN KEY ([ProjectId]) REFERENCES Projects (Id),
+    FOREIGN KEY ([TeamId]) REFERENCES Teams (Id)
 )
 
 

@@ -30,10 +30,16 @@
     </div>
 </nav>
 <div class="center-items">
-    <h1 class="display-2 " style="text-align: center"> Classes menu index</h1>
-
+    <h1 class="display-2 " style="text-align: center"> Меню за класовете</h1>
+<p style="text-align: center">
+    От тази страница може да създавате и изтривате класове.<br>
+    Всички създадени класове ще се визуализират в таблица по-долу.<br>
+    Ако искате да създадете клас първо изберете бутона "Добави клас".<br>
+    Въведете данните в полетата и изпратете формата.<br> Ако искате да изтриете
+    клас изберете бутона "Изтрий".
+</p>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addGroupModal">
-        Add class
+        Добави клас
     </button>
 
 </div>
@@ -44,23 +50,23 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="addGroupModalLabel">Add group form</h1>
+                <h1 class="modal-title fs-5" id="addGroupModalLabel">Форма за добавяне на клас</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="http://localhost:8080/groups" method="post" >
+            <form action="http://localhost:8080/groupsMenu" method="post" >
             <div class="modal-body">
 
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">1-12</span>
                         <input type="number" th:field="*{newGroup.grade}" class="form-control myInput"
-                               placeholder="Grade" aria-label="Grade" aria-describedby="basic-addon1" required min="1">
+                               placeholder="Клас" aria-label="Grade" aria-describedby="basic-addon1" required min="1">
                         <span class="input-group-text mySpan" id="basic-addon2">🔤</span>
                         <input type="text" th:field="*{newGroup.letter}" class="form-control "
-                               placeholder="Letter" aria-label="Letter" aria-describedby="basic-addon2" size="1" required>
+                               placeholder="Буква" aria-label="Letter" aria-describedby="basic-addon2" size="1" required>
 
                     </div>
                     <div class="form-group">
-                        <label>Choose class teacher</label>
+                        <label>Избери класен ръководител</label>
 
                         <select th:field="*{newGroup.teacher}" th:each="teacher:${teachers}">
                             <option  th:value="*{teacher.id}"
@@ -72,8 +78,8 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Затвори</button>
+                <button type="submit" class="btn btn-primary">Изпрати</button>
             </div>
             </form>
         </div>
@@ -83,10 +89,10 @@
 <table class="table" style="color:whitesmoke;width: 70%;margin-left: 15%" th:unless="${#lists.isEmpty(groups)}">
     <thead>
         <tr>
-            <th scope="col" >id</th>
-            <th scope="col">Grade</th>
-            <th scope="col">Letter</th>
-            <th scope="col">Delete</th>
+            <th scope="col" >Идентификационен номер</th>
+            <th scope="col">Клас</th>
+            <th scope="col">Буква</th>
+            <th scope="col">Изтрий</th>
         </tr>
     </thead>
     <tbody>
@@ -94,7 +100,7 @@
             <td th:text="${group.id}"></td>
             <td th:text="${group.grade}"></td>
             <td th:text="${group.letter}"></td>
-            <td> <form method="post" th:action="@{/groups/delete/{id}(id=${group.id})}">
+            <td> <form method="post" th:action="@{/groupsMenu/delete/{id}(id=${group.id})}">
                 <button type="submit" class="btn btn-danger"> Delete </button></form></td>
         </tr>
     </tbody>

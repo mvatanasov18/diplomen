@@ -26,18 +26,18 @@ public class PendingUpdate {
 
     @Column(name = "Email", columnDefinition = "varchar(255)", unique = true)
     private String email;
-    @Column(name = "First_Name", columnDefinition = "nvarchar(100)")
+    @Column(name = "FirstName", columnDefinition = "nvarchar(100)")
     private String firstName;
-    @Column(name = "Last_Name", columnDefinition = "nvarchar(100)")
+    @Column(name = "LastName", columnDefinition = "nvarchar(100)")
     private String lastName;
-    @Column(name = "Changes_Made")
+    @Column(name = "ChangesMade")
     private LocalDateTime changesMade;
     @ManyToOne
-    @JoinColumn(name = "Admin_Id")
+    @JoinColumn(name = "AdminId")
     private Admin admin;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "User_Id", columnDefinition = "varchar(36)")
+    @JoinColumn(name = "UserId", columnDefinition = "varchar(36)")
     private User user;
 
     public PendingUpdate() {

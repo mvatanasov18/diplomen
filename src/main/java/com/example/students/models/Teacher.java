@@ -19,7 +19,7 @@ public class Teacher {
     private String id;
 
     @OneToOne
-    @JoinColumn(name = "User_Id", columnDefinition = "varchar(36)")
+    @JoinColumn(name = "UserId", columnDefinition = "varchar(36)")
     private User user;
 
     @OneToMany(mappedBy = "teacher")

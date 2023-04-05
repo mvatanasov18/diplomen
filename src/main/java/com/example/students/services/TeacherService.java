@@ -6,7 +6,9 @@ import com.example.students.repositories.TeacherRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -37,7 +39,27 @@ public class TeacherService implements com.example.students.services.Service<Tea
     public Teacher findByUserId(String id) {
         return teacherRepository.findTeacherByUserId(id);
     }
-    public List<Teacher> findAllNotAssignedToClassBySchoolId(String id){
+
+    public List<Teacher> findAllNotAssignedToClassBySchoolId(String id) {
         return teacherRepository.findAllNotAssignedToClassBySchoolId(id);
+    }
+
+    public void deleteById(String groupId) {
+        teacherRepository.deleteById(groupId);
+    }
+
+    public List<Teacher> findAllBySchoolId(String schoolId) {
+        return teacherRepository.findAllBySchoolId(schoolId);
+    }
+
+    public boolean checkGroupByIdAndSchoolId(String id, String schoolId) {
+        List<Teacher> teachers = findAllBySchoolId(schoolId);
+        Map<String, Teacher> hashTeachers = new HashMap<>();
+
+        for (Teacher teacher : teachers) {
+            hashTeachers.put(teacher.getId(), teacher);
+        }
+
+        return hashTeachers.containsKey(id);
     }
 }

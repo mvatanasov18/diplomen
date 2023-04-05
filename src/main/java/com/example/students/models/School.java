@@ -18,7 +18,7 @@ public class School {
     private String name;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Address_Id", referencedColumnName = "Id")
+    @JoinColumn(name = "AddressId", referencedColumnName = "Id")
     private Address address;
 
     public School() {

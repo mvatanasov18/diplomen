@@ -19,19 +19,19 @@ public class Student {
     private String id;
 
     @OneToOne
-    @JoinColumn(name = "user_id", columnDefinition = "varchar(36)")
+    @JoinColumn(name = "UserId", columnDefinition = "varchar(36)")
     private User user;
 
     @ManyToMany
-    @JoinTable(name = "StudentsTeams", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
+    @JoinTable(name = "StudentsTeams", joinColumns = @JoinColumn(name = "StudentId"), inverseJoinColumns = @JoinColumn(name = "TeamId"))
     private Set<Team> teams;
 
     @ManyToOne
-    @JoinColumn(name = "group_id", nullable = false)
+    @JoinColumn(name = "GroupId", nullable = false)
     private Group group;
 
     @ManyToMany
-    @JoinTable(name = "StudentsTasks", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "task_id"))
+    @JoinTable(name = "StudentsTasks", joinColumns = @JoinColumn(name = "StudentId"), inverseJoinColumns = @JoinColumn(name = "TaskId"))
     private Set<Task> tasks;
 
     public Student() {

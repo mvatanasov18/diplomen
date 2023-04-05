@@ -19,10 +19,10 @@ public class Session {
     private String id;
     @Column(name = "RoleName")
     private String roleName;
-    @Column(name = "time_created")
+    @Column(name = "TimeCreated")
     private LocalDateTime timeCreated;
     @OneToOne()
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "UserId")
     private User user;
 
     public Session() {

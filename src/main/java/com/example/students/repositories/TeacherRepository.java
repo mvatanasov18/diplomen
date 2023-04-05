@@ -9,9 +9,17 @@ import java.util.List;
 
 public interface TeacherRepository extends JpaRepository<Teacher, String> {
     Teacher findTeacherByUserId(String userId);
-    @Query( value="SELECT t.id, t.[user_id] FROM Teachers AS t " +
-            "LEFT JOIN Groups AS g ON t.id=g.teacher_id " +
-            "INNER JOIN Users AS u ON t.[user_id] = u.id " +
-            "WHERE u.school_id = :id",nativeQuery = true)
+    @Query( value="SELECT t.Id, t.[UserId] FROM Teachers AS t " +
+            "LEFT JOIN Groups AS g ON t.Id=g.TeacherId " +
+            "INNER JOIN Users AS u ON t.[UserId] = u.Id " +
+            "WHERE u.SchoolId = :id",nativeQuery = true)
     List<Teacher> findAllNotAssignedToClassBySchoolId( @Param("id") String id);
+    @Query(value = "SELECT " +
+            " t.Id, " +
+            " t.UserId " +
+            " FROM Teachers AS t " +
+            " INNER JOIN  Users AS u " +
+            " ON u.Id=t.UserId " +
+            " WHERE u.SchoolId=:id ",nativeQuery = true)
+    List<Teacher> findAllBySchoolId(@Param("id")String id);
 }

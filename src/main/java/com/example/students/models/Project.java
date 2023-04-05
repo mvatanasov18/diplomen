@@ -27,18 +27,18 @@ public class Project {
     @Column(name = "Description", columnDefinition = "nvarchar(MAX)", nullable = false)
     private String description;
 
-    @Column(name = "Date_Created", columnDefinition = "datetime2(0)", nullable = false)
+    @Column(name = "DateCreated", columnDefinition = "datetime2(0)", nullable = false)
     private LocalDateTime dateCreated;
 
-    @Column(name = "Due_Date", columnDefinition = "datetime2(0)")
+    @Column(name = "DueDate", columnDefinition = "datetime2(0)")
     private LocalDateTime dueDate;
 
     @ManyToOne
-    @JoinColumn(name = "Admin_Id", columnDefinition = "varchar(36)")
+    @JoinColumn(name = "AdminId", columnDefinition = "varchar(36)")
     private Admin admin;
 
     @ManyToMany
-    @JoinTable(name = "TeamsProjects", joinColumns = @JoinColumn(name = "Project_Id"), inverseJoinColumns = @JoinColumn(name = "Team_Id"))
+    @JoinTable(name = "TeamsProjects", joinColumns = @JoinColumn(name = "ProjectId"), inverseJoinColumns = @JoinColumn(name = "TeamId"))
     private Set<Team> teams;
 
 

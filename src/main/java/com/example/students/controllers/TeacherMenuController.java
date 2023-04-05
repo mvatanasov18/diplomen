@@ -9,14 +9,11 @@ import com.example.students.services.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(value = "/teachers")
+@RequestMapping(value = "/teachersMenu")
 @AllArgsConstructor
 public class TeacherMenuController {
 
@@ -39,7 +36,9 @@ public class TeacherMenuController {
                 return new ModelAndView("/teachers-menu-index")
                         .addObject("navElements", navbarService
                                 .getNavbar(cookieService.getValue(request.getCookies()), sessionService))
-                        .addObject("teacher", new Teacher());
+                        .addObject("teacher", new Teacher())
+                        .addObject("teachers",teacherService.findAllBySchoolId(session.getUser().getSchool().getId()));
+
             }
         }
         throw new UserDoesNotHavePermissionException();
@@ -63,11 +62,26 @@ public class TeacherMenuController {
 
                 userService.save(teacher.getUser());
                 teacherService.save(teacher);
-                return new ModelAndView("redirect:/teachers");
+                return new ModelAndView("redirect:/teachersMenu");
             }
         }
-
             throw new UserDoesNotHavePermissionException();
+    }
 
+    @PostMapping(value = "/delete/{id}")
+    public ModelAndView deleteGroup( HttpServletRequest request, @PathVariable String id){
+        if (cookieService.isSessionPresent(request.getCookies())) {
+
+            Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
+            String role = roleService.getRole(session.getUser());
+            if (role.equals("principal")) {
+                String schoolId= session.getUser().getSchool().getId();
+                if( teacherService.checkGroupByIdAndSchoolId(id,schoolId)){
+                    teacherService.deleteById(id);
+                    return new ModelAndView("redirect:/teachersMenu");
+                }
+            }
+        }
+        throw new UserDoesNotHavePermissionException();
     }
 }
