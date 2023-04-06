@@ -13,13 +13,18 @@ public interface TeacherRepository extends JpaRepository<Teacher, String> {
 
     @Query( value="SELECT " +
             "t.Id, " +
-            "t.[UserId] " +
+            "t.UserId " +
             "FROM Teachers AS t " +
-            "LEFT JOIN Groups AS g " +
-            "ON t.Id!=g.TeacherId " +
+            "LEFT JOIN Groups g  " +
+            "ON t.Id = g.TeacherId " +
             "INNER JOIN Users AS u " +
-            "ON t.[UserId] = u.Id " +
-            "WHERE u.SchoolId = :id",nativeQuery = true)
+            "ON u.Id = t.UserId " +
+            "WHERE g.TeacherId IS NULL AND t.Id IN  " +
+            "(SELECT t.Id " +
+            "FROM Teachers AS t " +
+            "INNER JOIN Users AS u " +
+            "ON t.UserId = u.Id " +
+            "WHERE u.SchoolId=:id)",nativeQuery = true)
     List<Teacher> findAllNotAssignedToClassBySchoolId( @Param("id") String id);
 
     @Query(value = "SELECT " +

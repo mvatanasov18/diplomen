@@ -52,7 +52,7 @@ public class TeacherService implements com.example.students.services.Service<Tea
         return teacherRepository.findAllBySchoolId(schoolId);
     }
 
-    public boolean checkGroupByIdAndSchoolId(String id, String schoolId) {
+    public boolean checkTeacherByIdAndSchoolId(String id, String schoolId) {
         List<Teacher> teachers = findAllBySchoolId(schoolId);
         Map<String, Teacher> hashTeachers = new HashMap<>();
 

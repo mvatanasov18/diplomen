@@ -45,7 +45,8 @@ public class LoginController {
     }
 
     @GetMapping(value = "/logout")
-    public String getLogout(HttpServletResponse response) {
+    public String getLogout(HttpServletRequest request,HttpServletResponse response) {
+        sessionService.deleteById(cookieService.getValue(request.getCookies()));
         Cookie cookie = new Cookie("session", null);
         cookie.setMaxAge(0);
         cookie.setHttpOnly(true);

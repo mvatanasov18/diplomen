@@ -30,14 +30,11 @@ public class StudentMenuController {
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
             String role = roleService.getRole(session.getUser());
             if (role.equals("principal")) {
-                Student student = new Student();
-                student.getUser().setSchool(session.getUser().getSchool());
-                System.out.println(student);
                 return new ModelAndView("/students-menu-index")
-                        .addObject("user", new User())
                         .addObject("navElements", navbarService
                                 .getNavbar(cookieService.getValue(request.getCookies()), sessionService))
-                        .addObject("student", student);
+                        .addObject("student", new Student())
+                        .addObject("students", studentService.findAllBySchoolId(session.getUser().getSchool().getId()));
             }
         }
         throw new UserDoesNotHavePermissionException();
@@ -45,9 +42,6 @@ public class StudentMenuController {
 
     @PostMapping
     public ModelAndView postStudent(@ModelAttribute Student student, HttpServletRequest request) {
-        //todo check is the user sending the request is principal
-        // - check the student's data
-        // - save the student entity using the student service
         if (cookieService.isSessionPresent(request.getCookies())) {
 
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
@@ -62,7 +56,7 @@ public class StudentMenuController {
             throw new UserDoesNotHavePermissionException();
     }
 
-    @PutMapping
+    @PostMapping(value = "/update")
     public ModelAndView putStudent(@ModelAttribute Student student, HttpServletRequest request) {
         if (cookieService.isSessionPresent(request.getCookies())) {
 
@@ -76,18 +70,20 @@ public class StudentMenuController {
         }
             throw new UserDoesNotHavePermissionException();
     }
-    @DeleteMapping
-    public ModelAndView deleteStudent(@ModelAttribute Student student, HttpServletRequest request) {
+    @PostMapping(value = "/delete/{id}")
+    public ModelAndView deleteStudent( HttpServletRequest request, @PathVariable String id){
         if (cookieService.isSessionPresent(request.getCookies())) {
 
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
             String role = roleService.getRole(session.getUser());
             if (role.equals("principal")) {
-                studentService.delete(student);
-                userService.delete(student.getUser());
-                return new ModelAndView("redirect:/students");
+                String schoolId= session.getUser().getSchool().getId();
+                if( studentService.checkStudentByIdAndSchoolId(id,schoolId)){
+                    studentService.deleteById(id);
+                    return new ModelAndView("redirect:/studentsMenu");
+                }
             }
         }
-            throw new UserDoesNotHavePermissionException();
+        throw new UserDoesNotHavePermissionException();
     }
 }

@@ -1,10 +1,8 @@
 package com.example.students.controllers;
 
 import com.example.students.exeptions.UserDoesNotHavePermissionException;
+import com.example.students.models.Admin;
 import com.example.students.models.Session;
-import com.example.students.models.Student;
-import com.example.students.models.Teacher;
-import com.example.students.models.User;
 import com.example.students.services.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
@@ -13,31 +11,31 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(value = "/teachersMenu")
+@RequestMapping(value = "/adminsMenu")
 @AllArgsConstructor
-public class TeacherMenuController {
+public class AdminMenuController {
 
     private final SessionService sessionService;
     private final NavbarService navbarService;
     private final CookieService cookieService;
     private final RoleService roleService;
     private final UserService userService;
-    private final TeacherService teacherService;
+    private final AdminService adminService;
 
 
     @GetMapping
-    public ModelAndView getTeacherMenuIndexPage(HttpServletRequest request) {
+    public ModelAndView getAdminMenuIndexPage(HttpServletRequest request) {
         if (cookieService.isSessionPresent(request.getCookies())) {
 
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
             String role = roleService.getRole(session.getUser());
             if (role.equals("principal")) {
 
-                return new ModelAndView("/teachers-menu-index")
+                return new ModelAndView("/admins-menu-index")
                         .addObject("navElements", navbarService
                                 .getNavbar(cookieService.getValue(request.getCookies()), sessionService))
-                        .addObject("teacher", new Teacher())
-                        .addObject("teachers",teacherService.findAllBySchoolId(session.getUser().getSchool().getId()));
+                        .addObject("admin", new Admin())
+                        .addObject("admins",adminService.findAllBySchoolId(session.getUser().getSchool().getId()));
 
             }
         }
@@ -47,38 +45,35 @@ public class TeacherMenuController {
 
 
     @PostMapping
-    public ModelAndView postTeacher(@ModelAttribute Teacher teacher, HttpServletRequest request) {
-        //todo check is the user sending the request is principal
-        // - check the teacher's data
-        // - save the teacher entity using the teacher service
+    public ModelAndView postAdmin(@ModelAttribute Admin admin, HttpServletRequest request) {
         if (cookieService.isSessionPresent(request.getCookies())) {
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
             String role = roleService.getRole(session.getUser());
             if (role.equals("principal")) {
-                teacher.getUser().setSchool(session.getUser().getSchool());
-                System.out.println(teacher);
+                admin.getUser().setSchool(session.getUser().getSchool());
+                System.out.println(admin);
 
-                teacher.getUser().hashPassword();
+                admin.getUser().hashPassword();
 
-                userService.save(teacher.getUser());
-                teacherService.save(teacher);
-                return new ModelAndView("redirect:/teachersMenu");
+                userService.save(admin.getUser());
+                adminService.save(admin);
+                return new ModelAndView("redirect:/adminsMenu");
             }
         }
             throw new UserDoesNotHavePermissionException();
     }
 
     @PostMapping(value = "/delete/{id}")
-    public ModelAndView deleteTeacher( HttpServletRequest request, @PathVariable String id){
+    public ModelAndView deleteGroup( HttpServletRequest request, @PathVariable String id){
         if (cookieService.isSessionPresent(request.getCookies())) {
 
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
             String role = roleService.getRole(session.getUser());
             if (role.equals("principal")) {
                 String schoolId= session.getUser().getSchool().getId();
-                if( teacherService.checkTeacherByIdAndSchoolId(id,schoolId)){
-                    teacherService.deleteById(id);
-                    return new ModelAndView("redirect:/teachersMenu");
+                if( adminService.checkAdminByIdAndSchoolId(id,schoolId)){
+                    adminService.deleteById(id);
+                    return new ModelAndView("redirect:/adminsMenu");
                 }
             }
         }

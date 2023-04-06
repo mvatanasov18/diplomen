@@ -65,11 +65,11 @@
                                placeholder="Буква" aria-label="Letter" aria-describedby="basic-addon2" size="1" required>
 
                     </div>
-                    <div class="form-group">
-                        <label>Избери класен ръководител</label>
+                    <div class="form-group" >
+                        <label for="select1">Избери класен ръководител</label>
 
-                        <select th:field="*{newGroup.teacher}" th:each="teacher:${teachers}">
-                            <option  th:value="*{teacher.id}"
+                        <select id="select1" th:field="*{newGroup.teacher}" >
+                            <option th:each="teacher:${teachers}"  th:value="*{teacher.id}"
                                     th:text="*{teacher.user.firstName+' '+teacher.user.lastName}"></option>
 
                         </select>
