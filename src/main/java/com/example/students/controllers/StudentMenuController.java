@@ -47,6 +47,7 @@ public class StudentMenuController {
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
             String role = roleService.getRole(session.getUser());
             if (role.equals("principal")) {
+                student.getUser().setSchool(session.getUser().getSchool());
                 student.getUser().hashPassword();
                 userService.save(student.getUser());
                 studentService.save(student);
@@ -63,6 +64,8 @@ public class StudentMenuController {
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
             String role = roleService.getRole(session.getUser());
             if (role.equals("principal")) {
+                student.getUser().setSchool(session.getUser().getSchool());
+
                 userService.save(student.getUser());
                 studentService.save(student);
                 return new ModelAndView("redirect:/students");

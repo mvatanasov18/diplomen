@@ -31,22 +31,27 @@
 </nav>
 <div class="center-items">
     <h1 class="display-2 "> Меню за учениците</h1>
-
+    <p style="text-align: center">От тази страница може да създавате, обновявате и изтривате ученическите акаунти.
+        <br>Всички акаунти на ученици във Вашето училище ще бъдат видими в таблицата по-долу.<br>
+        Ако искате да създадете акаунт на ученик кликнете върху бутона "Създай ученически акаунт".<br>
+        За да изтриете акаунт кликнете върху бутнона "Изтрий".</p>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStudentModal">
-        Добави ученик
+        Създай ученически акаунт
     </button>
 </div>
 <!-- Modal -->
-<div class="modal  fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentModalLabel" aria-hidden="true"
+<div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentModalLabel" aria-hidden="true"
      style="color:black">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="addStudentModalLabel">Add student form</h1>
+                <h1 class="modal-title fs-5" id="addStudentModalLabel">Форма за добавяне на ученик</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <form th:action="@{/studentsMenu}" method="post" class="center-items">
+            <form th:action="@{/studentsMenu}"  method="post" >
+                <div class="modal-body">
+
+
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">@</span>
                         <input type="text" th:field="*{student.user.username}" class="form-control myInput"
@@ -58,8 +63,8 @@
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text mySpan" id="basic-addon5">📧</span>
-                        <input type="email" th:field="*{student.user.email}" class="form-control" placeholder="Email"
-                               aria-label="Имейл" aria-describedby="basic-addon5" required>
+                        <input type="email" th:field="*{student.user.email}" class="form-control" placeholder="Имейл"
+                               aria-label="Email" aria-describedby="basic-addon5" required>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon3">🧑</span>
@@ -71,17 +76,19 @@
                                placeholder="Фамилия" aria-label="Last Name" aria-describedby="basic-addon4" required>
 
                     </div>
-                    <div class="input-group mb-3">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Затвори</button>
-                <button type="button" class="btn btn-primary">Изпрати</button>
-            </div>
+<!--TODO add input group for classes-->
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Изпрати</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Затвори</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+
+
 
 <table class="table" style="color:whitesmoke;width: 70%;margin-left: 15%" th:unless="${#lists.isEmpty(students)}">
     <thead>
@@ -96,7 +103,7 @@
     <tbody>
     <tr  th:each="student:${students}">
         <td th:text="${student.id}"></td>
-        <td th:text="${student.user.id}"></td>
+        <td th:text="${student.user.username}"></td>
         <td th:text="${student.user.firstName}"></td>
         <td th:text="${student.user.lastName}"></td>
         <td> <form method="post" th:action="@{/studentsMenu/delete/{id}(id=${student.id})}">
@@ -104,7 +111,6 @@
     </tr>
     </tbody>
 </table>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         crossorigin="anonymous"></script>
