@@ -42,12 +42,12 @@ public class AdminService implements com.example.students.services.Service<Admin
     }
     public boolean checkAdminByIdAndSchoolId(String id, String schoolId) {
         List<Admin> admins = findAllBySchoolId(schoolId);
-        Map<String, Admin> hashTeachers = new HashMap<>();
+        Map<String, Admin> hashAdmins = new HashMap<>();
 
         for (Admin admin : admins) {
-            hashTeachers.put(admin.getId(), admin);
+            hashAdmins.put(admin.getId(), admin);
         }
 
-        return hashTeachers.containsKey(id);
+        return hashAdmins.containsKey(id);
     }
 }

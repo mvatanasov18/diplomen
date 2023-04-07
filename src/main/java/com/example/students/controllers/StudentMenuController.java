@@ -1,6 +1,7 @@
 package com.example.students.controllers;
 
 import com.example.students.exeptions.UserDoesNotHavePermissionException;
+import com.example.students.models.Group;
 import com.example.students.models.Session;
 import com.example.students.models.Student;
 import com.example.students.models.User;
@@ -34,6 +35,7 @@ public class StudentMenuController {
                         .addObject("navElements", navbarService
                                 .getNavbar(cookieService.getValue(request.getCookies()), sessionService))
                         .addObject("student", new Student())
+                        .addObject("groups",groupService.findAllBySchoolId(session.getUser().getSchool().getId()))
                         .addObject("students", studentService.findAllBySchoolId(session.getUser().getSchool().getId()));
             }
         }
@@ -47,28 +49,54 @@ public class StudentMenuController {
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
             String role = roleService.getRole(session.getUser());
             if (role.equals("principal")) {
+
+                Group group = groupService.findAllByGradeAndLetterAndSchoolId(
+                        student.getGroup().getGrade(),
+                        student.getGroup().getLetter(),
+                        session.getUser().getSchool().getId());
+                student.setGroup(group);
                 student.getUser().setSchool(session.getUser().getSchool());
                 student.getUser().hashPassword();
                 userService.save(student.getUser());
                 studentService.save(student);
-                return new ModelAndView("redirect:/students");
+                return new ModelAndView("redirect:/studentsMenu");
             }
         }
             throw new UserDoesNotHavePermissionException();
     }
-
-    @PostMapping(value = "/update")
-    public ModelAndView putStudent(@ModelAttribute Student student, HttpServletRequest request) {
+    @GetMapping(value = "/update/{id}")
+    public ModelAndView getUpdatePage(@PathVariable String id, HttpServletRequest request){
         if (cookieService.isSessionPresent(request.getCookies())) {
 
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
             String role = roleService.getRole(session.getUser());
             if (role.equals("principal")) {
+
+                Student student = studentService.findById(id);
                 student.getUser().setSchool(session.getUser().getSchool());
 
-                userService.save(student.getUser());
-                studentService.save(student);
-                return new ModelAndView("redirect:/students");
+
+                return new ModelAndView("students-menu-update")
+                        .addObject("student",student)
+                        .addObject("groups",groupService.findAllBySchoolId(session.getUser().getSchool().getId()))
+                        .addObject("navElements", navbarService
+                                .getNavbar(cookieService.getValue(request.getCookies()), sessionService));
+            }
+        }
+        throw new UserDoesNotHavePermissionException();
+    }
+
+    @PostMapping(value = "/update/{id}")
+    public ModelAndView putStudent(@ModelAttribute Student student,@PathVariable String id, HttpServletRequest request) {
+        if (cookieService.isSessionPresent(request.getCookies())) {
+            Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
+            String role = roleService.getRole(session.getUser());
+            if (role.equals("principal")) {
+                student.getUser().setSchool(session.getUser().getSchool());
+
+                Student studentToUpdate = studentService.findById(id);
+                userService.update(student.getUser(),studentToUpdate.getUser(), id);
+                return new ModelAndView("redirect:/studentsMenu");
             }
         }
             throw new UserDoesNotHavePermissionException();

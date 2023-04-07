@@ -30,7 +30,7 @@
     </div>
 </nav>
 <div class="center-items">
-    <h1 class="display-2 "> Меню за учениците</h1>
+    <h1 class="display-2" style="text-align: center"> Меню за учениците</h1>
     <p style="text-align: center">От тази страница може да създавате, обновявате и изтривате ученическите акаунти.
         <br>Всички акаунти на ученици във Вашето училище ще бъдат видими в таблицата по-долу.<br>
         Ако искате да създадете акаунт на ученик кликнете върху бутона "Създай ученически акаунт".<br>
@@ -76,7 +76,15 @@
                                placeholder="Фамилия" aria-label="Last Name" aria-describedby="basic-addon4" required>
 
                     </div>
-<!--TODO add input group for classes-->
+                    <div class="form-group" >
+                        <label for="select1">Избери клас:</label>
+
+                        <select id="select1" th:field="*{student.group}" >
+                            <option th:each="group:${groups}"  th:value="*{group.id}"
+                                    th:text="*{group.grade+' '+group.letter}"></option>
+
+                        </select>
+                    </div>
 
                 </div>
                 <div class="modal-footer">
@@ -97,6 +105,7 @@
         <th scope="col">Потребителско име</th>
         <th scope="col">Име</th>
         <th scope="col">Фамилия</th>
+        <th scope="col">Обнови</th>
         <th scope="col">Изтрий</th>
     </tr>
     </thead>
@@ -106,6 +115,8 @@
         <td th:text="${student.user.username}"></td>
         <td th:text="${student.user.firstName}"></td>
         <td th:text="${student.user.lastName}"></td>
+        <td> <form method="get" th:action="@{/studentsMenu/update/{id}(id=${student.id})}">
+            <button type="submit" class="btn btn-warning">Обнови</button></form></td>
         <td> <form method="post" th:action="@{/studentsMenu/delete/{id}(id=${student.id})}">
             <button type="submit" class="btn btn-danger"> Изтрий </button></form></td>
     </tr>

@@ -1,6 +1,8 @@
 package com.example.students.services;
 
+import com.example.students.exeptions.EmailAlreadyTakenException;
 import com.example.students.exeptions.InvalidCredentialsException;
+import com.example.students.exeptions.UsernameAlreadyTakenException;
 import com.example.students.models.User;
 import com.example.students.repositories.UserRepository;
 import lombok.AllArgsConstructor;
@@ -58,5 +60,39 @@ public class UserService implements com.example.students.services.Service<User> 
 
     private boolean isUsernameUnique(String username) {
         return !userRepository.existsByEmail(username);
+    }
+
+    private void updateEmail(String email,String id){
+        //todo: create custom query to update the email
+        if(userRepository.existsByEmail(email)){
+            throw new EmailAlreadyTakenException();
+        }
+        userRepository.updateEmail(email,id);
+    }
+    private void updateUsername(String username,String id){
+        //todo: create custom query to update the username
+        if(userRepository.existsByUsername(username)){
+            throw new UsernameAlreadyTakenException();
+        }
+        userRepository.updateUsername(username,id);
+    }
+
+    public boolean isEmailChanged(String changedUserEmail, String databaseUserEmail){
+        return !changedUserEmail.equals(databaseUserEmail);
+    }
+    public boolean isUsernameChanged(String changedUserUsername, String databaseUserUsername){
+        return !changedUserUsername.equals(databaseUserUsername);
+    }
+
+    public void update(User changedUser, User databaseUser,String id){
+        boolean flag =isEmailChanged(changedUser.getEmail(),databaseUser.getEmail());
+        if(flag){
+            updateEmail(changedUser.getEmail(),changedUser.getId());
+        }
+        if(isUsernameChanged(changedUser.getUsername(),databaseUser.getUsername())){
+            updateUsername(changedUser.getUsername(),changedUser.getId());
+        }
+        System.out.println(changedUser);
+        userRepository.update(changedUser.getFirstName(),changedUser.getLastName(),id);
     }
 }

@@ -10,7 +10,6 @@ import java.util.List;
 
 public interface StudentRepository extends JpaRepository<Student, String> {
     Student findStudentByUserId(String userId);
-
     @Query(value = "SELECT " +
             "s.Id, " +
             "s.UserId, " +

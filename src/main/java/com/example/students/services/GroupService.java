@@ -52,4 +52,8 @@ public class GroupService implements com.example.students.services.Service<Group
 
         return  hashGroups.containsKey(id);
     }
+
+    public Group findAllByGradeAndLetterAndSchoolId(int grade, char letter,String schoolId){
+        return groupRepository.findAllByGradeAndLetterAndSchoolId(grade,letter,schoolId);
+    }
 }

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>StudentsAndTeachers</title>
+    <link href="../../css/style.css" rel="stylesheet">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" rel="stylesheet">
+</head>
+<body id="body">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">SaT</a>
+        <button aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+                data-bs-target="#navbarText" data-bs-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="place">
+                <li class="nav-item" th:each="navElement:${navElements.elements}">
+                    <a aria-current="page" class="nav-link active" th:href="${navElement.key}"
+                       th:text="${navElement.value}"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="center-items">
+    <h1 class="display-2 " style="text-align: center"> Обновяване на ученически акаунт</h1>
+</div>
+<div>
+<form method="post" th:action="@{/studentsMenu/update/{id}(id=${student.id})}" style="padding-left: 15%;padding-right: 15%">
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">@</span>
+            <input aria-describedby="basic-addon1" aria-label="Username" class="form-control myInput"
+                   placeholder="Потребителско име" required th:field="*{student.user.username}" type="text">
+
+            <span class="input-group-text mySpan" id="basic-addon5">📧</span>
+            <input aria-describedby="basic-addon5" aria-label="Email" class="form-control" placeholder="Имейл"
+                   required th:field="*{student.user.email}" type="email">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon3">🧑</span>
+            <input aria-describedby="basic-addon3" aria-label="First Name" class="form-control myInput"
+                   placeholder="Име" required th:field="*{student.user.firstName}"
+                   type="text">
+            <span class="input-group-text mySpan" id="basic-addon4">👪</span>
+            <input aria-describedby="basic-addon4" aria-label="Last Name" class="form-control"
+                   placeholder="Фамилия" required th:field="*{student.user.lastName}" type="text">
+
+        </div>
+    <div class="form-group" >
+        <label for="select1">Избери клас:</label>
+
+        <select id="select1" th:field="*{student.group}" >
+            <option th:each="group:${groups}"  th:value="*{group.id}"
+                    th:text="*{group.grade+' '+group.letter}"></option>
+
+        </select>
+    </div>
+
+    <div>
+            <button type="submit" class="btn btn-success">Обнови</button>
+
+</form>
+    <form method="get" th:action="@{/studentsMenu}">
+        <button type="submit" class="btn btn-danger">Затвори</button></form></div>
+</div>
+<script crossorigin="anonymous"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -20,5 +20,17 @@ public interface GroupRepository extends JpaRepository<Group, String> {
             "ON u.Id = t.[UserId] " +
             "WHERE u.SchoolId = :id ",nativeQuery = true)
     List<Group> findAllBySchoolId(@Param("id") String id);
+@Query( value="SELECT " +
+        "g.Id, " +
+        "g.Grade, " +
+        "g.Letter, " +
+        "g.TeacherId " +
+        "FROM Groups g " +
+        "INNER JOIN Teachers t " +
+        "ON t.Id = g.TeacherId " +
+        "INNER JOIN Users u " +
+        "ON t.UserId = u.Id " +
+        "WHERE g.Grade=:grade AND Letter=:letter AND SchoolId = :schoolId ",nativeQuery = true)
+    Group findAllByGradeAndLetterAndSchoolId(int grade,char letter,String schoolId);
 
 }

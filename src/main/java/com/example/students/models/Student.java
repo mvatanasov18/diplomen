@@ -18,7 +18,7 @@ public class Student {
     @Column(name = "Id", nullable = false, columnDefinition = "varchar(36)")
     private String id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "UserId", columnDefinition = "varchar(36)")
     private User user;
 
