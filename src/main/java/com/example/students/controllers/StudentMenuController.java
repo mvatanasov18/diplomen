@@ -95,7 +95,7 @@ public class StudentMenuController {
                 student.getUser().setSchool(session.getUser().getSchool());
 
                 Student studentToUpdate = studentService.findById(id);
-                userService.update(student.getUser(),studentToUpdate.getUser(), id);
+                userService.update(student.getUser(),studentToUpdate.getUser(), studentToUpdate.getUser().getId());
                 return new ModelAndView("redirect:/studentsMenu");
             }
         }

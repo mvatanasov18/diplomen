@@ -11,7 +11,6 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "Students")
-@AllArgsConstructor
 @EqualsAndHashCode
 public class Student {
     @Id
@@ -40,6 +39,14 @@ public class Student {
         teams=new HashSet<>();
         group=new Group();
         tasks=new HashSet<>();
+    }
+
+    public Student(String id, User user, Set<Team> teams, Group group, Set<Task> tasks) {
+        this.id = id;
+        this.user = user;
+        this.teams = teams;
+        this.group = group;
+        this.tasks = tasks;
     }
 
     public String getId() {

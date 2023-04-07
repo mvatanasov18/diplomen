@@ -93,6 +93,7 @@ public class UserService implements com.example.students.services.Service<User> 
             updateUsername(changedUser.getUsername(),changedUser.getId());
         }
         System.out.println(changedUser);
+        System.out.println(id);
         userRepository.update(changedUser.getFirstName(),changedUser.getLastName(),id);
     }
 }
