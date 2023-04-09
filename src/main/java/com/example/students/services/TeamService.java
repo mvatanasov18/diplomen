@@ -5,6 +5,8 @@ import com.example.students.repositories.TeamRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class TeamService implements com.example.students.services.Service<Team> {
@@ -28,5 +30,9 @@ public class TeamService implements com.example.students.services.Service<Team> 
     @Override
     public Iterable<Team> findAll() {
         return teamRepository.findAll();
+    }
+
+    public List<Team> findAllBySchoolId(String id){
+        return teamRepository.findAllBySchoolId(id);
     }
 }

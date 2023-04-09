@@ -39,6 +39,10 @@ public class GroupMenuController {
                 List<Teacher> teacherList = teacherService.findAllNotAssignedToClassBySchoolId(schoolId);
                 teacherList.forEach(System.out::println);
 
+                if(teacherList.isEmpty()){
+                    throw new NoAvailableTeachersException();
+                }
+
                 return new ModelAndView("/classes-menu-index")
                         .addObject("navElements", navbarService
                                 .getNavbar(cookieService.getValue(request.getCookies()), sessionService))

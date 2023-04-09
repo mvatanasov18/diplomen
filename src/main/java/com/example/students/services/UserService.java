@@ -13,12 +13,11 @@ public class UserService implements com.example.students.services.Service<User> 
 
     @Override
     public User save(User user) {
-        System.out.println("vuv save");
+
         if (checkUser(user)) {
             System.out.println("pass");
             return userRepository.save(user);
         }
-        System.out.println("vrushtam null");
         return null;
     }
 

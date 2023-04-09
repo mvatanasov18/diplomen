@@ -57,15 +57,13 @@ public class RegisterController {
 
                 addressService.save(address);
                 schoolService.save(school);
-                if(userService.save(user)==null){
-                    throw  new UsernameOrEmailTakenException();
+                if (userService.save(user) == null) {
+                    throw new UsernameOrEmailTakenException();
                 }
-                principal=principalService.save(principal);
+                principalService.save(principal);
+                System.out.println(user);
+                return "redirect:/login";
 
-                if ( principal!= null && principal.equals(new Principal())) {
-                    System.out.println(user);
-                    return "redirect:/login";
-                }
             } catch (Exception e) {
                 userService.delete(user);
                 schoolService.delete(school);
