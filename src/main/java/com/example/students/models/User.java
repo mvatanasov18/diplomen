@@ -2,14 +2,11 @@ package com.example.students.models;
 
 import com.example.students.services.PasswordHasher;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-
-import java.util.Arrays;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
 @Table(name = "Users")
-@EqualsAndHashCode
 public class User {
     @Id
     @Column(name = "Id", columnDefinition = "varchar(36)")
@@ -140,5 +137,18 @@ public class User {
 
     public void setSalt(byte[] salt) {
         this.salt = salt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(school, user.school);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, password, email, firstName, lastName, school);
     }
 }

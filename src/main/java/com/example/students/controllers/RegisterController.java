@@ -1,6 +1,7 @@
 package com.example.students.controllers;
 
 import com.example.students.exeptions.InvalidCredentialsException;
+import com.example.students.exeptions.UsernameOrEmailTakenException;
 import com.example.students.models.Address;
 import com.example.students.models.Principal;
 import com.example.students.models.School;
@@ -46,7 +47,6 @@ public class RegisterController {
         if (cookieService.isSessionPresent(request.getCookies())) {
             throw new RuntimeException();
         } else {
-            //check if data is valid
             try {
 
                 user.hashPassword();
@@ -57,9 +57,12 @@ public class RegisterController {
 
                 addressService.save(address);
                 schoolService.save(school);
-                userService.save(user);
+                if(userService.save(user)==null){
+                    throw  new UsernameOrEmailTakenException();
+                }
+                principal=principalService.save(principal);
 
-                if (principalService.save(principal) != null) {
+                if ( principal!= null && principal.equals(new Principal())) {
                     System.out.println(user);
                     return "redirect:/login";
                 }
@@ -67,7 +70,8 @@ public class RegisterController {
                 userService.delete(user);
                 schoolService.delete(school);
                 addressService.delete(address);
-                throw e;
+                e.printStackTrace();
+
             }
             return "/index";
         }

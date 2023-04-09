@@ -1,18 +1,13 @@
 package com.example.students.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
 @Table(name = "PendingUpdates")
 @EqualsAndHashCode
-@AllArgsConstructor
 public class PendingUpdate {
     @Id
     @Column(name = "Id", unique = true, nullable = false, columnDefinition = "varchar(36)")
@@ -32,24 +27,45 @@ public class PendingUpdate {
     private String lastName;
     @Column(name = "ChangesMade")
     private LocalDateTime changesMade;
+
+    @Column(name = "Salt")
+    private byte[] salt;
     @ManyToOne
     @JoinColumn(name = "AdminId")
     private Admin admin;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne()
     @JoinColumn(name = "UserId", columnDefinition = "varchar(36)")
     private User user;
 
     public PendingUpdate() {
         id = UUID.randomUUID().toString();
-        username="";
-        password="";
-        email="";
-        firstName="";
-        lastName="";
-        changesMade=LocalDateTime.now();
-        admin=new Admin();
-        user=new User();
+        username = "";
+        password = "";
+        email = "";
+        firstName = "";
+        lastName = "";
+        changesMade = LocalDateTime.now();
+        admin = new Admin();
+        user = new User();
+    }
+
+    public PendingUpdate(String username, String password, String email, String firstName, String lastName, LocalDateTime changesMade, byte[] salt, Admin admin, User user) {
+        id = UUID.randomUUID().toString();
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.changesMade = changesMade;
+        this.salt = salt;
+        this.admin = admin;
+        this.user = user;
+    }
+
+    public PendingUpdate(String id, String username, String password, String email, String firstName, String lastName, LocalDateTime changesMade, byte[] salt, Admin admin, User user) {
+        this(username, password, email, firstName, lastName, changesMade, salt, admin, user);
+        this.id = id;
     }
 
     public String getId() {
@@ -141,5 +157,13 @@ public class PendingUpdate {
                 ", admin_id=" + admin.getId() +
                 ", user_id=" + user.getId() +
                 '}';
+    }
+
+    public byte[] getSalt() {
+        return salt;
+    }
+
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.students.controllers;
 
 import com.example.students.exeptions.UserDoesNotHavePermissionException;
+import com.example.students.exeptions.UsernameOrEmailTakenException;
 import com.example.students.models.Admin;
 import com.example.students.models.Session;
 import com.example.students.services.*;
@@ -51,11 +52,11 @@ public class AdminMenuController {
             String role = roleService.getRole(session.getUser());
             if (role.equals("principal")) {
                 admin.getUser().setSchool(session.getUser().getSchool());
-                System.out.println(admin);
-
                 admin.getUser().hashPassword();
 
-                userService.save(admin.getUser());
+                if(userService.save(admin.getUser())==null){
+                    throw  new UsernameOrEmailTakenException();
+                }
                 adminService.save(admin);
                 return new ModelAndView("redirect:/adminsMenu");
             }

@@ -9,21 +9,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(EmailAlreadyTakenException.class)
+    @ExceptionHandler(UsernameOrEmailTakenException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ModelAndView handleEmailAlreadyTakenException(EmailAlreadyTakenException exception) {
+    public ModelAndView handleEmailAlreadyTakenException(UsernameOrEmailTakenException exception) {
 
         return new ModelAndView("custom-error")
-                .addObject("message", "Имейлът вече е заето");
-    }
-
-    @ExceptionHandler(UsernameAlreadyTakenException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ResponseBody
-    public ModelAndView handleUsernameAlreadyTakenException(UsernameAlreadyTakenException exception) {
-
-        return new ModelAndView("custom-error").addObject("message", "Потребителското име вече е заето!");
+                .addObject("message", "Имейлът или потребителското име вече са заети");
     }
 
     @ExceptionHandler(InvalidCredentialsException.class)

@@ -13,15 +13,15 @@ public interface UserRepository extends JpaRepository<User, String> {
     Boolean existsByEmail(String email);
 
     Boolean existsByUsername(String username);
-    @Query(value = "UPDATE Users SET Username= :username WHERE Id=:id;",nativeQuery = true)
-    void updateUsername(String username,String id);
-    @Query(value = "UPDATE Users SET Email= :email WHERE Id=:id;",nativeQuery = true)
-    void updateEmail(String email,String id);
     @Modifying
     @Transactional
-    @Query(value = "UPDATE Users SET FirstName= :firstName, LastName=:lastName WHERE Id=:id",nativeQuery = true)
+    @Query(value = "UPDATE Users SET FirstName= :firstName, LastName=:lastName, Username=:username, Email=:email WHERE Id=:id",nativeQuery = true)
     void update(
             @Param("firstName") String firstName,
             @Param("lastName") String lastName,
+            @Param("username") String username,
+            @Param("email") String email,
             @Param("id") String id);
+
+    User findByEmail(String email);
 }

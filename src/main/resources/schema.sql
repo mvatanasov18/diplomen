@@ -110,7 +110,7 @@ CREATE TABLE [dbo].[Addresses]
 (
     [Id]              [varchar](36)   NOT NULL PRIMARY KEY,
     [City]            [nvarchar](100) NOT NULL,
-    [HouseNumber]    [int]           NOT NULL CHECK ([house_number] > 0),
+    [HouseNumber]    [int]           NOT NULL CHECK ([HouseNumber] > 0),
     [Street]          [nvarchar](100) NOT NULL,
     [AdditionalInfo] [nvarchar](100) NULL,
 )
@@ -202,15 +202,17 @@ CREATE TABLE [dbo].[Files]
     FOREIGN KEY ([TaskId]) REFERENCES Tasks (Id)
 )
 
+
 CREATE TABLE [dbo].[PendingUpdates]
 (
     [Id]           [varchar](36)    NOT NULL PRIMARY KEY,
     [Username]     [varchar](150)   NOT NULL UNIQUE,
-    [Password]     [varbinary](max) NOT NULL,
+    [Password]   [varchar](500)  NOT NULL,
     [Email]        [varchar](255)   NOT NULL UNIQUE,
     [FirstName]   [nvarchar](100)  NOT NULL,
     [LastName]    [nvarchar](100)  NOT NULL,
     [ChangesMade] datetime2(0)     NOT NULL,
+    Salt         varbinary(16)   NOT NULL,
     [AdminId]     [varchar](36)    NOT NULL,
     [UserId]      [varchar](36)    NOT NULL UNIQUE,
     FOREIGN KEY ([UserId]) REFERENCES Users (Id),

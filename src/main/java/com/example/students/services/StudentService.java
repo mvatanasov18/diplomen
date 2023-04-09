@@ -2,11 +2,9 @@ package com.example.students.services;
 
 
 import com.example.students.models.Student;
-import com.example.students.models.Teacher;
 import com.example.students.repositories.StudentRepository;
 import lombok.AllArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,18 +42,18 @@ public class StudentService implements com.example.students.services.Service<Stu
         return studentRepository.findAllBySchoolId(schoolId);
     }
 
-    public void deleteById(String id){
+    public void deleteById(String id) {
         studentRepository.deleteById(id);
     }
 
     public boolean checkStudentByIdAndSchoolId(String id, String schoolId) {
         List<Student> students = findAllBySchoolId(schoolId);
-        Map<String, Student> hashTeachers = new HashMap<>();
+        Map<String, Student> hashStudents = new HashMap<>();
 
         for (Student student : students) {
-            hashTeachers.put(student.getId(), student);
+            hashStudents.put(student.getId(), student);
         }
 
-        return hashTeachers.containsKey(id);
+        return hashStudents.containsKey(id);
     }
 }

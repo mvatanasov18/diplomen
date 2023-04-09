@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.UUID;
 
 @Controller
@@ -45,7 +44,7 @@ public class LoginController {
     }
 
     @GetMapping(value = "/logout")
-    public String getLogout(HttpServletRequest request,HttpServletResponse response) {
+    public String getLogout(HttpServletRequest request, HttpServletResponse response) {
         sessionService.deleteById(cookieService.getValue(request.getCookies()));
         Cookie cookie = new Cookie("session", null);
         cookie.setMaxAge(0);
@@ -59,7 +58,6 @@ public class LoginController {
     @PostMapping
     public ModelAndView postLogin(@ModelAttribute User loginUser, HttpServletResponse response, HttpServletRequest request) {
         if (cookieService.isSessionPresent(request.getCookies())) {
-            System.out.println("ima kookie");
             throw new UserDoesNotHavePermissionException();
         } else {
             User user = userService.findByUsername(loginUser.getUsername());
@@ -89,7 +87,6 @@ public class LoginController {
                         return new ModelAndView("redirect:/");
                     }
                 }
-                throw new InvalidCredentialsException();
             }
             throw new InvalidCredentialsException();
         }

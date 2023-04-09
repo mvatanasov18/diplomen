@@ -1,7 +1,6 @@
 package com.example.students.services;
 
 import com.example.students.models.Admin;
-import com.example.students.models.Teacher;
 import com.example.students.repositories.AdminRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,20 +33,24 @@ public class AdminService implements com.example.students.services.Service<Admin
     public Iterable<Admin> findAll() {
         return adminRepository.findAll();
     }
+
     public void deleteById(String groupId) {
         adminRepository.deleteById(groupId);
     }
+
     public List<Admin> findAllBySchoolId(String schoolId) {
         return adminRepository.findAllBySchoolId(schoolId);
     }
+
     public boolean checkAdminByIdAndSchoolId(String id, String schoolId) {
         List<Admin> admins = findAllBySchoolId(schoolId);
         Map<String, Admin> hashAdmins = new HashMap<>();
-
         for (Admin admin : admins) {
             hashAdmins.put(admin.getId(), admin);
         }
-
         return hashAdmins.containsKey(id);
+    }
+    public Admin findAdminByUserId(String id) {
+        return adminRepository.findAdminByUserId(id);
     }
 }

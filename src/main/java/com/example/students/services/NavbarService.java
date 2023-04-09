@@ -4,7 +4,6 @@ import com.example.students.models.Navbar;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -14,12 +13,10 @@ import java.util.TreeMap;
 @AllArgsConstructor
 public class NavbarService {
 
-    //future idea if there is time:
-    //statistics about the school
     private Map<String, String> setMapForPrincipal() {
         Map<String, String> elements = new LinkedHashMap<>();
         elements.put("/school", "Промяна на училищни данни");
-        elements.put("/adminsMenu", "Меню за администрация");
+        elements.put("/adminsMenu", "Меню за администраторите");
         elements.put("/teachersMenu", "Меню за учителите");
         elements.put("/groupsMenu", "Меню за класовете");
         elements.put("/studentsMenu", "Меню за учениците");
@@ -55,6 +52,7 @@ public class NavbarService {
         Map<String, String> elements = new LinkedHashMap<>();
         elements.put("/groupsMenu", "Меню за класовете");
         elements.put("/studentsMenu", "Меню за учениците");
+        elements.put("/pendingUpdates", "Потвърди промени");
         elements.put("/teamsMenu", "Меню за отборите");
         elements.put("/projectsMenu", "Меню за проектите");
         elements.put("/profile", "Профил");
