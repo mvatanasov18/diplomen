@@ -2,6 +2,7 @@ package com.example.students.controllers;
 
 import com.example.students.exeptions.UserDoesNotHavePermissionException;
 import com.example.students.models.PendingUpdate;
+import com.example.students.models.Role;
 import com.example.students.models.Session;
 import com.example.students.models.User;
 import com.example.students.services.*;
@@ -30,8 +31,8 @@ public class PendingUpdateController {
     public ModelAndView getPendingUpdates(HttpServletRequest request) {
         if (cookieService.isSessionPresent(request.getCookies())) {
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
-            String role = roleService.getRole(session.getUser());
-            if (role.equals("admin")) {
+            Role role = roleService.getRole(session.getUser());
+            if (role== Role.PRINCIPAL) {
                 return new ModelAndView("pending-update")
                         .addObject("navElements", navbarService
                                 .getNavbar(cookieService.getValue(request.getCookies()), sessionService))
@@ -49,8 +50,8 @@ public class PendingUpdateController {
         if (cookieService.isSessionPresent(request.getCookies())) {
 
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
-            String role = roleService.getRole(session.getUser());
-            if (role.equals("admin")) {
+            Role role = roleService.getRole(session.getUser());
+            if (role==Role.PRINCIPAL) {
                 String schoolId = session.getUser().getSchool().getId();
                 if (pendingUpdateService.checkPendingUpdateByIdAndSchoolId(id, schoolId)) {
                     PendingUpdate pendingUpdate = pendingUpdateService.findById(id);
@@ -79,8 +80,8 @@ public class PendingUpdateController {
         if (cookieService.isSessionPresent(request.getCookies())) {
 
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
-            String role = roleService.getRole(session.getUser());
-            if (role.equals("admin")) {
+            Role role = roleService.getRole(session.getUser());
+            if (role==Role.PRINCIPAL) {
                 String schoolId = session.getUser().getSchool().getId();
                 if (pendingUpdateService.checkPendingUpdateByIdAndSchoolId(id, schoolId)) {
                     pendingUpdateService.deleteById(id);

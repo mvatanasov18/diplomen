@@ -3,6 +3,7 @@ package com.example.students.controllers;
 import com.example.students.exeptions.UserDoesNotHavePermissionException;
 import com.example.students.exeptions.UsernameOrEmailTakenException;
 import com.example.students.models.Admin;
+import com.example.students.models.Role;
 import com.example.students.models.Session;
 import com.example.students.services.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,8 +30,7 @@ public class AdminMenuController {
         if (cookieService.isSessionPresent(request.getCookies())) {
 
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
-            String role = roleService.getRole(session.getUser());
-            if (role.equals("principal")) {
+            if (session.getRole()== Role.PRINCIPAL) {
 
                 return new ModelAndView("/admins-menu-index")
                         .addObject("navElements", navbarService
@@ -49,8 +49,8 @@ public class AdminMenuController {
     public ModelAndView postAdmin(@ModelAttribute Admin admin, HttpServletRequest request) {
         if (cookieService.isSessionPresent(request.getCookies())) {
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
-            String role = roleService.getRole(session.getUser());
-            if (role.equals("principal")) {
+            Role role = roleService.getRole(session.getUser());
+            if (role==Role.PRINCIPAL) {
                 admin.getUser().setSchool(session.getUser().getSchool());
                 admin.getUser().hashPassword();
 
@@ -69,8 +69,8 @@ public class AdminMenuController {
         if (cookieService.isSessionPresent(request.getCookies())) {
 
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
-            String role = roleService.getRole(session.getUser());
-            if (role.equals("principal")) {
+            Role role = roleService.getRole(session.getUser());
+            if (role==Role.PRINCIPAL) {
                 String schoolId= session.getUser().getSchool().getId();
                 if( adminService.checkAdminByIdAndSchoolId(id,schoolId)){
                     adminService.deleteById(id);

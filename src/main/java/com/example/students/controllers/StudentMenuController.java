@@ -31,8 +31,8 @@ public class StudentMenuController {
     public ModelAndView getStudentsMenuIndexPage(HttpServletRequest request) {
         if (cookieService.isSessionPresent(request.getCookies())) {
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
-            String role = roleService.getRole(session.getUser());
-            if (role.equals("principal") || role.equals("admin")) {
+            Role role = roleService.getRole(session.getUser());
+            if (role==Role.PRINCIPAL || role==Role.ADMIN) {
                 return new ModelAndView("/students-menu-index").addObject("navElements", navbarService.getNavbar(cookieService.getValue(request.getCookies()), sessionService)).addObject("student", new Student()).addObject("groups", groupService.findAllBySchoolId(session.getUser().getSchool().getId())).addObject("students", studentService.findAllBySchoolId(session.getUser().getSchool().getId()));
             }
         }
@@ -44,8 +44,8 @@ public class StudentMenuController {
         if (cookieService.isSessionPresent(request.getCookies())) {
 
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
-            String role = roleService.getRole(session.getUser());
-            if (role.equals("principal")) {
+            Role role = roleService.getRole(session.getUser());
+            if (role==Role.PRINCIPAL) {
 
                 Group group = groupService.findAllByGradeAndLetterAndSchoolId(student.getGroup().getGrade(), student.getGroup().getLetter(), session.getUser().getSchool().getId());
                 student.setGroup(group);
@@ -66,8 +66,8 @@ public class StudentMenuController {
         if (cookieService.isSessionPresent(request.getCookies())) {
 
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
-            String role = roleService.getRole(session.getUser());
-            if (role.equals("principal") || role.equals("admin")) {
+            Role role = roleService.getRole(session.getUser());
+            if (role==Role.PRINCIPAL || role==Role.ADMIN) {
 
                 Student student = studentService.findById(id);
                 student.getUser().setSchool(session.getUser().getSchool());
@@ -85,15 +85,15 @@ public class StudentMenuController {
         if (pendingUpdateService.checkUser(student.getUser())) {
             if (cookieService.isSessionPresent(request.getCookies())) {
                 Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
-                String role = roleService.getRole(session.getUser());
-                if (role.equals("principal")) {
+                Role role = roleService.getRole(session.getUser());
+                if (role==Role.PRINCIPAL) {
                     student.getUser().setSchool(session.getUser().getSchool());
 
                     Student studentToUpdate = studentService.findById(id);
                     userService.update(student.getUser(), studentToUpdate.getUser().getId());
                     return new ModelAndView("redirect:/studentsMenu");
                 }
-                if (role.equals("admin")) {
+                if (role==Role.ADMIN) {
 
                     User user = student.getUser();
                     user.setSchool(session.getUser().getSchool());
@@ -129,8 +129,8 @@ public class StudentMenuController {
         if (cookieService.isSessionPresent(request.getCookies())) {
 
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
-            String role = roleService.getRole(session.getUser());
-            if (role.equals("principal")) {
+            Role role = roleService.getRole(session.getUser());
+            if (role==Role.PRINCIPAL) {
                 String schoolId = session.getUser().getSchool().getId();
                 if (studentService.checkStudentByIdAndSchoolId(id, schoolId)) {
                     studentService.deleteById(id);

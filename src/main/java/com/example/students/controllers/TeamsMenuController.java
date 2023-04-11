@@ -2,6 +2,7 @@ package com.example.students.controllers;
 
 import com.example.students.exeptions.UserDoesNotHavePermissionException;
 import com.example.students.models.Admin;
+import com.example.students.models.Role;
 import com.example.students.models.Session;
 import com.example.students.services.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,8 +30,8 @@ public class TeamsMenuController {
         if (cookieService.isSessionPresent(request.getCookies())) {
 
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
-            String role = roleService.getRole(session.getUser());
-            if (role.equals("admin")||role.equals("teacher")) {
+            Role role = roleService.getRole(session.getUser());
+            if (role== Role.ADMIN||role==Role.TEACHER) {
 
                 return new ModelAndView("/teams-menu-index")
                         .addObject("navElements", navbarService

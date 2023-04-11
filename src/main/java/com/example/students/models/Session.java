@@ -18,7 +18,8 @@ public class Session {
     @Id
     private String id;
     @Column(name = "RoleName")
-    private String roleName;
+    @Enumerated(EnumType.STRING)
+    private Role role;
     @Column(name = "TimeCreated")
     private LocalDateTime timeCreated;
     @OneToOne()
@@ -27,7 +28,7 @@ public class Session {
 
     public Session() {
         id = UUID.randomUUID().toString();
-        roleName="";
+        role=Role.STUDENT;
         timeCreated=LocalDateTime.now();
         user=new User();
     }
@@ -36,14 +37,13 @@ public class Session {
         return id;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    public void setRole(Role role) {
+        this.role = role;
     }
-
     public LocalDateTime getTimeCreated() {
         return timeCreated;
     }

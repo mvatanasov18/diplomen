@@ -2,10 +2,7 @@ package com.example.students.controllers;
 
 import com.example.students.exeptions.NoAvailableTeachersException;
 import com.example.students.exeptions.UserDoesNotHavePermissionException;
-import com.example.students.models.Group;
-import com.example.students.models.Session;
-import com.example.students.models.Teacher;
-import com.example.students.models.User;
+import com.example.students.models.*;
 import com.example.students.services.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
@@ -31,9 +28,9 @@ public class GroupMenuController {
     public ModelAndView getGroupsMenuIndexPage(HttpServletRequest request) {
         if (cookieService.isSessionPresent(request.getCookies())) {
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
-            String role = roleService.getRole(session.getUser());
+            Role role = roleService.getRole(session.getUser());
 
-            if (role.equals("principal")) {
+            if (role== Role.PRINCIPAL) {
 
                 String schoolId = session.getUser().getSchool().getId();
                 List<Teacher> teacherList = teacherService.findAllNotAssignedToClassBySchoolId(schoolId);
@@ -58,8 +55,8 @@ public class GroupMenuController {
     public ModelAndView postGroup(@ModelAttribute Group group, HttpServletRequest request) {
         if (cookieService.isSessionPresent(request.getCookies())) {
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
-            String role = roleService.getRole(session.getUser());
-            if (role.equals("principal")) {
+            Role role = roleService.getRole(session.getUser());
+            if (role==Role.PRINCIPAL) {
                 groupService.save(group);
                 return new ModelAndView("redirect:/groupsMenu");
             }
@@ -74,8 +71,8 @@ public class GroupMenuController {
         if (cookieService.isSessionPresent(request.getCookies())) {
 
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
-            String role = roleService.getRole(session.getUser());
-            if (role.equals("principal")) {
+            Role role = roleService.getRole(session.getUser());
+            if (role==Role.PRINCIPAL) {
                 String schoolId= session.getUser().getSchool().getId();
                 if( groupService.checkGroupByIdAndSchoolId(id,schoolId)){
                     groupService.deleteById(id);

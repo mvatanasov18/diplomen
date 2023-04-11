@@ -1,6 +1,7 @@
 package com.example.students.services;
 
 import com.example.students.exeptions.SessionNotFoundException;
+import com.example.students.models.Role;
 import com.example.students.models.Session;
 import com.example.students.models.User;
 import com.example.students.repositories.*;
@@ -32,29 +33,23 @@ public class RoleService {
         return principalRepository.findPrincipalByUserId(user.getId()) != null;
     }
 
-    public String getRole(User user) {
+    public Role getRole(User user) {
         if (isStudent(user)) {
             System.out.println("student");
-            return "student";
+            return Role.STUDENT;
         }
         if (isTeacher(user)) {
             System.out.println("teacher");
-            return "teacher";
+            return Role.TEACHER;
         }
         if (isAdmin(user)) {
             System.out.println("admin");
-            return "admin";
+            return Role.ADMIN;
         }
         if (isPrincipal(user)) {
             System.out.println("principal");
-            return "principal";
+            return Role.PRINCIPAL;
         }
-        return "";
+        return null;
     }
-
-    public String getRoleFromSessionId(String sessionId) {
-        Session session = sessionRepository.findById(sessionId).orElseThrow(SessionNotFoundException::new);
-        return getRole(session.getUser());
-    }
-
 }

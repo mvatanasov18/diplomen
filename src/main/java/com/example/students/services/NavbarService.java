@@ -1,6 +1,7 @@
 package com.example.students.services;
 
 import com.example.students.models.Navbar;
+import com.example.students.models.Role;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -61,14 +62,13 @@ public class NavbarService {
         return elements;
     }
 
-    private Navbar getNavbarByRoleName(String roleName) {
+    private Navbar getNavbarByRoleName(Role roleName) {
 
         return switch (roleName) {
-            case "principal" -> new Navbar(setMapForPrincipal());
-            case "student" -> new Navbar(setMapForStudent());
-            case "admin" -> new Navbar(setMapForAdmin());
-            case "teacher" -> new Navbar(setMapForTeacher());
-            default -> null;
+            case PRINCIPAL -> new Navbar(setMapForPrincipal());
+            case STUDENT -> new Navbar(setMapForStudent());
+            case ADMIN -> new Navbar(setMapForAdmin());
+            case TEACHER -> new Navbar(setMapForTeacher());
         };
 
     }
@@ -84,7 +84,7 @@ public class NavbarService {
 
 
         } else {
-            return getNavbarByRoleName(sessionService.findById(sessionId).getRoleName());
+            return getNavbarByRoleName(sessionService.findById(sessionId).getRole());
         }
     }
 }

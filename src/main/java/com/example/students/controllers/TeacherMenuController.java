@@ -1,10 +1,7 @@
 package com.example.students.controllers;
 
 import com.example.students.exeptions.UserDoesNotHavePermissionException;
-import com.example.students.models.Session;
-import com.example.students.models.Student;
-import com.example.students.models.Teacher;
-import com.example.students.models.User;
+import com.example.students.models.*;
 import com.example.students.services.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
@@ -30,8 +27,8 @@ public class TeacherMenuController {
         if (cookieService.isSessionPresent(request.getCookies())) {
 
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
-            String role = roleService.getRole(session.getUser());
-            if (role.equals("principal")) {
+            Role role = roleService.getRole(session.getUser());
+            if (role== Role.PRINCIPAL) {
 
                 return new ModelAndView("/teachers-menu-index")
                         .addObject("navElements", navbarService
@@ -53,8 +50,8 @@ public class TeacherMenuController {
         // - save the teacher entity using the teacher service
         if (cookieService.isSessionPresent(request.getCookies())) {
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
-            String role = roleService.getRole(session.getUser());
-            if (role.equals("principal")) {
+            Role role = roleService.getRole(session.getUser());
+            if (role==Role.PRINCIPAL) {
                 teacher.getUser().setSchool(session.getUser().getSchool());
                 System.out.println(teacher);
 
@@ -73,8 +70,8 @@ public class TeacherMenuController {
         if (cookieService.isSessionPresent(request.getCookies())) {
 
             Session session = sessionService.findById(cookieService.getValue(request.getCookies()));
-            String role = roleService.getRole(session.getUser());
-            if (role.equals("principal")) {
+            Role role = roleService.getRole(session.getUser());
+            if (role==Role.PRINCIPAL) {
                 String schoolId= session.getUser().getSchool().getId();
                 if( teacherService.checkTeacherByIdAndSchoolId(id,schoolId)){
                     teacherService.deleteById(id);
